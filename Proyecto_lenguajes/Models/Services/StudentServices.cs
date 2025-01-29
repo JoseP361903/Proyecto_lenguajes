@@ -1,5 +1,7 @@
 ﻿using Proyecto_lenguajes.Models.Entities;
 using Microsoft.Data.SqlClient;
+using System.Text;
+using System.Data;
 
 namespace Proyecto_lenguajes.Models.Services
 {
@@ -12,6 +14,81 @@ namespace Proyecto_lenguajes.Models.Services
             _configuration = configuration;
             connectionString = _configuration.GetConnectionString("DefaultConnection");
         }
+
+        //GetStudentById
+        public Student Get(string id)
+        {
+            Student student = new Student();
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    sqlConnection.Open();
+                    SqlCommand command = new SqlCommand("GetStudentByID", sqlConnection);
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@Id", id);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        student.Id = id;
+                        student.Name = reader.GetString(1);
+                        student.LastName = reader.GetString(2);
+                        student.Password = reader.GetString(3);
+                        student.Email = reader.GetString(4);
+                        student.Likings = reader.GetString(5);
+                        student.Photo = Encoding.ASCII.GetBytes(reader.GetString(6));
+                    }
+                    sqlConnection.Close();
+                } catch (SqlException)
+                {
+                    throw;
+                }
+
+                
+            }
+
+            return student;
+        }
+
+        //LoginAuthentication
+        //This methods receives as a parameter an student built only by id and password, and authenticates the existence
+        //The return cases will show an option on the controller
+        public int Authenticate(Student student)
+        {
+            int result = 0;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try {
+                    connection.Open();
+                    SqlCommand command = new SqlCommand("LoginAuthentication", connection);
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@Id", student.Id);
+                    command.Parameters.AddWithValue("@Password", student.Password);
+
+                    SqlParameter returnValue = new SqlParameter();
+                    returnValue.ParameterName = "@RETURN_VALUE";
+                    returnValue.Direction = ParameterDirection.ReturnValue;
+                    command.Parameters.Add(returnValue);
+
+                    command.ExecuteNonQuery();
+
+                    result = (int)returnValue.Value;
+
+                } catch (SqlException)
+                {
+                    throw;
+                }
+                
+            }
+
+            return result;
+        }
+
 
         public int Post(Student student) 
         { 

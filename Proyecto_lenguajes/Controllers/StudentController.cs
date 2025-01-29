@@ -21,6 +21,44 @@ namespace Proyecto_lenguajes.Controllers
             studentServices = new StudentServices(_configuration);
         }
 
+        public IActionResult Get(string id)
+        {
+            try
+            {
+                if(studentServices.ValidateID(id) != null)
+                {
+                    return Ok(studentServices.Get(id));
+                }
+                else
+                {
+                    return Error();
+                }
+            }
+            catch (SqlException)
+            {
+                throw;
+            }
+        }
+
+        public IActionResult Authenticate([FromBody] Student student)
+        {
+            var result = studentServices.Authenticate(student);
+            try
+            {
+                if(result == 1) //The user and passwords were register at the database
+                {
+                    return Ok(student);
+                }
+                else
+                { //Here there just be two options -1: user doesn't exists. 0: there wasn't match between user & password
+                    return Error();
+                }
+            } catch (SqlException)
+            {
+                throw;
+            }
+        }
+
         public IActionResult Post([FromBody] Student student)
         {
             try

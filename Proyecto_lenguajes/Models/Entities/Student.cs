@@ -14,7 +14,7 @@
         {
         }
 
-        public Student(string id, string name, string lastName, string password, string email, string likings, string photo)
+        public Student(string id, string name, string lastName, string password, string email, string likings, byte[] photo)
         {
             Id = id;
             Name = name;
@@ -31,6 +31,6 @@
         public string Password { get => password; set => password = value; }
         public string Email { get => email; set => email = value; }
         public string Likings { get => likings; set => likings = value; }
-        public string Photo { get => photo; set => photo = value; }
+        public byte[] Photo { get => photo; set => photo = value; }
     }
 }
