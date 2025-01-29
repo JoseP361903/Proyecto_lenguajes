@@ -68,7 +68,7 @@ namespace Proyecto_lenguajes.Controllers
         }
 
 
-        public IActionResult UpdateStudent([FromBody] Student student)
+        public IActionResult Put([FromBody] Student student)
         {
             try
             {

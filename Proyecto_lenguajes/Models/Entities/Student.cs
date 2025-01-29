@@ -8,7 +8,7 @@
         private string password;
         private string email;
         private string likings;
-        private string photo;
+        private byte[] photo;
 
         public Student()
         {

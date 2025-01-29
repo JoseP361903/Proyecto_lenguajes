@@ -17,7 +17,7 @@ namespace Proyecto_lenguajes.Models.Services
         public List<Professor> Get()
         {
 
-            List<Professor> students = new List<Professor>();
+            List<Professor> professors = new List<Professor>();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -31,11 +31,11 @@ namespace Proyecto_lenguajes.Models.Services
                     SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
                     while (sqlDataReader.Read()) 
                     {
-                        students.Add(new Professor 
-                        {
-                            Id = sqlDataReader["Id"].ToString(),
-                            Name = sqlDataReader["Name"].ToString()
-                        });
+                        professors.Add(new Professor 
+                                  {
+                                    Id = sqlDataReader["Id"].ToString(),
+                                    Name = sqlDataReader["Name"].ToString()
+                                  });
                     }
 
                     connection.Close();
@@ -46,7 +46,7 @@ namespace Proyecto_lenguajes.Models.Services
                 }
             }
 
-            return students;
+            return professors;
         }
     }
 }
