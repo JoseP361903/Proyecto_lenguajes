@@ -1,45 +1,54 @@
-﻿// Get elements
-const profileModal = document.getElementById('profileModal'); // Modal element
-const closeModal = document.querySelector('.custom-modal-close'); // Close button
-const profileNav = document.getElementById('profileNav'); // Profile link in navbar
+﻿const modals = document.querySelectorAll('.custom-modal');
+const closeButtons = document.querySelectorAll('.custom-modal-close');
 const navigationBar = document.getElementById('navBar');
-const modal = document.getElementById("newsModal");
+
+function openModal(modal) {
+    modal.style.display = 'flex';
+    navigationBar.style.display = 'none';
+}
+
+function closeModal(modal) {
+    modal.style.display = 'none';
+    navigationBar.style.display = 'block';
+}
+
+closeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const modal = button.closest('.custom-modal');
+        closeModal(modal);
+    });
+});
+
+window.addEventListener('click', (event) => {
+    modals.forEach(modal => {
+        if (event.target === modal) {
+            closeModal(modal);
+        }
+    });
+});
+
+const profileNav = document.getElementById('profileNav');
+const profileModal = document.getElementById('profileModal');
+
+profileNav.addEventListener('click', (event) => {
+    event.preventDefault();
+    openModal(profileModal);
+});
+
+const newsModal = document.getElementById('newsModal');
 const moreAboutLinks = document.querySelectorAll(".more-about-link");
 
-
-
-// Open modal when Profile is clicked
-profileNav.addEventListener('click', (event) => {
-    event.preventDefault(); // Prevent default link behavior
-    profileModal.style.display = 'flex'; // Show the modal
-    navigationBar.style.display = 'none';
-
-});
-
-// Close modal when the close button is clicked
-closeModal.addEventListener('click', () => {
-    profileModal.style.display = 'none'; // Hide the modal
-    navigationBar.style.display = 'block';
-});
-
-// Close modal when clicking outside the modal content
-window.addEventListener('click', (event) => {
-    if (event.target === profileModal) {
-        profileModal.style.display = 'none';
-        navigationBar.style.display = 'block';
-    }
-});
-
-
-    function openModal(event) {
-        event.preventDefault(); 
-        modal.style.display = "block";
-        navigationBar.style.display = 'none';
-
-    }
-
-    moreAboutLinks.forEach(link => {
-        link.addEventListener("click", openModal);
-
+moreAboutLinks.forEach(link => {
+    link.addEventListener('click', (event) => {
+        event.preventDefault();
+        openModal(newsModal);
     });
+});
 
+// Link Discussion button to Course Discussion modal
+const discussionButton = document.getElementById('discussionButton');
+const courseModal = document.getElementById('courseModal');
+
+discussionButton.addEventListener('click', () => {
+    openModal(courseModal);
+});

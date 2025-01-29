@@ -1136,251 +1136,68 @@ label {
 				text-decoration: underline;
 			}
 
-/* Modal */
-.custom-modal {
-	display: none; /* Hidden by default */
-	position: fixed; /* Stay in place */
-	z-index: 1; /* Sit on top */
-	left: 0;
-	top: 0;
-	width: 100%; /* Full width */
-	height: 100%; /* Full height */
-	overflow: auto; /* Enable scroll if needed */
-	background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
-}
 
-/* Modal Content */
-.custom-modal-content {
-	background-color: #fff; /* Light blue background */
-	margin: 10% auto; /* Center the modal */
-	padding: 1.5rem; /* Reduced padding */
-	border-radius: 4px;
-	width: 40%; /* Reduced width */
-	height: 120%;
-	border: 3px solid #f1962e;
-}
 
-/* Close Button */
-.custom-modal-close {
-	color: red;
-	font-size: 25px; /* Smaller close button */
-	font-weight: bold;
-	position: absolute;
-	top: 10px;
-	right: 10px;
-}
 
-	.custom-modal-close:hover,
-	.custom-modal-close:focus {
-		color: #f1962e; /* Highlight color for hover */
-		cursor: pointer;
-	}
-
-/* Title Styling inside Modal */
-.custom-modal h1 {
-	color: black;
-	text-align: center;
-	padding-bottom: 1.5rem; /* Reduced padding */
-	font-size: 1.5rem; /* Smaller font */
-}
-
-.custom-modal h2 {
-	color: black;
-	text-align: center;
-	padding-bottom: 0.5rem;
-	font-size: 1rem; /* Smaller font */
-}
-
-/* Modal Body */
-.custom-modal .news-body {
-	color: black;
-	font-size: 1rem;
-	margin-bottom: 1rem;
-}
-
-.custom-modal .news-date {
-	color: #666;
-	font-size: 0.9rem;
-	text-align: center;
-	margin-top: 1rem;
-}
-
-/* Adjustments for Modal Content inside */
-.custom-modal-content .news-content {
-	text-align: center;
-	margin: 0 auto;
-}
-
-.custom-modal-content .news-title,
-.custom-modal-content .news-body,
-.custom-modal-content .news-date {
-	margin-bottom: 1rem;
-}
-
-/* Form Input, Button and Checkboxes */
-.form-group {
-	padding: 0.25rem;
-}
-
-.form-check.form-check-inline {
-	color: black;
-	display: inline-block;
-	padding: 0.25rem 0; /* Reduced padding */
-}
-
-.form-control-input {
-	border-radius: 4px;
-	padding: 0.75rem; /* Reduced padding */
-	margin-bottom: 1rem;
-	font-size: 0.9rem; /* Smaller font */
-}
-
-label {
-	color: black;
-	font-size: 0.9rem; /* Smaller font */
-}
-
-/* Submit Button */
-.custom-modal button {
-	align-self: center;
-	width: 100%;
-	height: 2.5rem; /* Smaller height */
-	border: 0.125rem solid #f1962e;
-	border-radius: 4px;
-	background-color: #f1962e;
-	color: white;
-	font: 700 0.75rem/1.75rem "Montserrat", sans-serif;
-	cursor: pointer;
-}
-
-	.custom-modal button:hover {
-		background-color: white;
-		color: #f1962e;
-		border: 0.125rem solid #f1962e;
-	}
-
-/* Modal */
-.custom-modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0, 0, 0, 0.5); /* Black with opacity */
-}
-
-/* Modal Content */
+/************************/
+/*     Noticias Modal     */
+/************************/
 .custom-modal-content2 {
-    background-color: #fff; /* Light blue background */
-    margin: 10% auto; /* Center the modal */
-    padding: 1.5rem; /* Reduced padding */
-    border-radius: 4px;
-    width: 90%; /* Reduced width */
-    height: 100%;
-    border: 3px solid #f1962e;
+	background-color: #fff;
+	margin: 5% auto;
+	padding: 1.5rem;
+	border-radius: 4px;
+	width: 100%;
+	max-width: 900px;
+	border: 3px solid #f1962e;
+	display: flex;
+	flex-direction: column;
+	max-height: 90vh;
+	overflow-y: auto;
+	border-bottom: 2px solid #ccc;
+	padding-bottom: 1rem;
 }
 
-/* Close Button */
-.custom-modal-close {
-    color: red;
-    font-size: 25px; /* Smaller close button */
-    font-weight: bold;
-    position: absolute;
-    top: 10px;
-    right: 10px;
+.news-container {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 1.5rem;
+	border-bottom: 2px solid #ccc;
+	padding-bottom: 1rem;
+	flex-wrap: wrap;
 }
 
-.custom-modal-close:hover,
-.custom-modal-close:focus {
-    color: #f1962e; /* Highlight color for hover */
-    cursor: pointer;
+.news-text {
+	flex: 1;
+	text-align: left;
 }
 
-/* Title Styling inside Modal */
-.custom-modal h1 {
-    color: black;
-    text-align: center;
-    padding-bottom: 1.5rem; /* Reduced padding */
-    font-size: 1.5rem; /* Smaller font */
+.news-body {
+	font-size: 1rem;
+	line-height: 1.5;
+	overflow-wrap: break-word;
 }
 
-.custom-modal h2 {
-    color: black;
-    text-align: center;
-    padding-bottom: 0.5rem;
-    font-size: 1rem; /* Smaller font */
+.news-image-container {
+	flex: 1;
+	text-align: center;
 }
 
-/* Modal Body */
-.custom-modal .news-body {
-    color: black;
-    font-size: 1rem;
-    margin-bottom: 1rem;
+.news-image {
+	max-width: 100%;
+	height: auto;
+	border-radius: 4px;
 }
 
-.custom-modal .news-date {
-    color: #666;
-    font-size: 0.9rem;
-    text-align: center;
-    margin-top: 1rem;
+@media (max-width: 768px) {
+	.news-container {
+		flex-direction: column;
+		text-align: center;
+	}
 }
 
-/* Adjustments for Modal Content inside */
-.custom-modal-content .news-content {
-    text-align: center;
-    margin: 0 auto;
-}
 
-.custom-modal-content .news-title,
-.custom-modal-content .news-body,
-.custom-modal-content .news-date {
-    margin-bottom: 1rem;
-}
-
-/* Form Input, Button and Checkboxes */
-.form-group {
-    padding: 0.25rem;
-}
-
-.form-check.form-check-inline {
-    color: black;
-    display: inline-block;
-    padding: 0.25rem 0; /* Reduced padding */
-}
-
-.form-control-input {
-    border-radius: 4px;
-    padding: 0.75rem; /* Reduced padding */
-    margin-bottom: 1rem;
-    font-size: 0.9rem; /* Smaller font */
-}
-
-label {
-    color: black;
-    font-size: 0.9rem; /* Smaller font */
-}
-
-/* Submit Button */
-.custom-modal button {
-    align-self: center;
-    width: 100%;
-    height: 2.5rem; /* Smaller height */
-    border: 0.125rem solid #f1962e;
-    border-radius: 4px;
-    background-color: #f1962e;
-    color: white;
-    font: 700 0.75rem/1.75rem "Montserrat", sans-serif;
-    cursor: pointer;
-}
-
-.custom-modal button:hover {
-    background-color: white;
-    color: #f1962e;
-    border: 0.125rem solid #f1962e;
-}
 
 
 /************************/
@@ -1625,10 +1442,15 @@ table th,
 	}
 
 
+.form-1 form-check-label {
+	color: white;
+	justify-content: center;
+	max-width: 80%;
+}
 
-	.form-1.form-group {
-		padding: 0.25rem;
-	}
+.form-1.form-group {
+	padding: 0.25rem;
+}
 
 
 	.form-1 .fas.fa-square {
@@ -1650,6 +1472,306 @@ table th,
 		.form-1 .form-control-submit-button:hover {
 			background-color: white;
 			color: #f1962e;
+		}
+
+
+/**********************/
+/*   News Comments */
+/**********************/
+
+
+.news-comment-container {
+	padding: 30px 0;
+	background-color: #FFFFFF;
+}
+
+.news-comment-container  comment-media-object{
+	height: 100px;
+	width: 100px;
+	display: block;
+	object-fit: cover;
+	margin-left: 20px;
+}
+
+	.news-comment-form .submit-comment-media {
+		height: 100px;
+		width: 100px;
+		display: block;
+		object-fit: cover;
+		margin-left: 20px;
+	}
+
+
+	.news-comment-container .media {
+		display: flex;
+		align-items: center; 
+		justify-content: flex-start; 
+	}
+
+
+
+
+	.news-comment-container.grey {
+		background-color: #F0F0F0;
+		padding: 50px 0;
+		height: 100%;
+	}
+
+	.news-comment-container h1 {
+		font-weight: 800;
+		font-size: 25px;
+		line-height: 45px;
+		margin: 20px 0;
+	}
+
+	.news-comment-container h3 {
+		font-weight: 800;
+		font-size: 20px;
+		color: black;
+		margin: 10px 0 15px;
+		padding: 0;
+	}
+
+.news-comment-form form {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-bottom: 30px;
+}
+
+.news-comment-form {
+	margin-bottom: 30px;
+	width:100%;
+}
+
+	.news-comment-form form fieldset {
+		clear: both;
+	}
+
+	.news-comment-form form textarea {
+		height: 100px;
+		width: 230%;
+		
+	}
+
+	.news-comment-form form .btn {
+		margin-top: 7px;
+	}
+
+.news-comment-loader {
+	background-color: #FFFFFF;
+	width: 150%;
+}
+
+	.news-comment-loader .media {
+		border-top: 2px dashed #DDDDDD;
+		padding: 20px 0;
+		margin: 0;
+		display: flex;
+	}
+
+		.news-comment-loader .media .col-sm-3,
+		.news-comment-loader .media .col-lg-2 {
+			margin-right: 20px;
+		}
+
+		.news-comment-loader .media img {
+			max-width: 100px;
+		}
+
+	.news-comment-loader .comment {
+		flex: 1;
+	}
+
+	.news-comment-loader .media h4 {
+		margin: 0 0 10px;
+		color: black;
+	}
+
+		.news-comment-loader .media h4 span {
+			font-size: 14px;
+			float: right;
+			color: black;
+		}
+
+	.news-comment-loader .media p {
+		margin-bottom: 15px;
+		text-align: justify;
+		color: black;
+	}
+
+	.news-comment-loader .media-detail {
+		margin: 0;
+	}
+
+		.news-comment-loader .media-detail li {
+			color: #AAAAAA;
+			font-size: 12px;
+			padding-right: 10px;
+			font-weight: 600;
+		}
+
+		.news-comment-loader .media-detail a:hover {
+			text-decoration: underline;
+		}
+
+		.news-comment-loader .media-detail li:last-child {
+			padding-right: 0;
+		}
+
+		.news-comment-loader .media-detail li i {
+			color: #666666;
+			font-size: 15px;
+			margin-right: 10px;
+		}
+
+/**********************/
+/* Course Discussion */
+/**********************/
+
+
+.course-comment-container {
+	padding: 30px 0;
+	background-color: #FFFFFF;
+}
+
+.course-comment-container  comment-media-object{
+	height: 100px;
+	width: 100px;
+	display: block;
+	object-fit: cover;
+	margin-left: 20px;
+}
+
+	.course-comment-form .submit-comment-media {
+		height: 100px;
+		width: 100px;
+		display: block;
+		object-fit: cover;
+		margin-left: 20px;
+	}
+
+
+	.course-comment-container .media {
+		display: flex;
+		align-items: center; 
+		justify-content: flex-start; 
+	}
+
+
+
+
+	.course-comment-container.grey {
+		background-color: #F0F0F0;
+		padding: 50px 0;
+		height: 100%;
+	}
+
+	.course-comment-container h1 {
+		font-weight: 800;
+		font-size: 25px;
+		line-height: 45px;
+		margin: 20px 0;
+	}
+
+	.course-comment-container h3 {
+		font-weight: 800;
+		font-size: 20px;
+		color: black;
+		margin: 10px 0 15px;
+		padding: 0;
+	}
+
+.course-comment-form form {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-bottom: 30px;
+}
+
+.course-comment-form {
+	width:100%;
+}
+
+	.course-comment-form form fieldset {
+		clear: both;
+	}
+
+	.course-comment-form form textarea {
+		height: 100px;
+		width: 230%;
+		
+	}
+
+	.course-comment-form form .btn {
+		margin-top: 7px;
+	}
+
+.course-comment-loader {
+	background-color: #FFFFFF;
+	width: 150%;
+}
+
+	.course-comment-loader .media {
+		border-top: 2px dashed #DDDDDD;
+		padding: 20px 0;
+		margin: 0;
+		display: flex;
+	}
+
+		.course-comment-loader .media .col-sm-3,
+		.course-comment-loader .media .col-lg-2 {
+			margin-right: 20px;
+		}
+
+		.course-comment-loader .media img {
+			max-width: 100px;
+		}
+
+	.course-comment-loader .comment {
+		flex: 1;
+	}
+
+	.course-comment-loader .media h4 {
+		margin: 0 0 10px;
+		color: black;
+	}
+
+		.course-comment-loader .media h4 span {
+			font-size: 14px;
+			float: right;
+			color: black;
+		}
+
+	.course-comment-loader .media p {
+		margin-bottom: 15px;
+		text-align: justify;
+		color: black;
+	}
+
+	.course-comment-loader .media-detail {
+		margin: 0;
+	}
+
+		.course-comment-loader .media-detail li {
+			color: #AAAAAA;
+			font-size: 12px;
+			padding-right: 10px;
+			font-weight: 600;
+		}
+
+		.course-comment-loader .media-detail a:hover {
+			text-decoration: underline;
+		}
+
+		.course-comment-loader .media-detail li:last-child {
+			padding-right: 0;
+		}
+
+		.course-comment-loader .media-detail li i {
+			color: #666666;
+			font-size: 15px;
+			margin-right: 10px;
 		}
 
 

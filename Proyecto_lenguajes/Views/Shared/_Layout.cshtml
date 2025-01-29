@@ -223,7 +223,7 @@
                                 <div class="form-group">
                                     <button type="submit" class="form-control-submit-button" id="lButton">Let's start!</button>
                                 </div>
-                                <a class="nav-link page-scroll" href="#Register"> <p>No accrount?<u> Sign in </u> </p></a>
+                                <a class="nav-link page-scroll" href="#register"> <p>No accrount?<u> Sign in </u> </p></a>
                             </form>
                         </div>
                     </div>
@@ -247,7 +247,7 @@
        
             <!-- Each news item -->
             <div class="news-item">
-                <img src="~/images/testimonial-1.jpg" alt="News Image" class="news-image" />
+                <img src="~/images/project-3.jpg" alt="News Image" class="news-image" />
                 <div class="news-content">
                     <h3 class="news-title" id="newPreviewTittle">News Title 1</h3>
                     <a href="#" class="more-about-link">
@@ -257,7 +257,7 @@
             </div>
 
         <div class="news-item">
-            <img src="~/images/testimonial-2.jpg" alt="News Image" class="news-image" />
+            <img src="~/images/project-1.jpg" alt="News Image" class="news-image" />
             <div class="news-content">
                 <h3 class="news-title">News Title 2</h3>
                     <a href="#" class="more-about-link">
@@ -267,7 +267,7 @@
         </div>
 
         <div class="news-item">
-            <img src="~/images/testimonial-3.jpg" alt="News Image" class="news-image" />
+            <img src="~/images/project-2.jpg" alt="News Image" class="news-image" />
             <div class="news-content">
                 <h3 class="news-title">News Title 3</h3>
                     <a href="#" class="more-about-link">
@@ -288,26 +288,69 @@
         <div class="custom-modal-content2">
             <span class="custom-modal-close">&times;</span>
 
-            <!-- News Content -->
-            <div class="news-content">
-                <!-- Image -->
+            <div class="news-container">
+                <!-- Left Side: Text -->
+                <div class="news-text">
+                    <h1 class="news-title">Exciting News Title</h1>
+                    <p class="news-date">Published on: January 26, 2025</p>
+                    <p class="news-body">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod malesuada dolor nec bibendum.
+                        Cras vehicula mi eget lectus efficitur, eget accumsan ante condimentum.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod malesuada dolor nec bibendum.
+                        Cras vehicula mi eget lectus efficitur, eget accumsan ante condimentum.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod malesuada dolor nec bibendum.
+                        Cras vehicula mi eget lectus efficitur, eget accumsan ante condimentum.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod malesuada dolor nec bibendum.
+                        Cras vehicula mi eget lectus efficitur, eget accumsan ante condimentum.
+                    </p>
+                </div>
+
+                <!-- Right Side: Image -->
                 <div class="news-image-container">
                     <img src="~/images/about.jpg" alt="News Image" class="news-image" />
                 </div>
-
-                <!-- Title -->
-                <h1 class="news-title">Exciting News Title</h1>
-
-                <!-- Body -->
-                <p class="news-body">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod malesuada dolor nec bibendum.
-                    Cras vehicula mi eget lectus efficitur, eget accumsan ante condimentum.
-                </p>
-
-                <!-- Date -->
-                <p class="news-date">Published on: January 26, 2025</p>
             </div>
+
+            <!--News Comment section-->
+            <div class="news-comment-container">
+                <h1 class="pull-left">Discussion</h1>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="news-comment-form">
+                            <div class="row">
+                                <div class="col-sm-3 col-lg-2 hidden-xs">
+                                    <img class="submit-comment-media" src="~/images/defaultpfp.jpg" alt="">
+                                </div>
+
+                                <div class="comment col-xs-12 col-sm-9 col-lg-10">
+                                    <form>
+                                        <textarea class="form-control" id="message" placeholder="Your message" required=""></textarea>
+                                        <button type="submit" class="btn btn-normal pull-right">Submit</button>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                            <h3>Comments</h3>
+                            <div class="news-comment-loader">
+
+                                <div class="media">
+                                    <div class="col-sm-3 col-lg-2 hidden-xs">
+                                        <img class="comment-media-object" src="~/images/defaultpfp.jpg" alt="">
+                                    </div>
+
+                                    <div class="comment col-xs-12 col-sm-9 col-lg-10">
+                                        <h4 class="media-heading">Default name</h4>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
+    </div>
     </div>
 
 
@@ -400,6 +443,54 @@
         </div>
     </div>
 </div>
+
+    <!-- Course Modal -->
+    <div id="courseModal" class="custom-modal">
+       
+            <span class="custom-modal-close">&times;</span>
+        <div class="custom-modal-content2">
+            <!-- Course Discussion Section -->
+            <div class="course-comment-container">
+                <h1 class="pull-left">Course Discussion</h1>
+                <div class="row">
+                    <div class="col-sm-8">
+                        <div class="course-comment-form">
+                            <div class="row">
+                                <div class="col-sm-3 col-lg-2 hidden-xs">
+                                    <img class="submit-comment-media" src="~/images/defaultpfp.jpg" alt="">
+                                </div>
+                            </div>
+                           
+                            <div class="comment col-xs-12 col-sm-9 col-lg-10">
+                                <form>
+                                    <textarea class="form-control" id="message" placeholder="Your thoughts on this course..." required=""></textarea>
+                                    <button type="submit" class="btn btn-normal pull-right">Submit</button>
+                               </form>
+                            </div>
+                        </div>
+                    
+
+                        <h3>Comments</h3>
+                        <div class="course-comment-loader">
+                            <div class="media">
+                                <div class="col-sm-3 col-lg-2 hidden-xs">
+                                    <img class="comment-media-object" src="~/images/defaultpfp.jpg" alt="">
+                                </div>
+
+                                <div class="comment col-xs-12 col-sm-9 col-lg-10">
+                                    <h4 class="media-heading">Student Name</h4>
+                                    <p> No entendí ni pixa</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+
+
 
 
 
@@ -603,7 +694,7 @@
                         </ul>
                     </div> <!-- end of text-container -->
                 </div> <!-- end of col -->
-            </div> <!-- end of row -->
+            </div> <!-- end of row -->n
         </div> <!-- end of container -->
     </div> <!-- end of footer -->
     <!-- end of footer -->
