@@ -51,7 +51,7 @@ namespace Proyecto_lenguajes.Models.Services
         //GetCoursesByCycle
         public Course Get(string acronym)
         {
-            Course course;
+            Course course = new Course();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -59,7 +59,7 @@ namespace Proyecto_lenguajes.Models.Services
                 {
                     connection.Open();
 
-                    SqlCommand command = new SqlCommand("GetCoursesByAcronym", connection);
+                    SqlCommand command = new SqlCommand("GetCourseByAcronym", connection);
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@Acronym", acronym);
 

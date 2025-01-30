@@ -137,8 +137,8 @@ namespace Proyecto_lenguajes.Models.Services
                     SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
                     if (sqlDataReader.Read())
                     {
-                        student.Id = sqlDataReader.GetString(0);
-                        student.Name = sqlDataReader.GetString(1);
+                        student.Id = sqlDataReader["Id"].ToString();
+                        student.Name = sqlDataReader["Name"].ToString();
                     }
                     connection.Close();
                 }catch (SqlException) 

@@ -22,6 +22,7 @@ namespace Proyecto_lenguajes.Controllers
 
         public IActionResult GetByCycle(int cycle)
         {
+           
             try
             {
                 var getCourses = courseServices.Get(cycle);

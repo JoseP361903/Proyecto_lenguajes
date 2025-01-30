@@ -36,18 +36,29 @@ namespace Proyecto_lenguajes.Models.Services
                         breakingNew.Date = DateOnly.FromDateTime(reader.GetDateTime(1));
                         breakingNew.Title = reader.GetString(2);
                         breakingNew.Paragraph = reader.GetString(3);
-                        breakingNew.Photo = Encoding.ASCII.GetBytes(reader.GetString(4));
+
+                        // Manejar el caso en que Photo es NULL en la base de datos
+                        if (!reader.IsDBNull(4))
+                        {
+                            breakingNew.Photo = Encoding.ASCII.GetBytes(reader.GetString(4));
+                        }
+                        else
+                        {
+                            breakingNew.Photo = new byte[0]; // Asignar un array vacío si es NULL
+                        }
                     }
 
                     connection.Close();
-                } catch (SqlException)
+                }
+                catch (SqlException ex)
                 {
-                    throw;
+                    throw new Exception("Error al obtener la noticia", ex);
                 }
             }
 
             return breakingNew;
         }
+
 
         //GetMaxNewsId
         public BreakingNew GetMaxId()

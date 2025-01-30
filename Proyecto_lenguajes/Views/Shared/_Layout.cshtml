@@ -177,9 +177,8 @@
                         <label class="form-check-label" for="pCheckboxDevelopment">Development</label>
                     </div>
                 </div>
-
                 <!-- Edit Button -->
-                <button type="button" class="btn btn-primary" id="editButton">Ok!</button>
+                <button type="button" class="btn btn-primary" onclick="PutStudent()" id="editButton">Ok!</button>
             </form>
         </div>
     </div>
@@ -221,7 +220,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <button type="submit" class="form-control-submit-button" id="lButton">Let's start!</button>
+                                    <button type="button" class="form-control-submit-button" onclick="AuthenticateStudent()">Let's start!</button>
                                 </div>
                                 <a class="nav-link page-scroll" href="#register"> <p>No accrount?<u> Sign in </u> </p></a>
                             </form>
@@ -244,37 +243,7 @@
 
 
             <button class="carousel-control left" id="prevBtn"> &lt </button>
-       
-            <!-- Each news item -->
-            <div class="news-item">
-                <img src="~/images/project-3.jpg" alt="News Image" class="news-image" />
-                <div class="news-content">
-                    <h3 class="news-title" id="newPreviewTittle">News Title 1</h3>
-                    <a href="#" class="more-about-link">
-                        <u>More about</u>
-                    </a>
-                </div>
-            </div>
-
-        <div class="news-item">
-            <img src="~/images/project-1.jpg" alt="News Image" class="news-image" />
-            <div class="news-content">
-                <h3 class="news-title">News Title 2</h3>
-                    <a href="#" class="more-about-link">
-                        <u>More about</u>
-                    </a>
-            </div>
-        </div>
-
-        <div class="news-item">
-            <img src="~/images/project-2.jpg" alt="News Image" class="news-image" />
-            <div class="news-content">
-                <h3 class="news-title">News Title 3</h3>
-                    <a href="#" class="more-about-link">
-                        <u>More about</u>
-                    </a>
-            </div>
-        </div>
+     
 
 
             <button class="carousel-control right" id="nextBtn">&gt</button>
@@ -462,10 +431,12 @@
                             </div>
                            
                             <div class="comment col-xs-12 col-sm-9 col-lg-10">
-                                <form>
-                                    <textarea class="form-control" id="message" placeholder="Your thoughts on this course..." required=""></textarea>
-                                    <button type="submit" class="btn btn-normal pull-right">Submit</button>
-                               </form>
+                                
+                                    <textarea id="textareacomment" class="form-control" placeholder="Your thoughts on this course..."></textarea>
+
+                                    <button id="submitComment" type="button" onclick="postComment()" class="btn btn-normal pull-right">Submit</button>
+
+                               
                             </div>
                         </div>
                     
@@ -477,10 +448,6 @@
                                     <img class="comment-media-object" src="~/images/defaultpfp.jpg" alt="">
                                 </div>
 
-                                <div class="comment col-xs-12 col-sm-9 col-lg-10">
-                                    <h4 class="media-heading">Student Name</h4>
-                                    <p> No entendí ni pixa</p>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -505,7 +472,7 @@
                 <div class="col-lg-6">
                     <div class="form-area">
                         <form id="registerForm" data-toggle="validator" data-focus="false">
-                            <select class="form-control without-margin mb-3" name="addressees" id="adress">
+                            <select class="form-control without-margin mb-3" name="addressees" id="professorSelect">
                                 <option value="0" selected>Select a teacher</option>
                             </select>
 
@@ -514,10 +481,10 @@
                                 <option value="1">Consulta privada sobre curso</option>
                             </select>
 
-                            <textarea class="form-control mb-3" rows="6" placeholder="Asunto" name="appointmentMessage"></textarea>
+                            <textarea class="form-control mb-3" rows="6" placeholder="Asunto"id="txtConsult" name="appointmentMessage"></textarea>
 
                             <div class="form-group">
-                                <button type="submit" class="form-control-submit-button" id="submitAppointmentButton">Enviar</button>
+                                <button type="button" class="form-control-submit-button" onclick="PostApplicationConsultation()" id="submitAppointmentButton">Enviar</button>
                             </div>
                         </form>
                     </div>
@@ -603,31 +570,30 @@
                             <label class="label-control" for="rPassword">Passowrd</label>
 
                         </div>
-
                         <!-- Interests -->
-                        <p>Intereses</p>
+                        <p>Likings</p>
                         <div class="form-group">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="checkboxDB" name="intereses[]" value="databases">
-                                <label class="form-check-label" for="checkboxDB">Databases</label>
+                                <input class="form-check-input" type="radio" id="radioDB" name="intereses" value="databases">
+                                <label class="form-check-label" for="radioDB">Databases</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="checkboxNetwork" name="intereses[]" value="networks">
-                                <label class="form-check-label" for="checkboxNetwork">Networks</label>
+                                <input class="form-check-input" type="radio" id="radioNetwork" name="intereses" value="networks">
+                                <label class="form-check-label" for="radioNetwork">Networks</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="checkboxCSecurity" name="intereses[]" value="cybersecurity">
-                                <label class="form-check-label" for="checkboxCSecurity">Cyber Security</label>
+                                <input class="form-check-input" type="radio" id="radioCSecurity" name="intereses" value="cybersecurity">
+                                <label class="form-check-label" for="radioCSecurity">Cyber Security</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="checkboxDevelopment" name="intereses[]" value="development">
-                                <label class="form-check-label" for="checkboxDevelopment">Development</label>
+                                <input class="form-check-input" type="radio" id="radioDevelopment" name="intereses" value="development">
+                                <label class="form-check-label" for="radioDevelopment">Development</label>
                             </div>
                         </div>
 
                         <!-- Submit Button -->
                         <div class="form-group">
-                            <button type="submit" class="form-control-submit-button">Let's begin!</button>
+                            <button type="button" class="form-control-submit-button" onclick="PostStudent()">Let's begin!</button>
                         </div>
                     </form>
                 </div> <!-- end of col -->
@@ -712,7 +678,7 @@
     <!-- Scripts -->
 
     <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
-    <script src="js/popper.min.js"></script> <!-- Popper tooltip library for Bootstrap -->
+    <script src="js/po.min.js"></script> <!-- Popper tooltip library for Bootstrap -->
     <script src="js/bootstrap.min.js"></script> <!-- Bootstrap framework -->
     <script src="js/jquery.easing.min.js"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
     <script src="js/swiper.min.js"></script> <!-- Swiper for image and text sliders -->

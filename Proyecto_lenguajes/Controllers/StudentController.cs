@@ -64,7 +64,7 @@ namespace Proyecto_lenguajes.Controllers
             try
             { 
 
-                if (studentServices.ValidateID(student.Id) != null)
+                if (studentServices.ValidateID(student.Id).Id == null)
                 {
                     return Ok(studentServices.Post(student));
                 }
@@ -87,7 +87,7 @@ namespace Proyecto_lenguajes.Controllers
             try
             {
                 Student student = studentServices.ValidateID(Id);
-                if (student != null)
+                if (student.Id != null)
                 {
                     return Ok();
                 }
