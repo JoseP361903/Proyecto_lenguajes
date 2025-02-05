@@ -792,7 +792,267 @@ input[type='checkbox'] {
 	margin-right: 0.125rem;
 }
 
+.custom-modal-content2 {
+	background-color: #fff;
+	margin: 5% auto;
+	padding: 2rem; /* Increase padding for more space */
+	border-radius: 4px;
+	width: 100%;
+	max-width: 900px;
+	border: 3px solid #f1962e;
+	display: flex;
+	flex-direction: column;
+	max-height: 90vh;
+	overflow-y: auto;
+	border-bottom: 2px solid #ccc;
+	padding-bottom: 1rem;
+}
 
+.row {
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.col-md-6 {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.col-md-8 {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+p, label {
+	margin-bottom: 10px; /* Add margin to create space between text */
+}
+
+/* Center the form content */
+.form-group {
+	margin-bottom: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.form-check-inline {
+	margin-right: 15px; /* Space between radio buttons */
+}
+
+.text-right {
+	text-align: right;
+}
+
+button {
+	margin-left: 10px; /* Adds space between the two buttons */
+}
+
+/* Optional: Center the entire modal content vertically and horizontally */
+.custom-modal {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.custom-modal-content2 {
+	display: block;
+}
+
+
+/************************/
+/*     Profile Modal     */
+/************************/
+
+/* Modal - Hidden by default */
+.custom-modal {
+	display: none; /* Hide the modal initially */
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+}
+
+/* Modal content */
+.custom-modal-content2 {
+	background-color: #fff;
+	margin: 5% auto;
+	padding: 2.5rem;
+	border-radius: 4px;
+	width: 100%;
+	max-width: 900px;
+	border: 3px solid #f1962e;
+	display: flex;
+	flex-direction: column;
+	max-height: 90vh;
+	overflow-y: auto;
+	padding-bottom: 1rem;
+}
+
+/* Close button (for hiding the modal) */
+.custom-modal-close {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 2rem;
+	cursor: pointer;
+	color: #f1962e;
+}
+
+/* Row Layout */
+.row {
+	margin-bottom: 0rem;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.row-profile {
+	margin-bottom: 2.5rem;
+	display: flex;
+	flex-wrap: wrap;
+	border-bottom: 2px solid #ccc;
+}
+
+/* Column Layout */
+.col-md-2, .col-md-3, .col-md-4, .col-md-7, .col-md-1 {
+	padding: 0.75rem;
+}
+
+/* Image Styling */
+.img-fluid {
+	max-width: 100%;
+	height: auto;
+	border-radius: 4px;
+}
+
+/* Header Styling */
+h2, h3, label, p {
+	font-family: 'Arial', sans-serif;
+	margin: 0;
+	color: black;
+}
+
+/* Button Styling */
+.btn {
+	padding: 0.5rem 1rem;
+	font-size: 1rem;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+
+/* Form Group Layout */
+.form-group {
+	margin-top: 1rem;
+}
+
+/* Checkbox and radio button styling */
+.form-check-inline {
+	margin-right: 1rem;
+}
+
+.form-check-input {
+	margin-right: 0.5rem;
+}
+
+/* Layout for the Name, Role, and other details */
+h2, h3, p {
+	margin: 0;
+	padding: 0.25rem 0;
+}
+
+/* Row Layout Adjustments */
+.row > .col-md-6 {
+	display: flex;
+	justify-content: space-between;
+	padding: 0.5rem 0;
+}
+
+/* Add padding to the modal content and elements */
+.custom-modal-content2 {
+	padding: 2.5rem; /* Added padding for more space */
+}
+
+/* Align form text and buttons in a more centered way */
+p, label {
+	margin-bottom: 10px; /* Add margin to create space between text */
+}
+
+.form-group {
+	margin-bottom: 20px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.text-right {
+	text-align: right;
+}
+
+button {
+	margin-left: 10px; /* Adds space between the two buttons */
+}
+
+/* Buttons below "Likings" and aligned to the right */
+.buttons-container {
+	display: flex;
+	justify-content: flex-end; /* Align buttons to the right */
+	margin-top: 2rem; /* Space above the buttons */
+}
+
+	.buttons-container button {
+		margin-left: 10px; /* Adds space between the buttons */
+	}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	.col-md-2, .col-md-3, .col-md-4, .col-md-7, .col-md-1 {
+		padding: 0.5rem;
+	}
+
+	.row {
+		flex-direction: column;
+	}
+
+	.btn {
+		width: 100%;
+		margin-bottom: 0.5rem;
+	}
+}
+
+.form-control {
+	width: 100%;
+	padding: 0.5rem;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+#pPic {
+	position: absolute;
+	opacity: 0;
+	right: 0;
+	top: 0;
+}
+
+
+.file-label {
+	display: inline-block;
+	background-color: #f1962e;
+	border-bottom: 2px solid #f1962e;
+	color: white;
+	padding: 8px 10px;
+	border-radius: 4px;
+	cursor: pointer;
+	text-align: center;
+}
+
+	.file-label:hover {
+		background-color: #fff;
+		border-bottom: 2px solid #f1962e;
+		color: #f1962e;
+	}
 
 
 /* The Modal */
@@ -1400,7 +1660,7 @@ table th,
 
 .form-1 {
 	background-color: #6cccf6;
-	padding-bottom: 2.5rem;
+	padding-bottom: .5rem;
 	padding-top: 2.5rem;
 	border-radius: 2px;
 }
@@ -1442,7 +1702,7 @@ table th,
 	}
 
 
-.form-1 form-check-label {
+.form-1 .form-group-reg form-check-label {
 	color: white;
 	justify-content: center;
 	max-width: 80%;

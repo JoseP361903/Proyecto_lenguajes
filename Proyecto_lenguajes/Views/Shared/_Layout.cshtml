@@ -118,72 +118,113 @@
                 @* </div> *@
     </nav> <!-- end of navbar -->
     <!-- end of navbar -->
-
     <!-- Profile Modal -->
     <div id="profileModal" class="custom-modal">
-        <div class="custom-modal-content">
+        <div class="custom-modal-content2">
+            <!-- Close Button -->
             <span class="custom-modal-close">&times;</span>
 
-            <!-- Profile Picture -->
-            <div class="profile-picture-container">
-                <img src="~/images/testimonial-2.jpg" alt="Profile Picture" class="profile-picture" id="profileImage">
-                
+            <!-- First Row (Image and Name/Role) -->
+            <div class="row-profile">
+                <div class="col-md-2">
+                    <!-- Profile Image (Placeholder or Actual Image) -->
+                    <img src="~/images/defaultpfp.jpg" alt="Profile Picture" class="img-fluid">
+                </div>
+                <div class="col-md-3">
+                    <!-- Name and Role -->
+                    <h3>Name</h3>
+                    <p>#ID</p>
+                </div>
+                <div class="col-md-4">
+                    <!-- Empty Column for spacing -->
+                </div>
             </div>
 
-            <!-- Profile Form -->
-            <form id="profileForm" data-toggle="validator" data-focus="false">
-
-                <!-- First Name -->
-                <div class="form-group">
-                    <input type="text" class="form-control-input" id="pName" name="pName" required>
-                    <label class="label-control" for="pName">First Name</label>
-                </div>
-
-                <!-- Second Name -->
-                <div class="form-group">
-                    <input type="text" class="form-control-input" id="pSname" name="pSname" required>
-                    <label class="label-control" for="pSname">Second Name</label>
-                </div>
-
-                <!-- Email -->
-                <div class="form-group">
-                    <input type="email" class="form-control-input" id="pMail" name="pMail" required>
-                    <label class="label-control" for="pMail">Email</label>
-                </div>
-
-                <!-- Password -->
-                <div class="form-group">
-                    <input type="password" class="form-control-input" id="pPassword" name="pPassword" required>
-                    <label class="label-control" for="rPassword">Password</label>
-                </div>
-
-                <!-- Interests -->
-                <p>Interests</p>
-                <div class="form-group">
-                    <div class="form-check form-check">
-                        <input class="form-check-input" type="checkbox" id="pCheckboxDB" name="intereses[]" value="databases">
-                        <label class="form-check-label" for="pCheckboxDB">Databases</label>
+            <!-- Second Row (Details) -->
+            <div class="row">
+                <div class="col-md-8">
+                    <!-- Form for Additional Profile Information -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p for="pName">Name:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" id="pName" name="pName" class="form-control" value="Example">
+                        </div>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="pCheckboxNetwork" name="intereses[]" value="networks">
-                        <label class="form-check-label" for="pCheckboxNetwork">Networks</label>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p for="pSname">Second Name:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" id="pSname" name="pSname" class="form-control" value="Example">
+                        </div>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="pCheckboxCSecurity" name="intereses[]" value="cybersecurity">
-                        <label class="form-check-label" for="pCheckboxCSecurity">Cyber Security</label>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p for="pMail">Email:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="email" id="pMail" name="pMail" class="form-control" value="example@gmail.com">
+                        </div>
                     </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="pCheckboxDevelopment" name="intereses[]" value="development">
-                        <label class="form-check-label" for="pCheckboxDevelopment">Development</label>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p for="pPic">Profile picture</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="pPic" class="file-label">Choose File</label>
+                            <input type="file" id="pPic" name="pPic" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p for="pPass">Password:</p>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="password" id="pMail" name="pPass" class="form-control" required>
+                        </div>
                     </div>
                 </div>
-                <!-- Edit Button -->
-                <button type="button" class="btn btn-primary" onclick="PutStudent()" id="editButton">Ok!</button>
-            </form>
+            </div>
+
+            <!-- Third Row (Likings + Buttons) -->
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <p>Likings</p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="radioDB" name="intereses" value="databases">
+                            <label class="form-check-label" for="radioDB">Databases</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="radioNetwork" name="intereses" value="networks">
+                            <label class="form-check-label" for="radioNetwork">Networks</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="radioCSecurity" name="intereses" value="cybersecurity">
+                            <label class="form-check-label" for="radioCSecurity">Cyber Security</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" id="radioDevelopment" name="intereses" value="development">
+                            <label class="form-check-label" for="radioDevelopment">Development</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 text-right">
+                </div>
+                <div class="col-md-6 text-right">
+                    <!-- Buttons aligned to the right of the Likings section -->
+                    <button class="btn">Ok!</button>
+                    <button class="btn">Delete</button>
+                </div>
+            </div>
         </div>
     </div>
-
-
 
     <!-- Header -->
 
@@ -243,7 +284,37 @@
 
 
             <button class="carousel-control left" id="prevBtn"> &lt </button>
-     
+
+            <!-- Each news item -->
+            <div class="news-item">
+                <img src="~/images/project-3.jpg" alt="News Image" class="news-image" />
+                <div class="news-content">
+                    <h3 class="news-title" id="newPreviewTittle">noticia.title</h3>
+                    <a href="#" class="more-about-link">
+                        <u>More about</u>
+                    </a>
+                </div>
+            </div>
+
+            <div class="news-item">
+                <img src="~/images/project-1.jpg" alt="News Image" class="news-image" />
+                <div class="news-content">
+                    <h3 class="news-title">News Title 2</h3>
+                    <a href="#" class="more-about-link">
+                        <u>More about</u>
+                    </a>
+                </div>
+            </div>
+
+            <div class="news-item">
+                <img src="~/images/project-2.jpg" alt="News Image" class="news-image" />
+                <div class="news-content">
+                    <h3 class="news-title">News Title 3</h3>
+                    <a href="#" class="more-about-link">
+                        <u>More about</u>
+                    </a>
+                </div>
+            </div>
 
 
             <button class="carousel-control right" id="nextBtn">&gt</button>
@@ -318,8 +389,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
-    </div>
     </div>
 
 
@@ -572,7 +643,7 @@
                         </div>
                         <!-- Interests -->
                         <p>Likings</p>
-                        <div class="form-group">
+                        <div class="form-group-reg">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" id="radioDB" name="intereses" value="databases">
                                 <label class="form-check-label" for="radioDB">Databases</label>
