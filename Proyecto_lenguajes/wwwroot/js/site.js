@@ -481,6 +481,16 @@ moreAboutLinks.forEach(link => {
         openModal(newsModal);
     });
 });
+
+const mailNav = document.getElementById('emailNav');
+const mailModal = document.getElementById('emailModal');
+
+mailNav.addEventListener('click', (event) => {
+    event.preventDefault();
+    openModal(mailModal);
+});
+
+
 // Link Discussion button to Course Discussion modal
 const discussionButton = document.getElementById('discussionButton');
 const courseModal = document.getElementById('courseModal');
