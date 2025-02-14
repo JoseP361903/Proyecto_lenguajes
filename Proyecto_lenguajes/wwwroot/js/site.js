@@ -1,22 +1,34 @@
 ﻿const modals = document.querySelectorAll('.custom-modal');
 const closeButtons = document.querySelectorAll('.custom-modal-close');
 const navigationBar = document.getElementById('navBar');
-
-
+let newsList = [];
+let currentIndex = 0;
+const newsPerPage = 3;
 
 $(document).ready(function () {
     GetCoursesByCycle(1);
-    GetNewsById("SV-200");
+    loadAllNewsDescending();
     LoadProfessor();
 
     $("#cicles").change(function () {
         let romanCycle = $(this).val();
-        let cycle = convertRomanToInt(romanCycle); 
+        let cycle = convertRomanToInt(romanCycle);
         GetCoursesByCycle(cycle);
     });
 
-  
+    $("#prevBtn").click(function () {
+        if (currentIndex > 0) {
+            currentIndex -= newsPerPage;
+            updateNewsDisplay();
+        }
+    });
 
+    $("#nextBtn").click(function () {
+        if (currentIndex + newsPerPage < newsList.length) {
+            currentIndex += newsPerPage;
+            updateNewsDisplay();
+        }
+    });
 });
 function LoadProfessor() {
     $.ajax({
@@ -39,49 +51,6 @@ function LoadProfessor() {
     });
 }
 
-function PostApplicationConsultation() {
-   
-       
-
-    let appointmentType = $("#appointmentType").val(); // Obtener el valor del select
-
-        if (appointmentType === "0") { // Solo ejecuta si el select está en "0"
-
-            let professorSelect = $("#professorSelect option:selected"); // Obtiene la opción seleccionada
-            let professorId = professorSelect.val(); // Obtiene el ID del profesor
-            let professorName = professorSelect.text().replace(/\s*\(\d+\)$/, ''); // Extrae el nombre sin el ID
-
-            let applicationData = {
-                Text: $("#txtConsult").val(), // Asegurar que este input exista en el HTML
-                Student: {
-                    Id: "C36373", // Asegurar que el campo de estudiante exista
-                    Name: "Jose Luis"
-                },
-
-                Professor: {
-                    Id: professorId,
-                    Name: professorName
-                }
-            };
-
-            $.ajax({
-                url: "/ApplicationConsultation/Post",
-                type: "POST",
-                contentType: "application/json;charset=utf-8",
-                data: JSON.stringify(applicationData),
-                dataType: "json",
-                success: function (response) {
-                    alert("Consulta enviada exitosamente");
-                },
-                error: function (error) {
-                    alert("Error al enviar la consulta");
-                }
-            });
-        } else {
-            alert("Seleccione una opción válida para enviar la consulta.");
-        }
-    
-}
 
 
 function PostApplicationConsultation() {
@@ -99,8 +68,8 @@ function PostApplicationConsultation() {
         let applicationData = {
             Text: $("#txtConsult").val(), // Asegurar que este input exista en el HTML
             Student: {
-                Id: "C36373", // Asegurar que el campo de estudiante exista
-                Name: "Jose Luis"
+                Id: $("#studentID").text(), // Asegurar que el campo de estudiante exista
+                Name: $("#studentName").text()
             },
 
             Professor: {
@@ -147,14 +116,63 @@ function AuthenticateStudent() {
         data: JSON.stringify(student), // Convertir objeto a JSON
         dataType: "json",
         success: function (response) {
+            GetStudentData(student.id);
             alert("Authentication successful!");
-            // Aquí puedes redirigir o realizar otras acciones si es necesario
+
+            // Vaciar los campos de entrada
+            $("#lId").val('');
+            $("#lPassword").val('');
         },
-        error: function () {
-            alert("Error authenticating. Check your credentials and try again.");
+        error: function (xhr) {
+            switch (xhr.status) {
+                case 401:
+                    alert("Incorrect password.");
+                    break;
+                case 404:
+                    alert("User does not exist.");
+                    break;
+                case 403:
+                    alert("User is not active.");
+                    break;
+                default:
+                    alert("Error authenticating. Check your credentials and try again.");
+                    break;
+            }
         }
     });
 }
+function GetStudentData(id) {
+    $.ajax({
+        url: "/Student/Get",
+        type: "GET",
+        data: { id: id },  // Asegurar que se envía el parámetro ID
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (professor) {
+            if (professor) {
+                $("#studentName").text(professor.name + " " + professor.lastName);
+                $("#studentID").text(professor.id);
+
+                $("#pName").val(professor.name);
+                $("#pSname").val(professor.lastName);
+                $("#pMail").val(professor.email);
+
+                if (professor.profilePicture) {
+                    $("#profileModal img").attr("src", professor.profilePicture);
+                }
+
+               
+
+            } else {
+                alert("No se encontraron datos del profesor.");
+            }
+        },
+        error: function () {
+            alert("Error al obtener los datos del profesor.");
+        }
+    });
+}
+
 function PostStudent() {
     // Construir el objeto student con los valores del formulario
     let student = {
@@ -163,10 +181,10 @@ function PostStudent() {
         lastName: $("#rSname").val(),
         email: $("#rMail").val(),
         password: $("#rPassword").val(),
-        likings: null  // Solo un valor, no un arreglo
+        likings: $("input[name='interesesR']:checked").val()
     };
 
-    student.likings = $("input[name='intereses[]']:checked").val();
+  
 
    
 
@@ -204,57 +222,7 @@ function GetNewsById(idNot) {
         }
     });
 }
-function addNewsComponent(news) {
-    // Crear nuevo elemento HTML para la noticia
-    var newsItem = `
-        <div class="news-item">
-            <img src="${news.imageUrl}" alt="News Image" class="news-image" />
-            <div class="news-content">
-                <h3 class="news-title">${news.title}</h3>
-                <a href="#" class="more-about-link"
-                   data-title="${news.title}"
-                   data-date="${news.date}"
-                   data-paragraph="${news.paragraph}"
-                   data-photo="${news.photo ? btoa(String.fromCharCode.apply(null, news.photo)) : ''}">
-                    <u>More about</u>
-                </a>
-            </div>
-        </div>`;
 
-    // Agregar la noticia al contenedor
-    $("#newsContainer").append(newsItem);
-
-    // Asignar evento de apertura del modal
-    $(".more-about-link").last().on("click", function (e) {
-        e.preventDefault(); // Evita la navegación por defecto
-
-        // Obtener datos desde `data-attributes`
-        var title = $(this).data("title");
-        var date = $(this).data("date");
-        var paragraph = $(this).data("paragraph");
-        var photo = $(this).data("photo");
-        var id = $(this).data("id");
-
-        // Rellenar el modal con la información correcta usando selectores de clase
-        $(".news-title").text(title);
-        $(".news-date").text("Published on: " + date);
-        $(".news-body").text(paragraph);
-
-        // Manejar la imagen
-        if (photo) {
-            $(".news-image").attr("src", "data:image/png;base64," + photo);
-        } else {
-            $(".news-image").attr("src", "/images/default.jpg"); // Imagen por defecto
-        }
-        GetCommentCourseById(news.idNot)
-        // Mostrar el modal
-        $("#newsModal").fadeIn();
-    });
-}
-// Evento para cerrar el modal
-$(".custom-modal-close").on("click", function () {
-    $("#newsModal").fadeOut();
-});
 function GetCommentCourseById(id) {
     $.ajax({
         url: "/CommentNew/Get",  // Ruta al controlador y método
@@ -385,7 +353,7 @@ function displayCourseInfo(course) {
     $('#courseAcronym').text(course.acronym); // Se asume que 'course' tiene el atributo 'acronym'
     $('#courseName').text(course.name); // Se asume que 'course' tiene el atributo 'name'
     $('#courseDescription').text(course.description); // Se asume que 'course' tiene el atributo 'description'
-    $('#assignedTeacher').text(course.teacher); // Se asume que 'course' tiene el atributo 'teacher'
+    $('#assignedTeacher').text(course.professor.name); // Se asume que 'course' tiene el atributo 'teacher'
     GetCommentsByCourseId(course.acronym);
 
 }
@@ -405,7 +373,7 @@ function postComment() {
     var commentData = {
         content: content,
         acronym: acronym,
-        idUser: "C36373" // Reemplázalo con el ID real del usuario
+        idUser: $("#studentID").text()
     };
 
     $.ajax({
@@ -425,19 +393,19 @@ function postComment() {
     });
 }
 function PutStudent() {
-    // Construir el objeto student con los valores del formulario
+    
     let student = {
-        id: "C36373",
+        id: $("#studentID").text(),
         name: $("#pName").val(),
         lastName: $("#pSname").val(),
         email: $("#pMail").val(),
         password: $("#pPassword").val(),
-        likings: null // Solo un valor, no un arreglo
+        likings: $("input[name='intereses']:checked").val()
     };
 
-    student.likings = $("input[name='intereses[]']:checked").val();
 
-    // Enviar los datos al backend con AJAX usando PUT
+
+  
     $.ajax({
         url: "/Student/Put", // Endpoint del método en el controlador
         type: "PUT",
@@ -445,6 +413,7 @@ function PutStudent() {
         data: JSON.stringify(student), // Convertir objeto a JSON
         dataType: "json",
         success: function (response) {
+            GetStudentData(student.id);
             alert("Student updated successfully!");
         },
         error: function () {
@@ -489,11 +458,135 @@ mailNav.addEventListener('click', (event) => {
     event.preventDefault();
     openModal(mailModal);
 });
-
-
 // Link Discussion button to Course Discussion modal
 const discussionButton = document.getElementById('discussionButton');
 const courseModal = document.getElementById('courseModal');
 discussionButton.addEventListener('click', () => {
     openModal(courseModal);
 });
+
+function loadAllNewsDescending() {
+    $.ajax({
+        url: "/BreakingNew/GetMaxId",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (maxIdResult) {
+            if (maxIdResult) {
+                let maxId = maxIdResult.idNot;
+                loadNewsById(maxId);
+            } else {
+                alert("No se pudo obtener el ID máximo.");
+            }
+        },
+        error: function () {
+            alert("Error al obtener el ID máximo.");
+        }
+    });
+}
+
+function loadNewsById(id) {
+    if (id < 1) {
+        updateNewsDisplay();
+        return; // Detener si el ID es menor que 1
+    }
+
+    $.ajax({
+        url: "/BreakingNew/Get",
+        type: "GET",
+        data: { idNot: id },
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (news) {
+            if (news) {
+                newsList.push(news);
+            }
+            // Intentar cargar la siguiente noticia
+            loadNewsById(id - 1);
+        },
+        error: function () {
+            // Manejar el caso en que el ID no exista y continuar con el siguiente
+            loadNewsById(id - 1);
+        }
+    });
+}
+
+function updateNewsDisplay() {
+    $("#newsContainer").empty();
+
+    // Agregar los botones de navegación
+    $("#newsContainer").append('<button class="carousel-control left" id="prevBtn"> &lt </button>');
+    $("#newsContainer").append('<button class="carousel-control right" id="nextBtn">&gt</button>');
+
+    for (let i = currentIndex; i < currentIndex + newsPerPage && i < newsList.length; i++) {
+        addNewsComponent(newsList[i]);
+    }
+
+    // Mostrar u ocultar botones según el índice actual
+    $("#prevBtn").toggle(currentIndex > 0);
+    $("#nextBtn").toggle(currentIndex + newsPerPage < newsList.length);
+
+    // Reasignar eventos de clic a los botones de navegación
+    $("#prevBtn").click(function () {
+        if (currentIndex > 0) {
+            currentIndex -= newsPerPage;
+            updateNewsDisplay();
+        }
+    });
+
+    $("#nextBtn").click(function () {
+        if (currentIndex + newsPerPage < newsList.length) {
+            currentIndex += newsPerPage;
+            updateNewsDisplay();
+        }
+    });
+}
+
+function addNewsComponent(news) {
+    // Crear nuevo elemento HTML para la noticia
+    var newsItem = `
+        <div class="news-item">
+            <img src="${news.imageUrl}" alt="News Image" class="news-image" />
+            <div class="news-content">
+                <h3 class="news-title">${news.title}</h3>
+                <a href="#" class="more-about-link"
+                   data-title="${news.title}"
+                   data-date="${news.date}"
+                   data-paragraph="${news.paragraph}"
+                   data-photo="${news.photo ? btoa(String.fromCharCode.apply(null, news.photo)) : ''}">
+                    <u>More about</u>
+                </a>
+            </div>
+        </div>`;
+
+    // Agregar la noticia al contenedor
+    $("#newsContainer").append(newsItem);
+
+    // Asignar evento de apertura del modal
+    $("#newsContainer .more-about-link").last().on("click", function (e) {
+        e.preventDefault(); // Evita la navegación por defecto
+
+        // Obtener datos desde `data-attributes`
+        var title = $(this).data("title");
+        var date = $(this).data("date");
+        var paragraph = $(this).data("paragraph");
+        var photo = $(this).data("photo");
+
+        // Rellenar el modal con la información correcta usando selectores de clase
+        $("#newsModal .news-title").text(title);
+        $("#newsModal .news-date").text("Published on: " + date);
+        $("#newsModal .news-body").text(paragraph);
+
+        // Manejar la imagen
+        if (photo) {
+            $("#newsModal .news-image").attr("src", "data:image/png;base64," + photo);
+        } else {
+            $("#newsModal .news-image").attr("src", "/images/default.jpg"); // Imagen por defecto
+        }
+
+        // Mostrar el modal
+        $("#newsModal").fadeIn();
+    });
+}
+
+

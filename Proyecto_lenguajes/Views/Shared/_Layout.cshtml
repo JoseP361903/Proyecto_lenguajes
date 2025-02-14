@@ -93,7 +93,7 @@
 
 
 
-    <!-- Profile Modal -->
+   <!-- Profile Modal -->
     <div id="profileModal" class="custom-modal">
         <div class="custom-modal-content2">
             <!-- Close Button -->
@@ -107,8 +107,8 @@
                 </div>
                 <div class="col-md-3">
                     <!-- Name and Role -->
-                    <h3>Name</h3>
-                    <p>#ID</p>
+                    <h3><span id="studentName">Nombre</span></h3>
+                    <p><span id="studentID">#ID</span></p>
                 </div>
                 <div class="col-md-4">
                     <!-- Empty Column for spacing -->
@@ -161,12 +161,11 @@
                             <p for="pPass">Password:</p>
                         </div>
                         <div class="col-md-6">
-                            <input type="password" id="pMail" name="pPass" class="form-control" required>
+                            <input type="password" id="pPassword" name="pPass" class="form-control" required>
                         </div>
                     </div>
                 </div>
             </div>
-
             <!-- Third Row (Likings + Buttons) -->
             <div class="row align-items-center">
                 <div class="col-md-6">
@@ -190,17 +189,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 text-right">
-                </div>
+                <div class="col-md-6 text-right"></div>
+
+            <div class="row align-items-center">
                 <div class="col-md-6 text-right">
                     <!-- Buttons aligned to the right of the Likings section -->
-                    <button class="btn">Ok!</button>
-                    <button class="btn">Delete</button>
+                    <button onclick="PutStudent()" class="btn">Ok!</button>
+
+
                 </div>
             </div>
         </div>
+
+        </div>
     </div>
 
+
+  
 
 
 
@@ -372,6 +377,7 @@
     <!-- Header -->
 
     <header id="header" class="header">
+
         <div class="header-content">
             <div class="container">
                 <div class="row align-items-center">
@@ -420,50 +426,13 @@
 
     <div id="newsDisplayer" class="newsDisplayer">
         <div class="col-lg-12 d-flex justify-content-center">
-        <h1>Noticias</h1>
+            <h1>Noticias</h1>
         </div>
 
         <div id="newsContainer" class="newsContainer">
-
-
             <button class="carousel-control left" id="prevBtn"> &lt </button>
-
-            <!-- Each news item -->
-            <div class="news-item">
-                <img src="~/images/project-3.jpg" alt="News Image" class="news-image" />
-                <div class="news-content">
-                    <h3 class="news-title" id="newPreviewTittle">noticia.title</h3>
-                    <a href="#" class="more-about-link">
-                        <u>More about</u>
-                    </a>
-                </div>
-            </div>
-
-            <div class="news-item">
-                <img src="~/images/project-1.jpg" alt="News Image" class="news-image" />
-                <div class="news-content">
-                    <h3 class="news-title">News Title 2</h3>
-                    <a href="#" class="more-about-link">
-                        <u>More about</u>
-                    </a>
-                </div>
-            </div>
-
-            <div class="news-item">
-                <img src="~/images/project-2.jpg" alt="News Image" class="news-image" />
-                <div class="news-content">
-                    <h3 class="news-title">News Title 3</h3>
-                    <a href="#" class="more-about-link">
-                        <u>More about</u>
-                    </a>
-                </div>
-            </div>
-
-
             <button class="carousel-control right" id="nextBtn">&gt</button>
-            
         </div>
-
     </div>
 
     <!-- News Modal -->
@@ -477,14 +446,6 @@
                     <h1 class="news-title">Exciting News Title</h1>
                     <p class="news-date">Published on: January 26, 2025</p>
                     <p class="news-body">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod malesuada dolor nec bibendum.
-                        Cras vehicula mi eget lectus efficitur, eget accumsan ante condimentum.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod malesuada dolor nec bibendum.
-                        Cras vehicula mi eget lectus efficitur, eget accumsan ante condimentum.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod malesuada dolor nec bibendum.
-                        Cras vehicula mi eget lectus efficitur, eget accumsan ante condimentum.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod malesuada dolor nec bibendum.
-                        Cras vehicula mi eget lectus efficitur, eget accumsan ante condimentum.
                     </p>
                 </div>
 
@@ -788,19 +749,19 @@
                         <p>Likings</p>
                         <div class="form-group-reg">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="radioDB" name="intereses" value="databases">
+                                <input class="form-check-input" type="radio" id="radioDB" name="interesesR" value="databases">
                                 <label class="form-check-label" for="radioDB">Databases</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="radioNetwork" name="intereses" value="networks">
+                                <input class="form-check-input" type="radio" id="radioNetwork" name="interesesR" value="networks">
                                 <label class="form-check-label" for="radioNetwork">Networks</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="radioCSecurity" name="intereses" value="cybersecurity">
+                                <input class="form-check-input" type="radio" id="radioCSecurity" name="interesesR" value="cybersecurity">
                                 <label class="form-check-label" for="radioCSecurity">Cyber Security</label>
                             </div>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="radioDevelopment" name="intereses" value="development">
+                                <input class="form-check-input" type="radio" id="radioDevelopment" name="interesesR" value="development">
                                 <label class="form-check-label" for="radioDevelopment">Development</label>
                             </div>
                         </div>

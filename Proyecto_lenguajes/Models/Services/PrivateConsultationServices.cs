@@ -22,7 +22,7 @@ namespace Proyecto_lenguajes.Models.Services
                 try
                 {
                     connection.Open();
-                    SqlCommand sqlCommand = new SqlCommand("SendPrivateConsultation", connection);
+                    SqlCommand sqlCommand = new SqlCommand("Edu.SendPrivateConsultation", connection);
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.Parameters.AddWithValue("@Text", privateConsultation.Text);
                     sqlCommand.Parameters.AddWithValue("@Id_Student", privateConsultation.Student.Id);

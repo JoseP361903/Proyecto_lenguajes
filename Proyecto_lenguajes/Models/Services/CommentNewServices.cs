@@ -24,7 +24,7 @@ namespace Proyecto_lenguajes.Models.Services
                 {
                     connection.Open();
 
-                    SqlCommand sqlCommand = new SqlCommand("AddCommentNew", connection);
+                    SqlCommand sqlCommand = new SqlCommand("Edu.AddCommentNew", connection);
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.Parameters.AddWithValue("@Id_New", commentNew.IdNew);
                     sqlCommand.Parameters.AddWithValue("@Content", commentNew.Content);
@@ -54,7 +54,7 @@ namespace Proyecto_lenguajes.Models.Services
                 {
                     connection.Open();
 
-                    SqlCommand sqlCommand = new SqlCommand("GetCommentNewsById", connection);
+                    SqlCommand sqlCommand = new SqlCommand("Edu.GetCommentNewsById", connection);
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.Parameters.AddWithValue("@IdNot", id);
 

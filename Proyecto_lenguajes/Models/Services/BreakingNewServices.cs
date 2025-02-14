@@ -15,37 +15,31 @@ namespace Proyecto_lenguajes.Models.Services
             connectionString = _configuration.GetConnectionString("DefaultConnection");
         }
 
-        //GetNewsById
-        public BreakingNew Get(string idNot)
+        // GetNewsById
+        public BreakingNew Get(int idNot)
         {
-            BreakingNew breakingNew = new BreakingNew();
+            BreakingNew breakingNew = null;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
                 {
                     connection.Open();
-                    SqlCommand command = new SqlCommand("GetNewsById", connection);
+                    SqlCommand command = new SqlCommand("Edu.GetNewsById", connection);
                     command.CommandType = System.Data.CommandType.StoredProcedure;
                     command.Parameters.AddWithValue("@IdNot", idNot);
 
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.Read())
                     {
-                        breakingNew.IdNot = reader.GetString(0);
-                        breakingNew.Date = DateOnly.FromDateTime(reader.GetDateTime(1));
-                        breakingNew.Title = reader.GetString(2);
-                        breakingNew.Paragraph = reader.GetString(3);
-
-                        // Manejar el caso en que Photo es NULL en la base de datos
-                        if (!reader.IsDBNull(4))
+                        breakingNew = new BreakingNew
                         {
-                            breakingNew.Photo = Encoding.ASCII.GetBytes(reader.GetString(4));
-                        }
-                        else
-                        {
-                            breakingNew.Photo = new byte[0]; // Asignar un array vacío si es NULL
-                        }
+                            IdNot = reader.GetInt32(0).ToString(),
+                            Date = DateOnly.FromDateTime(reader.GetDateTime(1)),
+                            Title = reader.GetString(2),
+                            Paragraph = reader.GetString(3),
+                            Photo = !reader.IsDBNull(4) ? Encoding.UTF8.GetBytes(reader.GetString(4)) : new byte[0]
+                        };
                     }
 
                     connection.Close();
@@ -59,40 +53,41 @@ namespace Proyecto_lenguajes.Models.Services
             return breakingNew;
         }
 
-
-        //GetMaxNewsId
+        // GetMaxNewsId
         public BreakingNew GetMaxId()
         {
-            BreakingNew breakingNew = new BreakingNew();
+            BreakingNew breakingNew = null;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
                 {
                     connection.Open();
-                    SqlCommand command = new SqlCommand("GetMaxNewsId", connection);
+                    SqlCommand command = new SqlCommand("Edu.GetMaxNewsId", connection);
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
                     SqlDataReader reader = command.ExecuteReader();
                     if (reader.Read())
                     {
-                        breakingNew.IdNot = reader.GetString(0);
-                        breakingNew.Date = DateOnly.FromDateTime(reader.GetDateTime(1));
-                        breakingNew.Title = reader.GetString(2);
-                        breakingNew.Paragraph = reader.GetString(3);
-                        breakingNew.Photo = Encoding.ASCII.GetBytes(reader.GetString(4));
+                        breakingNew = new BreakingNew
+                        {
+                            IdNot = reader.GetInt32(0).ToString(),
+                            Date = DateOnly.FromDateTime(reader.GetDateTime(1)),
+                            Title = reader.GetString(2),
+                            Paragraph = reader.GetString(3),
+                            Photo = !reader.IsDBNull(4) ? Encoding.UTF8.GetBytes(reader.GetString(4)) : new byte[0]
+                        };
                     }
 
                     connection.Close();
                 }
-                catch (SqlException)
+                catch (SqlException ex)
                 {
-                    throw;
+                    throw new Exception("Error al obtener el ID máximo de la noticia", ex);
                 }
             }
 
             return breakingNew;
         }
-
     }
 }

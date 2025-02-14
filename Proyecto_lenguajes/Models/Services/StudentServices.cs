@@ -25,7 +25,7 @@ namespace Proyecto_lenguajes.Models.Services
                 try
                 {
                     sqlConnection.Open();
-                    SqlCommand command = new SqlCommand("GetStudentByID", sqlConnection);
+                    SqlCommand command = new SqlCommand("Edu.GetStudentByID", sqlConnection);
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("@Id", id);
@@ -39,7 +39,7 @@ namespace Proyecto_lenguajes.Models.Services
                         student.Password = reader.GetString(3);
                         student.Email = reader.GetString(4);
                         student.Likings = reader.GetString(5);
-                        student.Photo = Encoding.ASCII.GetBytes(reader.GetString(6));
+                        student.Photo = reader.IsDBNull(6) ? null : Encoding.ASCII.GetBytes(reader.GetString(6));
                     }
                     sqlConnection.Close();
                 } catch (SqlException)
@@ -62,9 +62,10 @@ namespace Proyecto_lenguajes.Models.Services
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                try {
+                try
+                {
                     connection.Open();
-                    SqlCommand command = new SqlCommand("LoginAuthentication", connection);
+                    SqlCommand command = new SqlCommand("Edu.LoginAuthentication", connection);
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("@Id", student.Id);
@@ -78,12 +79,11 @@ namespace Proyecto_lenguajes.Models.Services
                     command.ExecuteNonQuery();
 
                     result = (int)returnValue.Value;
-
-                } catch (SqlException)
+                }
+                catch (SqlException)
                 {
                     throw;
                 }
-                
             }
 
             return result;
@@ -100,7 +100,7 @@ namespace Proyecto_lenguajes.Models.Services
                 {
 
                     connection.Open();
-                    SqlCommand sqlCommand = new SqlCommand("AddNewStudent", connection);
+                    SqlCommand sqlCommand = new SqlCommand("Edu.AddNewStudent", connection);
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.Parameters.AddWithValue("@Id", student.Id);
                     sqlCommand.Parameters.AddWithValue("@Name", student.Name);
@@ -108,7 +108,7 @@ namespace Proyecto_lenguajes.Models.Services
                     sqlCommand.Parameters.AddWithValue("@Email", student.Email);
                     sqlCommand.Parameters.AddWithValue("@Password", student.Password);
                     sqlCommand.Parameters.AddWithValue("@Likings", student.Likings);
-                    sqlCommand.Parameters.AddWithValue("@Photo", student.Photo);
+                    sqlCommand.Parameters.AddWithValue("@Photo", student.Photo ?? (object)DBNull.Value);
 
                     result = sqlCommand.ExecuteNonQuery();
                     connection.Close();
@@ -130,7 +130,7 @@ namespace Proyecto_lenguajes.Models.Services
                 try
                 {
                     connection.Open();
-                    SqlCommand sqlCommand = new SqlCommand("ValidateID", connection);
+                    SqlCommand sqlCommand = new SqlCommand("Edu.ValidateID", connection);
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
 
                     sqlCommand.Parameters.AddWithValue("@Id", Id);
@@ -149,9 +149,8 @@ namespace Proyecto_lenguajes.Models.Services
 
             return student;
         }
-
-        public int Put(Student student) 
-        { 
+        public int Put(Student student)
+        {
             int result = 0;
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -160,7 +159,7 @@ namespace Proyecto_lenguajes.Models.Services
                 {
                     connection.Open();
 
-                    SqlCommand sqlCommand = new SqlCommand("UpdateStudent", connection);
+                    SqlCommand sqlCommand = new SqlCommand("Edu.UpdateStudent", connection);
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
 
                     sqlCommand.Parameters.AddWithValue("@Id", student.Id);
@@ -169,7 +168,7 @@ namespace Proyecto_lenguajes.Models.Services
                     sqlCommand.Parameters.AddWithValue("@Email", student.Email);
                     sqlCommand.Parameters.AddWithValue("@Password", student.Password);
                     sqlCommand.Parameters.AddWithValue("@Likings", student.Likings);
-                    sqlCommand.Parameters.AddWithValue("@Photo", student.Photo);
+                    sqlCommand.Parameters.AddWithValue("@Photo", student.Photo ?? (object)DBNull.Value);
 
                     result = sqlCommand.ExecuteNonQuery();
                     connection.Close();
@@ -179,7 +178,7 @@ namespace Proyecto_lenguajes.Models.Services
                     throw;
                 }
             }
-        
+
             return result;
         }
     }

@@ -25,7 +25,7 @@ namespace Proyecto_lenguajes.Models.Services
                 {
                     connection.Open();
 
-                    SqlCommand sqlCommand = new SqlCommand("GetAllTeachers", connection);
+                    SqlCommand sqlCommand = new SqlCommand("Edu.GetAllTeachers", connection);
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
 
                     SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();

@@ -45,15 +45,21 @@ namespace Proyecto_lenguajes.Controllers
             var result = studentServices.Authenticate(student);
             try
             {
-                if(result == 1) //The user and passwords were register at the database
+                switch (result)
                 {
-                    return Ok(student);
+                    case 1:
+                        return Ok(student); // Autenticación exitosa
+                    case -1:
+                        return Unauthorized("Incorrect password."); // Contraseña incorrecta
+                    case -2:
+                        return NotFound("User does not exist."); // Usuario no existe
+                    case -3:
+                        return Forbid("User is not active."); // Usuario no está activo
+                    default:
+                        return StatusCode(500, "Unknown error."); // Error desconocido
                 }
-                else
-                { //Here there just be two options -1: user doesn't exists. 0: there wasn't match between user & password
-                    return Error();
-                }
-            } catch (SqlException)
+            }
+            catch (SqlException)
             {
                 throw;
             }

@@ -24,7 +24,7 @@ namespace Proyecto_lenguajes.Models.Services
                 {
                     connection.Open();
 
-                    SqlCommand sqlCommand = new SqlCommand("AddCommentCourse", connection);
+                    SqlCommand sqlCommand = new SqlCommand("Edu.AddCommentCourse", connection);
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.Parameters.AddWithValue("@Acronym", commentCourse.Acronym);
                     sqlCommand.Parameters.AddWithValue("@Content", commentCourse.Content);
@@ -56,7 +56,7 @@ namespace Proyecto_lenguajes.Models.Services
                 {
                     connection.Open();
 
-                    SqlCommand sqlCommand = new SqlCommand("GetCommentCoursesById", connection);
+                    SqlCommand sqlCommand = new SqlCommand("Edu.GetCommentCoursesById", connection);
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.Parameters.AddWithValue("@Acronym", id);
 

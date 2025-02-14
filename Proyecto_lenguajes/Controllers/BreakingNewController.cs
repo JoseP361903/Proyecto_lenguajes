@@ -20,7 +20,7 @@ namespace Proyecto_lenguajes.Controllers
             breakingNewServices = new BreakingNewServices(_configuration);
         }
 
-        public IActionResult Get(string idNot)
+        public IActionResult Get(int idNot)
         {
             try
             {
