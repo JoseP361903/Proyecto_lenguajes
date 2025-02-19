@@ -2,10 +2,10 @@ trigger:
 - master
 
 pool:
-  vmImage: 'windows-latest'
+  name: my_agent_pool
 
 steps:
-- task: DotNetCoreCLI@2
+- task: DotNetCoreCLI@2 
   displayName: "Compilación"
   inputs:
     command: 'build'
