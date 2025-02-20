@@ -28,7 +28,7 @@
     <link href="css/fontawesome-all.css" rel="stylesheet">
     <link href="css/swiper.css" rel="stylesheet">
     <link href="css/magnific-popup.css" rel="stylesheet">
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/styles.css?v=2" rel="stylesheet">
 
     <!-- Favicon  -->
     <link rel="icon" href="images/favicon.ico">
@@ -62,29 +62,29 @@
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="#header">Intro<span class="sr-only">(current)</span></a>
+                    <a class="nav-link page-scroll" href="#header">Inicio<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="#newsDisplayer">News</a>
+                    <a class="nav-link page-scroll" href="#newsDisplayer">Noticias</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="#courses">Courses</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link page-scroll" href="#contact">Contact</a>
+                    <a class="nav-link page-scroll" href="#courses">Cursos</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link page-scroll" href="#register">Register</a>
+                    <a class="nav-link page-scroll" href="#contact">Contacto</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#" id="profileNav">Profile</a>
+                    <a class="nav-link page-scroll" href="#register">Registro</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#" id="emailNav">Mail</a>
+                    <a class="nav-link" href="#" id="profileNav">Perfil</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="emailNav">Correo</a>
                 </li>
             </ul>
         </div>
@@ -121,7 +121,7 @@
                     <!-- Form for Additional Profile Information -->
                     <div class="row">
                         <div class="col-md-6">
-                            <p for="pName">Name:</p>
+                            <p for="pName">Nombre:</p>
                         </div>
                         <div class="col-md-6">
                             <input type="text" id="pName" name="pName" class="form-control" value="Example">
@@ -130,7 +130,7 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <p for="pSname">Second Name:</p>
+                            <p for="pSname">Apellido:</p>
                         </div>
                         <div class="col-md-6">
                             <input type="text" id="pSname" name="pSname" class="form-control" value="Example">
@@ -139,7 +139,7 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <p for="pMail">Email:</p>
+                            <p for="pMail">Correo Electrónico:</p>
                         </div>
                         <div class="col-md-6">
                             <input type="email" id="pMail" name="pMail" class="form-control" value="example@gmail.com">
@@ -148,17 +148,17 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <p for="pPic">Profile picture</p>
+                            <p for="pPic">Foto de perfil</p>
                         </div>
                         <div class="col-md-6">
-                            <label for="pPic" class="file-label">Choose File</label>
+                            <label for="pPic" class="file-label">Explorar archivos</label>
                             <input type="file" id="pPic" name="pPic" class="form-control">
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
-                            <p for="pPass">Password:</p>
+                            <p for="pPass">Contraseñas:</p>
                         </div>
                         <div class="col-md-6">
                             <input type="password" id="pPassword" name="pPass" class="form-control" required>
@@ -170,44 +170,44 @@
             <div class="row align-items-center">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <p>Likings</p>
+                        <p>Intereses</p>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" id="radioDB" name="intereses" value="databases">
-                            <label class="form-check-label" for="radioDB">Databases</label>
+                            <label class="form-check-label" for="radioDB">Bases de datos</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" id="radioNetwork" name="intereses" value="networks">
-                            <label class="form-check-label" for="radioNetwork">Networks</label>
+                            <label class="form-check-label" for="radioNetwork">Redes</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" id="radioCSecurity" name="intereses" value="cybersecurity">
-                            <label class="form-check-label" for="radioCSecurity">Cyber Security</label>
+                            <label class="form-check-label" for="radioCSecurity">Ciberseguridad</label>
                         </div>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" id="radioDevelopment" name="intereses" value="development">
-                            <label class="form-check-label" for="radioDevelopment">Development</label>
+                            <label class="form-check-label" for="radioDevelopment">Desarrollo</label>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 text-right"></div>
 
-            <div class="row align-items-center">
-                <div class="col-md-6 text-right">
-                    <!-- Buttons aligned to the right of the Likings section -->
-                    <button onclick="PutStudent()" class="btn">Ok!</button>
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-right">
+                        <!-- Buttons aligned to the right of the Likings section -->
+                        <button onclick="PutStudent()" class="btn">Guardar</button>
+                        <button onclick="" class="btn">Cancelar</button>
+                        <button onclick="" class="btn">Editar</button>
 
 
+                    </div>
                 </div>
             </div>
-        </div>
 
         </div>
     </div>
 
 
-  
-
-
+ 
 
 
     <!-- Email Modal -->
@@ -240,76 +240,6 @@
                                 </td>
                             </tr>
 
-                            <tr>
-                                <td class="email-info">
-                                    <h4>Subject Example</h4>
-                                    <p>From: sender@example.com</p>
-                                </td>
-                                <td class="email-action">
-                                    <button class="btn btn-primary">Open</button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="email-info">
-                                    <h4>Subject Example</h4>
-                                    <p>From: sender@example.com</p>
-                                </td>
-                                <td class="email-action">
-                                    <button class="btn btn-primary">Open</button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="email-info">
-                                    <h4>Subject Example</h4>
-                                    <p>From: sender@example.com</p>
-                                </td>
-                                <td class="email-action">
-                                    <button class="btn btn-primary">Open</button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="email-info">
-                                    <h4>Subject Example</h4>
-                                    <p>From: sender@example.com</p>
-                                </td>
-                                <td class="email-action">
-                                    <button class="btn btn-primary">Open</button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="email-info">
-                                    <h4>Subject Example</h4>
-                                    <p>From: sender@example.com</p>
-                                </td>
-                                <td class="email-action">
-                                    <button class="btn btn-primary"> Open </button>
-                                </td>
-                            </tr>
-
-
-                            <tr>
-                                <td class="email-info">
-                                    <h4>Subject Example</h4>
-                                    <p>From: sender@example.com</p>
-                                </td>
-                                <td class="email-action">
-                                    <button class="btn btn-primary"> Open </button>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td class="email-info">
-                                    <h4>Subject Example</h4>
-                                    <p>From: sender@example.com</p>
-                                </td>
-                                <td class="email-action">
-                                    <button class="btn btn-primary"> Open </button>
-                                </td>
-                            </tr>
 
                         </tbody>
                     </table>
@@ -365,7 +295,7 @@
                     <!-- Reply Section -->
                     <h3>Reply</h3>
                     <textarea class="form-control" placeholder="Write your reply..."></textarea>
-                    <button class="btn btn-primary send-btn">Send</button>
+                    <button class="btn btn-primary send-btn">Enviar</button>
                 </div>
             </div>
         </div>
@@ -385,34 +315,35 @@
 
                     <div class="col-lg-6">
                         <div class="text-container">
-                            <h1>Welcome!</h1>
+                            <h1>¡Bienvenido!</h1>
                             <p>
-                               Info-E is an independent platform meant to connect students from the Business Computer major located in UCR Paraíso´s branch, feel free to check out what we have to offer!
+                                Info-E es una plataforma independiente diseñada para conectar a los estudiantes de la carrera de Informática Empresarial en la sede de la UCR en Paraíso. ¡No dudes en echar un vistazo a lo que ofrecemos!
                             </p>
+
                         </div>
                     </div>
 
                     <!-- Left Side: Form -->
                     <div class="col-lg-6">
                         <div class="form-container">
-                            <h2> Login</h2>
+                            <h2> Ingreso </h2>
                             <form id="loginForm" data-toggle="validator" data-focus="false">
                                 <div class="form-group">
                                     <input type="text" class="form-control-input" id="lId" name="lId" required>
-                                    <label class="label-control" for="lId">ID</label>
+                                    <label class="label-control" for="lId">Carne</label>
 
                                 </div>
 
                                 <div class="form-group">
                                     <input type="password" class="form-control-input" id="lPassword" name="lPassword" required>
-                                    <label class="label-control" for="lPassword">Password</label>
+                                    <label class="label-control" for="lPassword">Contraseña</label>
 
                                 </div>
 
                                 <div class="form-group">
                                     <button type="button" class="form-control-submit-button" onclick="AuthenticateStudent()">Let's start!</button>
                                 </div>
-                                <a class="nav-link page-scroll" href="#register"> <p>No accrount?<u> Sign in </u> </p></a>
+                                <a class="nav-link page-scroll" href="#register"> <p>¿No tiene cuenta?<u> Registrese aquí </u> </p></a>
                             </form>
                         </div>
                     </div>
@@ -457,7 +388,7 @@
 
             <!--News Comment section-->
             <div class="news-comment-container">
-                <h1 class="pull-left">Discussion</h1>
+                <h1 class="pull-left">Discusión</h1>
                 <div class="row">
                     <div class="col-sm-8">
                         <div class="news-comment-form">
@@ -468,14 +399,14 @@
 
                                 <div class="comment col-xs-12 col-sm-9 col-lg-10">
                                     <form>
-                                        <textarea class="form-control" id="message" placeholder="Your message" required=""></textarea>
-                                        <button type="submit" class="btn btn-normal pull-right">Submit</button>
+                                        <textarea class="form-control" id="message" placeholder="Tu mensaje" required=""></textarea>
+                                        <button type="submit" class="btn btn-normal pull-right">Enviar</button>
 
                                     </form>
                                 </div>
                             </div>
 
-                            <h3>Comments</h3>
+                            <h3>Comentarios</h3>
                             <div class="news-comment-loader">
 
                                 <div class="media">
@@ -526,13 +457,13 @@
                 </div>
 
                 <!-- Table -->
-                <label for="coursesTable" class="table-label">Courses:</label>
+                <label for="coursesTable" class="table-label">Cursos:</label>
                 <table id="coursesTable" class="table table-striped">
                     <thead>
                         <tr>
-                            <th>Acronym</th>
-                            <th>Name</th>
-                            <th>Action</th>
+                            <th>Siglas</th>
+                            <th>Nombre</th>
+                            <th>Acción</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -574,12 +505,12 @@
                             <p class="course-about" id="courseDescription">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada.
                             </p>
-                            <h4>Assigned Teacher</h4>
+                            <h4>Profesor asignado</h4>
                             <p class="assigned-teacher" id="assignedTeacher">Example</p>
                             <!-- Buttons -->
                             <div class="button-group mt-4">
-                                <button id="discussionButton">Discussion</button>
-                                <button id="contactProfessor" >Contact Professor</button>
+                                <button id="discussionButton">Discusión</button>
+                                <button id="contactProfessor" >Contactar profesor</button>
                             </div>
                         </section>
                     </div>
@@ -590,33 +521,29 @@
 
     <!-- Course Modal -->
     <div id="courseModal" class="custom-modal">
-       
-            <span class="custom-modal-close">&times;</span>
         <div class="custom-modal-content2">
+            <span class="custom-modal-close" onclick="closeModal()">&times;</span>
+
             <!-- Course Discussion Section -->
             <div class="course-comment-container">
-                <h1 class="pull-left">Course Discussion</h1>
+                <h1>Discusión del curso</h1>
                 <div class="row">
-                    <div class="col-sm-8">
+                    <div class="col-sm-12">
                         <div class="course-comment-form">
                             <div class="row">
                                 <div class="col-sm-3 col-lg-2 hidden-xs">
                                     <img class="submit-comment-media" src="~/images/defaultpfp.jpg" alt="">
                                 </div>
-                            </div>
-                           
-                            <div class="comment col-xs-12 col-sm-9 col-lg-10">
-                                
-                                    <textarea id="textareacomment" class="form-control" placeholder="Your thoughts on this course..."></textarea>
-
-                                    <button id="submitComment" type="button" onclick="postComment()" class="btn btn-normal pull-right">Submit</button>
-
-                               
+                                <div class="comment col-xs-12 col-sm-9 col-lg-10">
+                                    <form>
+                                        <textarea id="textareacomment" class="form-control" placeholder="Your thoughts on this course..."></textarea>
+                                        <button id="submitComment" type="button" onclick="postComment()" class="btn btn-normal">Enviar</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    
 
-                        <h3>Comments</h3>
+                        <h3>Discusión</h3>
                         <div class="course-comment-loader">
                             <div class="media">
                                 <div class="col-sm-3 col-lg-2 hidden-xs">
@@ -629,17 +556,13 @@
                 </div>
             </div>
         </div>
-        </div>
-
-
-
-
+    </div>
 
 
     <div id="contact" class="form-2">
         <div class="container">
             <div class="col-lg-12 d-flex justify-content-center">
-                <h1>Contact us!</h1>
+                <h1>¡Contactenos!</h1>
             </div>
 
             <div class="row">
@@ -648,7 +571,7 @@
                     <div class="form-area">
                         <form id="registerForm" data-toggle="validator" data-focus="false">
                             <select class="form-control without-margin mb-3" name="addressees" id="professorSelect">
-                                <option value="0" selected>Select a teacher</option>
+                                <option value="0" selected>Seleccione un profesor</option>
                             </select>
 
                             <select class="form-control without-margin mb-3" name="appointmentTypes" id="appointmentType">
@@ -667,7 +590,8 @@
                 <!-- Left Side: Text Content -->
                 <div class="col-lg-6">
                     <div class="text-container">
-                        <p> Communication is key! Here you can directly contact our teachers in oreder to set up appointments or make things clear about the courses they are in charge</p>
+
+                        <p> La comunicación es clave. Aquí puedes directamente contactar a nuestros profesores para agendar horas de consultas o realizar consultas privadas sobre los cursos.</p>
                     </div>
                 </div> <!-- end of col -->
             </div> <!-- end of row -->
@@ -682,30 +606,30 @@
     <div id="register" class="form-1">
         <div class="container">
             <div class="col-lg-12 d-flex justify-content-center">
-                <h1>Register</h1>
+                <h1>Registro</h1>
             </div>
             <div class="row">
                 <!-- Left Side: Text Content -->
                 <div class="col-lg-6">
                     <div class="text-container">
 
-                        <p class="white">More than a platform, a community. Join us to access the following features:</p>
+                        <p class="white">Más que una plataforma, una comunidad. Registrarte te permite: </p>
 
                         <ul class="list-unstyled li-space-lg white">
                             <li class="media">
                                 <i class="fas fa-square"></i>
-                                <div class="media-body">Community interaction</div>
+                                <div class="media-body">Interactuar con la comunidad</div>
                             </li>
                             <li class="media">
                                 <i class="fas fa-square"></i>
-                                <div class="media-body">Get in touch with your professors</div>
+                                <div class="media-body">Contactar a los profesore</div>
                             </li>
                             <li class="media">
                                 <i class="fas fa-square"></i>
-                                <div class="media-body">Clear out all of your doubtss</div>
+                                <div class="media-body">Aclarar todas tus dudas</div>
                             </li>
                         </ul>
-                        <p class="white">Reminder: your account is subject to validation</p>
+                        <p class="white">Recordatorio: Tu cuenta esta sujeta a validación.</p>
                     </div>
                 </div> <!-- end of col -->
                 <!-- Right Side: Form -->
@@ -715,60 +639,39 @@
 
                         <div class="form-group">
                             <input type="text" class="form-control-input" id="rId" name="rId" required>
-                            <label class="label-control" for="rId">ID</label>
+                            <label class="label-control" for="rId">Carné</label>
 
                         </div>
 
                         <div class="form-group">
                             <input type="text" class="form-control-input" id="rName" name="rName" required>
-                            <label class="label-control" for="rName">First name</label>
+                            <label class="label-control" for="rName">Primer nombre</label>
 
                         </div>
 
                         <!-- Last Name -->
                         <div class="form-group">
                             <input type="text" class="form-control-input" id="rSname" name="rSname" required>
-                            <label class="label-control" for="rSname">Second name</label>
+                            <label class="label-control" for="rSname">Apellido</label>
 
                         </div>
 
                         <!-- Email -->
                         <div class="form-group">
                             <input type="text" class="form-control-input" id="rMail" name="rMail" required>
-                            <label class="label-control" for="rMail">Mail</label>
+                            <label class="label-control" for="rMail">Correo</label>
 
                         </div>
 
                         <!-- Password -->
                         <div class="form-group">
                             <input type="password" class="form-control-input" id="rPassword" name="rPassword" required>
-                            <label class="label-control" for="rPassword">Passowrd</label>
+                            <label class="label-control" for="rPassword">Contraseña</label>
 
                         </div>
-                        <!-- Interests -->
-                        <p>Likings</p>
-                        <div class="form-group-reg">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="radioDB" name="interesesR" value="databases">
-                                <label class="form-check-label" for="radioDB">Databases</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="radioNetwork" name="interesesR" value="networks">
-                                <label class="form-check-label" for="radioNetwork">Networks</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="radioCSecurity" name="interesesR" value="cybersecurity">
-                                <label class="form-check-label" for="radioCSecurity">Cyber Security</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" id="radioDevelopment" name="interesesR" value="development">
-                                <label class="form-check-label" for="radioDevelopment">Development</label>
-                            </div>
-                        </div>
-
                         <!-- Submit Button -->
                         <div class="form-group">
-                            <button type="button" class="form-control-submit-button" onclick="PostStudent()">Let's begin!</button>
+                            <button type="button" class="form-control-submit-button" onclick="PostStudent()">¡Comencemos!</button>
                         </div>
                     </form>
                 </div> <!-- end of col -->
@@ -783,54 +686,42 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="text-container about">
-                        <h4>Few Words About Aria</h4>
-                        <p class="white">We're passionate about delivering the best business growth services for companies just starting out as startups or industry players that have established their market position a long tima ago.</p>
+                        <h4>Algunas palabras sobre Info-E</h4>
+                        <p class="white">Info-E es un proyecto de estudiantes para estudiantes desarrollado durante el curso Lenguajes para Aplicaciones Comerciales, en verano de 2025</p>
                     </div> <!-- end of text-container -->
                 </div> <!-- end of col -->
                 <div class="col-md-2">
                     <div class="text-container">
-                        <h4>Links</h4>
+                        <h4>asc2-dev</h4>
                         <ul class="list-unstyled li-space-lg white">
                             <li>
-                                <a class="white" href="#your-link">startupguide.com</a>
+                                <a class="white">Dennis Quirós</a>
                             </li>
                             <li>
-                                <a class="white" href="terms-conditions.html">Terms & Conditions</a>
+                                <a class="white">Jose Pablo Ramirez</a>
                             </li>
                             <li>
-                                <a class="white" href="privacy-policy.html">Privacy Policy</a>
+                                <a class="white">Jason Quesada</a>
                             </li>
+                            <li>
+                                <a class="white">Lito Valverde</a>
+                            </li>
+
                         </ul>
                     </div> <!-- end of text-container -->
                 </div> <!-- end of col -->
                 <div class="col-md-2">
                     <div class="text-container">
-                        <h4>Tools</h4>
+                        <h4>Otros accesos</h4>
                         <ul class="list-unstyled li-space-lg">
                             <li>
-                                <a class="white" href="#your-link">businessgrowth.com</a>
+                                <a class="white" href="#your-link">Info-E: Estudiantes</a>
                             </li>
                             <li>
-                                <a class="white" href="#your-link">influencers.com</a>
+                                <a class="white" href="#your-link">Info-E: Profesores</a>
                             </li>
                             <li class="media">
-                                <a class="white" href="#your-link">optimizer.net</a>
-                            </li>
-                        </ul>
-                    </div> <!-- end of text-container -->
-                </div> <!-- end of col -->
-                <div class="col-md-2">
-                    <div class="text-container">
-                        <h4>Partners</h4>
-                        <ul class="list-unstyled li-space-lg">
-                            <li>
-                                <a class="white" href="#your-link">unicorns.com</a>
-                            </li>
-                            <li>
-                                <a class="white" href="#your-link">staffmanager.com</a>
-                            </li>
-                            <li>
-                                <a class="white" href="#your-link">association.gov</a>
+                                <a class="white" href="#your-link">Info-E: Admin</a>
                             </li>
                         </ul>
                     </div> <!-- end of text-container -->
@@ -844,12 +735,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <p class="p-small">Copyright © 2020 <a href="https://inovatik.com">Template by Inovatik</a></p>
+                    <p class="p-small">Copyright © 2025 <a href="https://inovatik.com"</a>UCR-RP</p>
                 </div> <!-- end of col -->
             </div> <!-- enf of row -->
         </div> <!-- end of container -->
     </div> <!-- end of copyright -->
     <!-- end of copyright -->
+    <!-- Scripts -->
     <!-- Scripts -->
 
     <script src="js/jquery.min.js"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->

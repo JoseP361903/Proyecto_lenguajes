@@ -42,7 +42,7 @@ namespace Proyecto_lenguajes.Models.Services
                 
                 } catch (SqlException)
                 {
-                    throw;
+                    throw;  
                 }
             }
             return courses;

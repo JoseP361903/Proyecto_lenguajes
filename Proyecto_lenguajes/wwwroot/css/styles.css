@@ -417,8 +417,6 @@ input[type='checkbox'] {
 	text-align: left;
 }
 
-
-
 .help-block.with-errors ul {
 	margin-bottom: 0;
 }
@@ -1057,7 +1055,6 @@ button {
 	}
 
 
-
 /************************/
 /*     Email Modal      */
 /************************/
@@ -1088,6 +1085,20 @@ button {
 	flex-direction: column;
 	max-height: 80vh;
 	overflow: hidden;
+	min-height: 500px;
+	max-height: 500px;
+	box-sizing: border-box; /* Prevents extra space or overflow */
+}
+
+.custom-date-margin {
+	margin-bottom: 20px; /* Add some space below the date picker */
+}
+
+.custom-send-btn {
+	padding: 5px 10px; /* Adjust the button padding to make it smaller */
+	font-size: 12px; /* Adjust font size if needed */
+	width: auto; /* Ensures button doesn't take full width */
+	max-width: 200px; /* Limit max width */
 }
 
 /* Close button */
@@ -1155,6 +1166,26 @@ button {
 	margin-top: 1rem;
 }
 
+/* For Appointment Tab */
+#appointments .email-content {
+	padding-top: 20px; /* Add space at the top for appointments section */
+}
+
+#appointments .custom-date-margin {
+	margin-top: 10px; /* Adjust margin for date picker in appointments */
+}
+
+#appointments .custom-send-btn {
+	margin-top: 10px; /* Add top margin for button in appointments section */
+}
+
+/* For Consult Tab */
+#consults .custom-send-btn {
+	margin-top: 20px; /* Adjust margin for the button in the consult section */
+	width: auto; /* Ensures button doesn't take full width */
+	max-width: 200px; /* Limit max width */
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
 	.email-container {
@@ -1171,8 +1202,6 @@ button {
 		max-height: 50vh;
 	}
 }
-
-
 
 /* The Modal */
 .custom-modal {
@@ -1396,6 +1425,17 @@ label {
 	position: relative; /* Ensure the buttons are positioned relative to this container */
 }
 
+.newsCar {
+	background-color: white;
+	padding: 2.5rem;
+	border-radius: 8px;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 1.5rem;
+	position: relative; /* Ensure the buttons are positioned relative to this container */
+}
+
+
 
 
 
@@ -1415,6 +1455,14 @@ label {
 .news-image {
 	width: 100%;
 	height: 200px;
+	object-fit: cover;
+}
+
+
+.news-image-preview {
+	width: 100%;
+	height: 200px;
+	max-height: 200px;
 	object-fit: cover;
 }
 
@@ -1516,6 +1564,14 @@ label {
 			}
 
 
+.news-comment-loader .media .comment h5.media-heading {
+	font-size: 0.8rem;
+	color: #777;
+	margin-top: -5px;
+}
+
+
+
 
 
 /************************/
@@ -1586,15 +1642,18 @@ label {
 
 .courses {
 	background-color: white;
-	padding-bottom: 2.15rem;
-	padding-top: 2.5rem;
+	padding-bottom: 4.15rem;
+	padding-top: 1rem;
 	border-radius: 8px;
 }
 
 
-.courses h1{
-	color: black;
-}
+	.courses h1 {
+		color: black;
+		margin-bottom: 4.15rem;
+	}
+
+
 /* Dropdown Styling */
 .dropdown-label {
 	font-size: 1.1rem;
@@ -1617,7 +1676,6 @@ label {
 	color: #333;
 	margin-bottom: 0.5rem;
 	display: block;
-
 }
 
 .table {
@@ -1821,15 +1879,15 @@ table th,
 	}
 
 
-.form-1 .form-group-reg form-check-label {
-	color: white;
-	justify-content: center;
-	max-width: 80%;
-}
+	.form-1 .form-group-reg form-check-label {
+		color: white;
+		justify-content: center;
+		max-width: 80%;
+	}
 
-.form-1.form-group {
-	padding: 0.25rem;
-}
+	.form-1.form-group {
+		padding: 0.25rem;
+	}
 
 
 	.form-1 .fas.fa-square {
@@ -1864,7 +1922,17 @@ table th,
 	background-color: #FFFFFF;
 }
 
-.news-comment-container  comment-media-object{
+.comment-media-object {
+	max-height: 100px;
+	max-width: 100px;
+	min-height: 100px;
+	min-width: 100px;
+	display: block;
+	object-fit: cover;
+	margin-left: 20px;
+}
+
+.news-comment-form .submit-comment-media {
 	height: 100px;
 	width: 100px;
 	display: block;
@@ -1872,44 +1940,36 @@ table th,
 	margin-left: 20px;
 }
 
-	.news-comment-form .submit-comment-media {
-		height: 100px;
-		width: 100px;
-		display: block;
-		object-fit: cover;
-		margin-left: 20px;
-	}
 
-
-	.news-comment-container .media {
-		display: flex;
-		align-items: center; 
-		justify-content: flex-start; 
-	}
+.news-comment-container .media {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
 
 
 
 
-	.news-comment-container.grey {
-		background-color: #F0F0F0;
-		padding: 50px 0;
-		height: 100%;
-	}
+.news-comment-container.grey {
+	background-color: #F0F0F0;
+	padding: 50px 0;
+	height: 100%;
+}
 
-	.news-comment-container h1 {
-		font-weight: 800;
-		font-size: 25px;
-		line-height: 45px;
-		margin: 20px 0;
-	}
+.news-comment-container h1 {
+	font-weight: 800;
+	font-size: 25px;
+	line-height: 45px;
+	margin: 20px 0;
+}
 
-	.news-comment-container h3 {
-		font-weight: 800;
-		font-size: 20px;
-		color: black;
-		margin: 10px 0 15px;
-		padding: 0;
-	}
+.news-comment-container h3 {
+	font-weight: 800;
+	font-size: 20px;
+	color: black;
+	margin: 10px 0 15px;
+	padding: 0;
+}
 
 .news-comment-form form {
 	display: flex;
@@ -1920,7 +1980,7 @@ table th,
 
 .news-comment-form {
 	margin-bottom: 30px;
-	width:100%;
+	width: 100%;
 }
 
 	.news-comment-form form fieldset {
@@ -1930,7 +1990,6 @@ table th,
 	.news-comment-form form textarea {
 		height: 100px;
 		width: 230%;
-		
 	}
 
 	.news-comment-form form .btn {
@@ -2008,94 +2067,50 @@ table th,
 /* Course Discussion */
 /**********************/
 
-
 .course-comment-container {
 	padding: 30px 0;
 	background-color: #FFFFFF;
+	position: relative;
+	max-width: 100%;
 }
 
-.course-comment-container  comment-media-object{
+.course-comment-form form textarea {
+	height: 80px; /* Ajuste menor para mejor visualización */
+	width: 100%; /* Cambio necesario para evitar desbordamientos */
+	resize: none; /* Evita el redimensionamiento */
+}
+
+.course-comment-container .submit-comment-media {
 	height: 100px;
 	width: 100px;
-	display: block;
-	object-fit: cover;
-	margin-left: 20px;
 }
 
-	.course-comment-form .submit-comment-media {
-		height: 100px;
-		width: 100px;
-		display: block;
-		object-fit: cover;
-		margin-left: 20px;
-	}
-
-
-	.course-comment-container .media {
-		display: flex;
-		align-items: center; 
-		justify-content: flex-start; 
-	}
-
-
-
-
-	.course-comment-container.grey {
-		background-color: #F0F0F0;
-		padding: 50px 0;
-		height: 100%;
-	}
-
-	.course-comment-container h1 {
-		font-weight: 800;
-		font-size: 25px;
-		line-height: 45px;
-		margin: 20px 0;
-	}
-
-	.course-comment-container h3 {
-		font-weight: 800;
-		font-size: 20px;
-		color: black;
-		margin: 10px 0 15px;
-		padding: 0;
-	}
-
-.course-comment-form form {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	margin-bottom: 30px;
+.course-comment-form form .btn {
+	margin-top: 10px;
+	background-color: #f1962e;
+	border: 0.125rem solid #f1962e;
+	color: #fff;
+	border: none;
+	padding: 8px 16px;
+	transition: background-color 0.3s;
 }
 
-.course-comment-form {
-	width:100%;
-}
-
-	.course-comment-form form fieldset {
-		clear: both;
-	}
-
-	.course-comment-form form textarea {
-		height: 100px;
-		width: 230%;
-		
-	}
-
-	.course-comment-form form .btn {
-		margin-top: 7px;
+	.course-comment-form form .btn:hover {
+		background-color: #fff;
+		border: 0.125rem solid #f1962e;
+		color: #f1962e;
 	}
 
 .course-comment-loader {
 	background-color: #FFFFFF;
-	width: 150%;
+	width: 100%;
 }
 
 	.course-comment-loader .media {
 		border-top: 2px dashed #DDDDDD;
 		padding: 20px 0;
-		margin: 0;
 		display: flex;
+		flex-wrap: wrap;
 	}
 
 		.course-comment-loader .media .col-sm-3,
@@ -2154,8 +2169,6 @@ table th,
 		}
 
 
-
-	
 /**********************/
 /*     17. Footer     */
 /**********************/
@@ -2282,6 +2295,8 @@ a:hover.back-to-top {
 	.ex-basic-2 .btn-outline-reg {
 		margin-top: 1.75rem;
 	}
+
+
 
 
 /*****************************/
@@ -2856,3 +2871,6 @@ a:hover.back-to-top {
 	/* end of navigation */
 }
 /* end of min-width width 1200px */
+
+
+/* Style this, github!!!! */
