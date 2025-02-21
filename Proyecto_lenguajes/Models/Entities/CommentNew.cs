@@ -5,24 +5,21 @@
         private string content;
         private string idNew;
         private string idUser;
-        private string Name;
-        private Byte[] Photo;
+        private DateOnly date;
 
         public CommentNew() { }
 
-        public CommentNew(string content, string idNew, string idUser, byte[] photo, string name)
+        public CommentNew(string content, string idNew, string idUser, string name, DateOnly date)
         {
             Content = content;
             IdNew = idNew;
             IdUser = idUser;
-            Photo = photo;
-            Name = name;
+            Date = date;
         }
 
         public string Content { get => content; set => content = value; }
         public string IdNew { get => idNew; set => idNew = value; }
         public string IdUser { get => idUser; set => idUser = value; }
-        public byte[] Photo1 { get => Photo; set => Photo = value; }
-        public string Name1 { get => Name; set => Name = value; }
+        public DateOnly Date { get => date; set => date = value; }
     }
 }

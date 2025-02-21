@@ -21,6 +21,5 @@
         public string Text { get => text; set => text = value; }
         public Student Student { get => student; set => student = value; }
         public Professor Professor { get => professor; set => professor = value; }
-
     }
 }

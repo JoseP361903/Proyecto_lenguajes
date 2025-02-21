@@ -48,5 +48,39 @@ namespace Proyecto_lenguajes.Models.Services
 
             return professors;
         }
+
+        public Professor Get(string id)
+        {
+            Professor professor = new Professor();
+
+            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    sqlConnection.Open();
+                    SqlCommand command = new SqlCommand("Edu.GetProfessorById", sqlConnection);
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@Id", id);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        professor.Id = id;
+                        professor.Name = reader.GetString(1);
+                        professor.LastName = reader.GetString(2);
+                        professor.Password = reader.GetString(3);
+                        professor.Email = reader.GetString(4);
+                        professor.Photo = reader.GetString(6);
+                    }
+                    sqlConnection.Close();
+                }
+                catch (SqlException)
+                {
+                    throw;
+                }
+            }
+            return professor;
+        }
     }
 }

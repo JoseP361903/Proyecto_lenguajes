@@ -5,6 +5,7 @@
         private string text;
         private Student student;
         private Professor professor;
+        
 
         public PrivateConsultation()
         {
@@ -20,5 +21,6 @@
         public string Text { get => text; set => text = value; }
         public Student Student { get => student; set => student = value; }
         public Professor Professor { get => professor; set => professor = value; }
+       
     }
 }

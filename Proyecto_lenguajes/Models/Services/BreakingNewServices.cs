@@ -38,7 +38,7 @@ namespace Proyecto_lenguajes.Models.Services
                             Date = DateOnly.FromDateTime(reader.GetDateTime(1)),
                             Title = reader.GetString(2),
                             Paragraph = reader.GetString(3),
-                            Photo = !reader.IsDBNull(4) ? Encoding.UTF8.GetBytes(reader.GetString(4)) : new byte[0]
+                            Photo = reader.GetString(4)
                         };
                     }
 
@@ -75,7 +75,7 @@ namespace Proyecto_lenguajes.Models.Services
                             Date = DateOnly.FromDateTime(reader.GetDateTime(1)),
                             Title = reader.GetString(2),
                             Paragraph = reader.GetString(3),
-                            Photo = !reader.IsDBNull(4) ? Encoding.UTF8.GetBytes(reader.GetString(4)) : new byte[0]
+                            Photo = reader.GetString(4)
                         };
                     }
 

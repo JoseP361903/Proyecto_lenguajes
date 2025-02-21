@@ -39,7 +39,7 @@ namespace Proyecto_lenguajes.Models.Services
                         student.Password = reader.GetString(3);
                         student.Email = reader.GetString(4);
                         student.Likings = reader.GetString(5);
-                        student.Photo = reader.IsDBNull(6) ? null : Encoding.ASCII.GetBytes(reader.GetString(6));
+                        student.Photo = reader.GetString(6);
                     }
                     sqlConnection.Close();
                 } catch (SqlException)
@@ -108,7 +108,7 @@ namespace Proyecto_lenguajes.Models.Services
                     sqlCommand.Parameters.AddWithValue("@Email", student.Email);
                     sqlCommand.Parameters.AddWithValue("@Password", student.Password);
                     sqlCommand.Parameters.AddWithValue("@Likings", student.Likings);
-                    sqlCommand.Parameters.AddWithValue("@Photo", student.Photo ?? (object)DBNull.Value);
+                    sqlCommand.Parameters.AddWithValue("@Photo", student.Photo);
 
                     result = sqlCommand.ExecuteNonQuery();
                     connection.Close();
@@ -168,7 +168,7 @@ namespace Proyecto_lenguajes.Models.Services
                     sqlCommand.Parameters.AddWithValue("@Email", student.Email);
                     sqlCommand.Parameters.AddWithValue("@Password", student.Password);
                     sqlCommand.Parameters.AddWithValue("@Likings", student.Likings);
-                    sqlCommand.Parameters.AddWithValue("@Photo", student.Photo ?? (object)DBNull.Value);
+                    sqlCommand.Parameters.AddWithValue("@Photo", student.Photo);
 
                     result = sqlCommand.ExecuteNonQuery();
                     connection.Close();

@@ -24,7 +24,7 @@ namespace Proyecto_lenguajes.Models.Services
                 try
                 {
                     connection.Open();
-                    SqlCommand sqlCommand = new SqlCommand("Edu.SendPrivateConsultation", connection);
+                    SqlCommand sqlCommand = new SqlCommand("Edu.SendAppointment", connection);
                     sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                     sqlCommand.Parameters.AddWithValue("@Text", applicationConsultation.Text);
                     sqlCommand.Parameters.AddWithValue("@Id_Student", applicationConsultation.Student.Id);

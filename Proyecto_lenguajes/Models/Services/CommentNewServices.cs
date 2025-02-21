@@ -64,8 +64,8 @@ namespace Proyecto_lenguajes.Models.Services
                         news.Add(new CommentNew
                         {
                             Content = sqlDataReader["ContentC"].ToString(),
-                            Name1 = sqlDataReader["Name"].ToString(),
-                            Photo1 = sqlDataReader["Photo"] != DBNull.Value ? (byte[])sqlDataReader["Photo"] : null
+                            IdUser = sqlDataReader["Id_User"].ToString(),
+                            Date = DateOnly.FromDateTime(Convert.ToDateTime(sqlDataReader["Date"]))
                         });
                     }
 

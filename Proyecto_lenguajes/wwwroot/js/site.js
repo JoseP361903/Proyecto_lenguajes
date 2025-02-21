@@ -10,6 +10,41 @@ $(document).ready(function () {
     loadAllNewsDescending();
     LoadProfessor();
 
+    //Required for courses and course comments
+    const month = new Date().getMonth() + 1;
+
+    let fillHtml = "";
+
+    if (month >= 2 && month <= 7) {
+        fillHtml = `
+            <option value="I">I</option>
+            <option value="III">III</option>
+            <option value="V">V</option>
+            <option value="VII">VII</option>
+        `;
+    } else if (month >= 8 && month <= 12) {
+        fillHtml = `
+            <option value="II">II</option>
+            <option value="IV">IV</option>
+            <option value="VI">VI</option>
+            <option value="VIII">VIII</option>
+        `;
+    } else {
+        fillHtml = `
+            <option value="I">I</option>
+            <option value="II">II</option>
+            <option value="III">III</option>
+            <option value="IV">IV</option>
+            <option value="V">V</option>
+            <option value="VI">VI</option>
+            <option value="VII">VII</option>
+            <option value="VIII">VIII</option>
+        `;
+    }
+    //Required for courses and course comments
+    $("#cicles").html(fillHtml);
+
+    //Required for courses and course comments
     $("#cicles").change(function () {
         let romanCycle = $(this).val();
         let cycle = convertRomanToInt(romanCycle);
@@ -97,6 +132,7 @@ function PostApplicationConsultation() {
 
 }
 
+//Required for courses and course comments
 function convertRomanToInt(roman) {
     const romanMap = { "I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8 };
     return romanMap[roman] || 0; 
@@ -223,6 +259,7 @@ function GetNewsById(idNot) {
     });
 }
 
+//Required for courses and course comments
 function GetCommentCourseById(id) {
     $.ajax({
         url: "/CommentNew/Get",  // Ruta al controlador y método
@@ -260,6 +297,7 @@ function addCommentsToContainer(comments) {
     });
 }
 
+//Required for courses and course comments
 function GetCoursesByCycle(cycle) {
     $.ajax({
         url: "/Course/GetByCycle",
@@ -293,6 +331,8 @@ function GetCoursesByCycle(cycle) {
         }
     });
 }
+
+//Required for courses and course comments
 function GetCommentsByCourseId(courseId) {
     $.ajax({
         url: "/CommentCourse/Get",
@@ -309,24 +349,115 @@ function GetCommentsByCourseId(courseId) {
     });
 }
 
+//Required for courses and course comments
 function loadComentarios(comments) {
+
+    GetStudentPhotoById();
+
     $(".course-comment-loader").empty(); // Limpiar comentarios anteriores
 
     comments.forEach(comment => {
+        var uniqueId = `img-${Math.random().toString(36).substr(2, 9)}`;
+
         var commentHtml = `
             <div class="media">
                 <div class="col-sm-3 col-lg-2 hidden-xs">
-                    <img class="comment-media-object" src="${comment.profileImageUrl || '/images/defaultpfp.jpg'}" alt="">
+                    <img id="${uniqueId}" class="comment-media-object" src="/images/defaultpfp.jpg" alt="">
                 </div>
                 <div class="comment col-xs-12 col-sm-9 col-lg-10">
-                    <h4 class="media-heading">${comment.name1}</h4>
+                    <h4 class="media-heading">${comment.idUser}</h4>
+                    <p>${comment.date}</p>
                     <p>${comment.content}</p>
                 </div>
             </div>
         `;
         $(".course-comment-loader").append(commentHtml);
+
+        GetPhoto(comment.idUser, "Professor")
+            .then(photo => {
+                if (!photo) {
+                    return GetPhoto(comment.idUser, "Student");
+                }
+                return photo;
+            })
+            .then(photo => {
+                if (photo) {
+                    document.getElementById(uniqueId).src = `data:image/png;base64,${photo}`;
+                }
+            })
+            .catch(() => {
+                alert("Error to take photo.");
+            });
     });
 }
+
+//Required for courses and course comments
+function GetPhoto(id, type) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: `/${type}/Get`,
+            type: "GET",
+            data: { id: id },
+            contentType: "application/json;charset=utf-8",
+            dataType: "json"
+        })
+            .done(result => {
+                if (result && result.photo) {
+                    resolve(result.photo);
+                } else {
+                    resolve(null);
+                }
+            })
+            .fail(() => {
+                reject();
+            });
+    });
+}
+
+function GetStudentPhotoById() {
+    $.ajax({
+        url: "/Student/Get",
+        type: "GET",
+        data: { id: "C36373" },    //Change for the photo de user in the application
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (student) {
+            if (student) {
+                const imgElement = document.getElementById('imageUser');
+                base64ToImage(student.photo, imgElement);
+            } else {
+                alert("No se encontraron datos del estudiante.");
+            }
+        },
+        error: function () {
+            alert("Error al obtener los datos del estudiante.");
+        }
+    });
+}
+
+function GetStudentPhotoId(id, type) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: `/${type}/Get`,
+            type: "GET",
+            data: { id: id },
+            contentType: "application/json;charset=utf-8",
+            dataType: "json"
+        })
+            .done(result => {
+                if (result && result.photo) {
+                    return (result.photo);
+                } else {
+                    return (null);
+                }
+            })
+            .fail(() => {
+                reject();
+            });
+    });
+}
+
+//Required for courses and course comments
 function GetCourseByAcronym(acronym) {
     $.ajax({
         url: "/Course/GetByAcronym",  // Ruta al controlador y método
@@ -349,6 +480,7 @@ function GetCourseByAcronym(acronym) {
         }
     });
 }
+//Required for courses and course comments
 function displayCourseInfo(course) {
     $('#courseAcronym').text(course.acronym); // Se asume que 'course' tiene el atributo 'acronym'
     $('#courseName').text(course.name); // Se asume que 'course' tiene el atributo 'name'
@@ -357,10 +489,58 @@ function displayCourseInfo(course) {
     GetCommentsByCourseId(course.acronym);
 
 }
+
+
+//Converters / Util stuff
+
+function imageToBase64(imgElement, callback) {
+    const img = imgElement; // Elemento <img>
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+
+    // Convertir la imagen a Base64 (formato PNG)
+    const base64String = canvas.toDataURL('image/png');
+
+    callback(base64String);
+}
+
+
+//Conversors
+function imageToBase64(imgElement, callback) {
+    const img = imgElement; // Elemento <img>
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+
+    // Convertir la imagen a Base64 (formato PNG)
+    const base64String = canvas.toDataURL('image/png');
+
+    callback(base64String);
+}
+
+//Required for courses and course comments
+//Method for pass base64 to <img>
+function base64ToImage(base64String, imgElement) {
+    imgElement.src = `data:image/png;base64,${base64String}`;
+}
+
+
+
+
+
+//Required for courses and course comments
 function openModal(modal) {
     modal.style.display = 'flex';
     navigationBar.style.display = 'none';
 }
+//Required for courses and course comments
 function closeModal(modal) {
     modal.style.display = 'none';
     navigationBar.style.display = 'block';
@@ -370,10 +550,18 @@ function postComment() {
     
     var content = $("#textareacomment").val().trim(); // Obtiene el valor del textarea y quita espacios vacíos
     var acronym = $("#courseAcronym").text().trim(); // Obtiene el texto del h4
+
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const date = `${year}-${month}-${day}`;
+
     var commentData = {
         content: content,
         acronym: acronym,
-        idUser: $("#studentID").text()
+        idUser: "C36373",//Cambiar por el id del usuario
+        date: date
     };
 
     $.ajax({
@@ -383,8 +571,9 @@ function postComment() {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (response) {
+            $("#message").val("");
             GetCommentsByCourseId(acronym);
-            $("#message").val(""); // Limpiar el campo después de enviar
+            $("#textareacomment").val("")
         },
         error: function (error) {
             alert("Error al enviar el comentario.");
@@ -429,6 +618,15 @@ closeButtons.forEach(button => {
         closeModal(modal);
     });
 });
+
+//Required for courses and course comments
+closeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const modal = button.closest('.custom-modal-close');
+        closeModal(modal);
+    });
+});
+
 window.addEventListener('click', (event) => {
     modals.forEach(modal => {
         if (event.target === modal) {
@@ -442,6 +640,7 @@ profileNav.addEventListener('click', (event) => {
     event.preventDefault();
     openModal(profileModal);
 });
+
 const newsModal = document.getElementById('newsModal');
 const moreAboutLinks = document.querySelectorAll(".more-about-link");
 moreAboutLinks.forEach(link => {

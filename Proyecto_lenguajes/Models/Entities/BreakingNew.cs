@@ -6,11 +6,11 @@
         private DateOnly date;
         private string title;
         private string paragraph;
-        private byte[] photo;
+        private string photo;
 
         public BreakingNew() { }
 
-        public BreakingNew(string idNot, DateOnly date, string title, string paragraph, byte[] photo)
+        public BreakingNew(string idNot, DateOnly date, string title, string paragraph, string photo)
         {
             IdNot = idNot;
             Date = date;
@@ -23,6 +23,6 @@
         public DateOnly Date { get => date; set => date = value; }
         public string Title { get => title; set => title = value; }
         public string Paragraph { get => paragraph; set => paragraph = value; }
-        public byte[] Photo { get => photo; set => photo = value; }
+        public string Photo { get => photo; set => photo = value; }
     }
 }
