@@ -1,73 +1,48 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using Proyecto_lenguajes.Models;
+using Proyecto_lenguajes.Models.Entities;
 using Proyecto_lenguajes.Models.Services;
+using Proyecto_lenguajes.Models;
 using System.Diagnostics;
 
-namespace Proyecto_lenguajes.Controllers
+public class BreakingNewController : Controller
 {
-    public class BreakingNewController : Controller
+    private readonly ILogger<BreakingNewController> _logger;
+    private readonly IConfiguration _configuration;
+    private readonly BreakingNewServices breakingNewServices;
+
+    public BreakingNewController(ILogger<BreakingNewController> logger, IConfiguration configuration)
     {
+        _logger = logger;
+        _configuration = configuration;
+        breakingNewServices = new BreakingNewServices(_configuration);
+    }
 
-        private readonly ILogger<HomeController> _logger;
-        private readonly IConfiguration _configuration;
-        BreakingNewServices breakingNewServices;
+    [HttpGet]
+    public IEnumerable<BreakingNew> Get()
+    {
+        IEnumerable<BreakingNew> news = null;
 
-        public BreakingNewController(ILogger<HomeController> logger, IConfiguration configuration)
+        try
         {
-            _logger = logger;
-            _configuration = configuration;
-            breakingNewServices = new BreakingNewServices(_configuration);
+            news = breakingNewServices.GetAllNews();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al obtener las noticias");
+            ModelState.AddModelError(string.Empty, $"Server error: {ex.Message}");
+            news = Enumerable.Empty<BreakingNew>();
         }
 
-        public IActionResult Get(int idNot)
-        {
-            try
-            {
-                var result = breakingNewServices.Get(idNot);
-                if (result != null)
-                {
-                    return Ok(result);
-                }
-                else
-                {
-                    return Error();
-                }
-            } catch (SqlException)
-            {
-                throw;
-            }
-        }
+        return news;
+    }
 
-        public IActionResult GetMaxId()
-        {
-            try
-            {
-                var result = breakingNewServices.GetMaxId();
-                if (result != null)
-                {
-                    return Ok(result);
-                }
-                else
-                {
-                    return Error();
-                }
-            }
-            catch (SqlException)
-            {
-                throw;
-            }
-        }
+    public IActionResult Index()
+    {
+        return View();
+    }
 
-
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+    public IActionResult Error()
+    {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

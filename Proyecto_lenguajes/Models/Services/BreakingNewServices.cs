@@ -15,79 +15,41 @@ namespace Proyecto_lenguajes.Models.Services
             connectionString = _configuration.GetConnectionString("DefaultConnection");
         }
 
-        // GetNewsById
-        public BreakingNew Get(int idNot)
+        public IEnumerable<BreakingNew> GetAllNews()
         {
-            BreakingNew breakingNew = null;
+            List<BreakingNew> newsList = new List<BreakingNew>();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
                 {
                     connection.Open();
-                    SqlCommand command = new SqlCommand("Edu.GetNewsById", connection);
+                    SqlCommand command = new SqlCommand("Edu.GetAllNews", connection);
                     command.CommandType = System.Data.CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@IdNot", idNot);
 
                     SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
+                    while (reader.Read())
                     {
-                        breakingNew = new BreakingNew
-                        {
-                            IdNot = reader.GetInt32(0).ToString(),
-                            Date = DateOnly.FromDateTime(reader.GetDateTime(1)),
-                            Title = reader.GetString(2),
-                            Paragraph = reader.GetString(3),
-                            Photo = reader.GetString(4)
-                        };
+                        BreakingNew breakingNew = new BreakingNew(
+                            reader.GetInt32(4), // idNew
+                            reader.GetString(1), // Title
+                            reader.GetString(2), // Paragraph
+                            reader.IsDBNull(3) ? null : reader.GetString(3), // Photo
+                            DateOnly.FromDateTime(reader.GetDateTime(0)) // Date
+                        );
+                        newsList.Add(breakingNew);
                     }
+
 
                     connection.Close();
                 }
                 catch (SqlException ex)
                 {
-                    throw new Exception("Error al obtener la noticia", ex);
+                    throw new Exception("Error al obtener las noticias", ex);
                 }
             }
 
-            return breakingNew;
-        }
-
-        // GetMaxNewsId
-        public BreakingNew GetMaxId()
-        {
-            BreakingNew breakingNew = null;
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("Edu.GetMaxNewsId", connection);
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-
-                    SqlDataReader reader = command.ExecuteReader();
-                    if (reader.Read())
-                    {
-                        breakingNew = new BreakingNew
-                        {
-                            IdNot = reader.GetInt32(0).ToString(),
-                            Date = DateOnly.FromDateTime(reader.GetDateTime(1)),
-                            Title = reader.GetString(2),
-                            Paragraph = reader.GetString(3),
-                            Photo = reader.GetString(4)
-                        };
-                    }
-
-                    connection.Close();
-                }
-                catch (SqlException ex)
-                {
-                    throw new Exception("Error al obtener el ID máximo de la noticia", ex);
-                }
-            }
-
-            return breakingNew;
+            return newsList;
         }
     }
 }

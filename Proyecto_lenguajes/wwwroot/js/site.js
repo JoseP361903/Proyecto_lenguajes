@@ -1,17 +1,21 @@
 ﻿const modals = document.querySelectorAll('.custom-modal');
 const closeButtons = document.querySelectorAll('.custom-modal-close');
 const navigationBar = document.getElementById('navBar');
-let newsList = [];
-let currentIndex = 0;
-const newsPerPage = 3;
+
+
+
+let newsArray = [];
+let newCurrentID = 1;
 
 $(document).ready(function () {
     GetCoursesByCycle(1);
-    loadAllNewsDescending();
+    loadNews();
     LoadProfessor();
 
     //Required for courses and course comments
     const month = new Date().getMonth() + 1;
+
+    const courseModal = document.getElementById('courseModal');
 
     let fillHtml = "";
 
@@ -51,20 +55,22 @@ $(document).ready(function () {
         GetCoursesByCycle(cycle);
     });
 
-    $("#prevBtn").click(function () {
-        if (currentIndex > 0) {
-            currentIndex -= newsPerPage;
-            updateNewsDisplay();
-        }
+
+    $('#nextBtn').click(function () {
+        moveNext();
+        renderNews();
     });
 
-    $("#nextBtn").click(function () {
-        if (currentIndex + newsPerPage < newsList.length) {
-            currentIndex += newsPerPage;
-            updateNewsDisplay();
-        }
+
+    $('#prevBtn').click(function () {
+        movePrev();
+        renderNews();
     });
+
 });
+
+
+
 function LoadProfessor() {
     $.ajax({
         url: "/Professor/Get",
@@ -236,63 +242,78 @@ function PostStudent() {
         }
     });
 }
-function GetNewsById(idNot) {
-    $.ajax({
-        url: "/BreakingNew/Get",
-        type: "GET",
-        data: { idNot: idNot },
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (result) {
-            if (result) {
-                addNewsComponent(result);
-            } else {
-                alert("No se encontró la noticia.");
-            }
-        },
-        error: function (errorMessage) {
-            alert("Error al obtener la noticia.");
-        }
-    });
-}
+
 
 //Required for courses and course comments
-function GetCommentCourseById(id) {
+function loadNewsComments(id) {
     $.ajax({
-        url: "/CommentNew/Get",  // Ruta al controlador y método
+        url: "/CommentNew/GetAll/",
         type: "GET",
-        data: { id: id },  // Parámetro id que se pasa al método
+        data: { id: id },
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (result) {
-            if (result && result.length > 0) {
-                // Aquí agregamos los comentarios al contenedor
-                addCommentsToContainer(result);
-            } else {
-                alert("No se encontraron comentarios.");
+            $("#NewsCommentsLoader").empty();
+
+            if (result.length > 0) {
+                let promises = result.map(comment => {
+                    return new Promise((resolve, reject) => {
+                        let photo = "/images/defaultpfp.jpg";
+                        let name = "Unknown!";
+
+                        CheckNewsCommentType(comment.idUser)
+                            .then(type => {
+                                if (type == 1) {
+                                    return GetProfessorCommentData(comment.idUser);
+                                } else if (type == -1) {
+                                    return GetStudentCommentData(comment.idUser);
+                                }
+                                return null;
+                            })
+                            .then(userData => {
+                                if (userData) {
+                                    photo = userData.photo || photo;
+                                    name = userData.name || name;
+                                }
+                                resolve({ name, photo, comment });
+                            })
+                            .catch(error => {
+                                console.error("Error:", error);
+                                resolve({ name, photo, comment }); // Evita que un error detenga todo
+                            });
+                    });
+                });
+
+                // Esperamos a que todas las promesas se resuelvan antes de mostrar los comentarios
+                Promise.all(promises).then(commentsData => {
+                    commentsData.forEach(({ name, photo, comment }) => {
+                        appendComment(name, photo, comment);
+                    });
+                });
             }
         },
         error: function (errorMessage) {
-            alert("Error al obtener los comentarios.");
+            console.error("Error al cargar los comentarios", errorMessage);
         }
     });
 }
-function addCommentsToContainer(comments) {
-    // Limpiar el contenedor antes de agregar los nuevos comentarios
-    $(".news-comment-loader").empty();
-
-    // Recorrer todos los comentarios y agregarlos al contenedor
-    comments.forEach(function (comment) {
-        var commentHtml = `
-            <div class="comment col-xs-12 col-sm-9 col-lg-10">
-                <h4 class="media-heading">${comment.name1}</h4>
-                <p>${comment.content}</p>
+function appendComment(name, photo, comment) {
+    let photoSrc = photo.startsWith("data:image") ? photo : `data:image/jpeg;base64,${photo}`;
+    var commentHtml = `
+            <div class="media">
+                <div class="col-sm-3 col-lg-2 hidden-xs">
+                    <img class="comment-media-object" src="${photoSrc}" alt="User Profile">
+                </div>
+                <div class="comment col-xs-12 col-sm-9 col-lg-10">
+                    <h4 class="media-heading">${name}</h4>
+                    <h5 class="media-heading">${comment.date}</h5>
+                    <p>${comment.contentC}</p>
+                </div>
             </div>
         `;
-        // Agregar el comentario al contenedor
-        $(".news-comment-loader").append(commentHtml);
-    });
+    $("#NewsCommentsLoader").append(commentHtml);
 }
+
 
 //Required for courses and course comments
 function GetCoursesByCycle(cycle) {
@@ -636,128 +657,161 @@ discussionButton.addEventListener('click', () => {
     openModal(courseModal);
 });
 
-function loadAllNewsDescending() {
-    $.ajax({
-        url: "/BreakingNew/GetMaxId",
-        type: "GET",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (maxIdResult) {
-            if (maxIdResult) {
-                let maxId = maxIdResult.idNot;
-                loadNewsById(maxId);
-            } else {
-                alert("No se pudo obtener el ID máximo.");
-            }
-        },
-        error: function () {
-            alert("Error al obtener el ID máximo.");
-        }
-    });
-}
-
-function loadNewsById(id) {
-    if (id < 1) {
-        updateNewsDisplay();
-        return; // Detener si el ID es menor que 1
-    }
-
+function loadNews() {
     $.ajax({
         url: "/BreakingNew/Get",
         type: "GET",
-        data: { idNot: id },
         contentType: "application/json;charset=utf-8",
         dataType: "json",
-        success: function (news) {
-            if (news) {
-                newsList.push(news);
-            }
-            // Intentar cargar la siguiente noticia
-            loadNewsById(id - 1);
+        success: function (result) {
+            $.each(result, function (key, item) {
+                newsArray.push({
+                    idNew: item.idNew,
+                    title: item.title,
+                    paragraph: item.paragraph,
+                    photo: item.photo,
+                    date: item.date
+                });
+            });
+            renderNews();
         },
-        error: function () {
-            // Manejar el caso en que el ID no exista y continuar con el siguiente
-            loadNewsById(id - 1);
+        error: function (errorMessage) {
+            alert("Error fetching news");
         }
     });
 }
 
-function updateNewsDisplay() {
-    $("#newsContainer").empty();
 
-    // Agregar los botones de navegación
-    $("#newsContainer").append('<button class="carousel-control left" id="prevBtn"> &lt </button>');
-    $("#newsContainer").append('<button class="carousel-control right" id="nextBtn">&gt</button>');
 
-    for (let i = currentIndex; i < currentIndex + newsPerPage && i < newsList.length; i++) {
-        addNewsComponent(newsList[i]);
-    }
+function renderNews() {
+    document.getElementById('newImage0').src = `data:image/png;base64,${newsArray[0].photo}`;
+    document.getElementById('newImage1').src = `data:image/png;base64,${newsArray[1].photo}`;
+    document.getElementById('newImage2').src = `data:image/png;base64,${newsArray[2].photo}`;
 
-    // Mostrar u ocultar botones según el índice actual
-    $("#prevBtn").toggle(currentIndex > 0);
-    $("#nextBtn").toggle(currentIndex + newsPerPage < newsList.length);
+    document.getElementById('newPreviewTittle0').textContent = newsArray[0].title;
+    document.getElementById('newPreviewTittle1').textContent = newsArray[1].title;
+    document.getElementById('newPreviewTittle2').textContent = newsArray[2].title;
+}
 
-    // Reasignar eventos de clic a los botones de navegación
-    $("#prevBtn").click(function () {
-        if (currentIndex > 0) {
-            currentIndex -= newsPerPage;
-            updateNewsDisplay();
-        }
-    });
 
-    $("#nextBtn").click(function () {
-        if (currentIndex + newsPerPage < newsList.length) {
-            currentIndex += newsPerPage;
-            updateNewsDisplay();
-        }
+function showNew() {
+    document.getElementById('newFullImage').src = `data:image/png;base64,${newsArray[newCurrentID].photo}`;
+    document.getElementById('newTitle').textContent = newsArray[newCurrentID].title;
+    document.getElementById('newDate').textContent = newsArray[newCurrentID].date;
+    document.getElementById('newBody').textContent = newsArray[newCurrentID].paragraph;
+    loadNewsComments(newsArray[newCurrentID].idNew);
+
+}
+
+
+function GetProfessorCommentData(id) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: "/CommentNew/GetProfessorCommentData/",
+            type: "GET",
+            data: { id: id },
+            dataType: "json",
+            success: function (result) {
+                resolve(result);
+            },
+            error: function () {
+                alert("Error retrieving data");
+                reject("Error retrieving data");
+            }
+        });
     });
 }
 
-function addNewsComponent(news) {
-    // Crear nuevo elemento HTML para la noticia
-    var newsItem = `
-        <div class="news-item">
-            <img src="${news.imageUrl}" alt="News Image" class="news-image" />
-            <div class="news-content">
-                <h3 class="news-title">${news.title}</h3>
-                <a href="#" class="more-about-link"
-                   data-title="${news.title}"
-                   data-date="${news.date}"
-                   data-paragraph="${news.paragraph}"
-                   data-photo="${news.photo ? btoa(String.fromCharCode.apply(null, news.photo)) : ''}">
-                    <u>More about</u>
-                </a>
-            </div>
-        </div>`;
-
-    // Agregar la noticia al contenedor
-    $("#newsContainer").append(newsItem);
-
-    // Asignar evento de apertura del modal
-    $("#newsContainer .more-about-link").last().on("click", function (e) {
-        e.preventDefault(); // Evita la navegación por defecto
-
-        // Obtener datos desde `data-attributes`
-        var title = $(this).data("title");
-        var date = $(this).data("date");
-        var paragraph = $(this).data("paragraph");
-        var photo = $(this).data("photo");
-
-        // Rellenar el modal con la información correcta usando selectores de clase
-        $("#newsModal .news-title").text(title);
-        $("#newsModal .news-date").text("Published on: " + date);
-        $("#newsModal .news-body").text(paragraph);
-
-        // Manejar la imagen
-        if (photo) {
-            $("#newsModal .news-image").attr("src", "data:image/png;base64," + photo);
-        } else {
-            $("#newsModal .news-image").attr("src", "/images/default.jpg"); // Imagen por defecto
-        }
-
-        // Mostrar el modal
-        $("#newsModal").fadeIn();
+function CheckNewsCommentType(id) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: "/CommentNew/CheckType/",
+            type: "GET",
+            data: { id: id },
+            contentType: "application/json;charset=utf-8",
+            dataType: "text",
+            success: function (result) {
+                resolve(result);
+            },
+            error: function () {
+                alert("Not an ID");
+                reject("Error en la petición");
+            }
+        });
     });
 }
 
 
+function GetStudentCommentData(id) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: "/CommentNew/GetStudentCommentData/",
+            type: "GET",
+            data: { id: id },
+            dataType: "json",
+            success: function (result) {
+                resolve(result);
+            },
+            error: function () {
+                alert("Error retrieving data");
+                reject("Error retrieving data");
+            }
+        });
+    });
+}
+
+
+function moveNext() {
+    let firstItem = newsArray.shift();
+    newsArray.push(firstItem);
+}
+
+
+function movePrev() {
+
+    let lastItem = newsArray.pop();
+    newsArray.unshift(lastItem);
+
+}
+
+
+
+const link0 = document.getElementById("newsLink0");
+
+const link1 = document.getElementById("newsLink1");
+
+const link2 = document.getElementById("newsLink2");
+
+link0.addEventListener('click', (event) => {
+    newCurrentID = 0;
+    showNew();
+});
+
+link1.addEventListener('click', (event) => {
+    newCurrentID = 1;
+    showNew();
+});
+
+link2.addEventListener('click', (event) => {
+    newCurrentID = 2;
+    showNew();
+
+})
+
+link0.addEventListener('click', (event) => {
+    event.preventDefault();
+    openModal(newsModal);
+
+});
+
+link1.addEventListener('click', (event) => {
+    event.preventDefault();
+    openModal(newsModal);
+
+});
+
+link2.addEventListener('click', (event) => {
+    event.preventDefault();
+    openModal(newsModal);
+
+});

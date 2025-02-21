@@ -359,10 +359,43 @@
         <div class="col-lg-12 d-flex justify-content-center">
             <h1>Noticias</h1>
         </div>
+        <div class="newsCar">
+            <div id="newsContainer" class="newsContainer">
+                <button class="carousel-control left" id="prevBtn"> &lt </button>
 
-        <div id="newsContainer" class="newsContainer">
-            <button class="carousel-control left" id="prevBtn"> &lt </button>
-            <button class="carousel-control right" id="nextBtn">&gt</button>
+
+                <div class="news-item">
+                    <img src="" alt="News Image" class="news-image-preview" id="newImage0" />
+                    <div class="news-content">
+                        <h3 class="news-title" id="newPreviewTittle0"></h3>
+                        <a href="#" class="more-about-link0" id="newsLink0">
+                            <u>Saber más</u>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <img src="" alt="News Image" class="news-image-preview" id="newImage1" />
+                    <div class="news-content">
+                        <h3 class="news-title" id="newPreviewTittle1"></h3>
+                        <a href="#" class="more-about-link1" id="newsLink1">
+                            <u>Saber más</u>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="news-item">
+                    <img src="" alt="News Image" class="news-image-preview" id="newImage2" />
+                    <div class="news-content">
+                        <h3 class="news-title" id="newPreviewTittle2"></h3>
+                        <a href="#" class="more-about-link2" id="newsLink2">
+                            <u>Saber más</u>
+                        </a>
+                    </div>
+                </div>
+                <button class="carousel-control right" id="nextBtn">&gt</button>
+
+            </div>
         </div>
     </div>
 
@@ -374,21 +407,29 @@
             <div class="news-container">
                 <!-- Left Side: Text -->
                 <div class="news-text">
-                    <h1 class="news-title">Exciting News Title</h1>
-                    <p class="news-date">Published on: January 26, 2025</p>
-                    <p class="news-body">
+                    <h1 class="news-title" id="newTitle">Exciting News Title</h1>
+                    <p class="news-date" id="newDate">Published on: January 26, 2025</p>
+                    <p class="news-body" id="newBody">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod malesuada dolor nec bibendum.
+                        Cras vehicula mi eget lectus efficitur, eget accumsan ante condimentum.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod malesuada dolor nec bibendum.
+                        Cras vehicula mi eget lectus efficitur, eget accumsan ante condimentum.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod malesuada dolor nec bibendum.
+                        Cras vehicula mi eget lectus efficitur, eget accumsan ante condimentum.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod malesuada dolor nec bibendum.
+                        Cras vehicula mi eget lectus efficitur, eget accumsan ante condimentum.
                     </p>
                 </div>
 
                 <!-- Right Side: Image -->
                 <div class="news-image-container">
-                    <img src="~/images/about.jpg" alt="News Image" class="news-image" />
+                    <img src="~/images/about.jpg" alt="News Image" class="news-image" id="newFullImage" />
                 </div>
             </div>
 
             <!--News Comment section-->
             <div class="news-comment-container">
-                <h1 class="pull-left">Discusión</h1>
+                <h1 class="pull-left">Comentarios</h1>
                 <div class="row">
                     <div class="col-sm-8">
                         <div class="news-comment-form">
@@ -399,7 +440,7 @@
 
                                 <div class="comment col-xs-12 col-sm-9 col-lg-10">
                                     <form>
-                                        <textarea class="form-control" id="message" placeholder="Tu mensaje" required=""></textarea>
+                                        <textarea class="form-control" id="message" placeholder="Escribe un mensaje" required=""></textarea>
                                         <button type="submit" class="btn btn-normal pull-right">Enviar</button>
 
                                     </form>
@@ -407,7 +448,7 @@
                             </div>
 
                             <h3>Comentarios</h3>
-                            <div class="news-comment-loader">
+                            <div class="news-comment-loader" id="NewsCommentsLoader">
 
                                 <div class="media">
                                     <div class="col-sm-3 col-lg-2 hidden-xs">
@@ -416,10 +457,11 @@
 
                                     <div class="comment col-xs-12 col-sm-9 col-lg-10">
                                         <h4 class="media-heading">Default name</h4>
+                                        <h5 class="media-heading">02/17/25</h5>
+
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -748,5 +790,11 @@
     <script src="js/validator.min.js"></script> <!-- Validator.js - Bootstrap plugin that validates forms -->
     <script src="js/scripts.js"></script> <!-- Custom scripts -->
     <script src="js/site.js"></script>
+
+
+
+
+
+
 </body>
 </html>

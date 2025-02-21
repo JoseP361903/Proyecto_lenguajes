@@ -2,27 +2,27 @@
 {
     public class BreakingNew
     {
-        private string idNot;
-        private DateOnly date;
+
+        private int idNew;
         private string title;
         private string paragraph;
-        private string photo;
+        private string? photo;
+        private DateOnly date;
 
-        public BreakingNew() { }
-
-        public BreakingNew(string idNot, DateOnly date, string title, string paragraph, string photo)
+        public BreakingNew(int idNew, string title, string paragraph, string? photo, DateOnly date)
         {
-            IdNot = idNot;
-            Date = date;
-            Title = title;
-            Paragraph = paragraph;
-            Photo = photo;
+            this.idNew = idNew;
+            this.title = title;
+            this.paragraph = paragraph;
+            this.photo = photo;
+            this.date = date;
         }
 
-        public string IdNot { get => idNot; set => idNot = value; }
-        public DateOnly Date { get => date; set => date = value; }
+      
+        public int IdNew { get => idNew; set => idNew = value; }
         public string Title { get => title; set => title = value; }
         public string Paragraph { get => paragraph; set => paragraph = value; }
-        public string Photo { get => photo; set => photo = value; }
+        public string? Photo { get => photo; set => photo = value; }
+        public DateOnly Date { get => date; set => date = value; }
     }
 }
