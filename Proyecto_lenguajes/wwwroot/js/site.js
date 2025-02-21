@@ -435,28 +435,6 @@ function GetStudentPhotoById() {
     });
 }
 
-function GetStudentPhotoId(id, type) {
-    return new Promise((resolve, reject) => {
-        $.ajax({
-            url: `/${type}/Get`,
-            type: "GET",
-            data: { id: id },
-            contentType: "application/json;charset=utf-8",
-            dataType: "json"
-        })
-            .done(result => {
-                if (result && result.photo) {
-                    return (result.photo);
-                } else {
-                    return (null);
-                }
-            })
-            .fail(() => {
-                reject();
-            });
-    });
-}
-
 //Required for courses and course comments
 function GetCourseByAcronym(acronym) {
     $.ajax({
