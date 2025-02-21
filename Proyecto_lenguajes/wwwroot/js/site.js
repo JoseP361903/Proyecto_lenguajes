@@ -307,7 +307,7 @@ function appendComment(name, photo, comment) {
                 <div class="comment col-xs-12 col-sm-9 col-lg-10">
                     <h4 class="media-heading">${name}</h4>
                     <h5 class="media-heading">${comment.date}</h5>
-                    <p>${comment.contentC}</p>
+                    <p>${comment.content}</p>
                 </div>
             </div>
         `;
