@@ -527,7 +527,67 @@ function base64ToImage(base64String, imgElement) {
 }
 
 
+function postNewsComment() {
+    var contentC = $("#newCommentmessage").val().trim(); // Usar .val() para obtener el valor del textarea
+    var idNew = newsArray[newCurrentID].idNew;
 
+    const currentDate = new Date();
+    const year = currentDate.getFullYear();
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const date = `${year}-${month}-${day}`;
+
+    getStudentDataFromSession().then(student => {
+        if (student) {
+            var commentData = {
+                content: contentC,
+                idNew: idNew,
+                date: date,
+                idUser: student.id
+            };
+
+            postNewCommentData(commentData);
+        } else {
+            alert("No se encontraron datos del estudiante.");
+        }
+    }).catch(() => {
+        alert("Error al obtener los datos del estudiante.");
+    });
+}
+
+function postNewCommentData(commentData) {
+    $.ajax({
+        url: "/CommentNew/Post",
+        type: "POST",
+        data: JSON.stringify(commentData),
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (response) {
+            $("#newsCommentText").val("");
+            loadNewsComments(commentData.idNew);
+        },
+        error: function (error) {
+            alert("Error al enviar el comentario.");
+        }
+    });
+}
+
+function getStudentDataFromSession() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: "/Student/GetStudentDataFromSession",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (student) {
+                resolve(student);
+            },
+            error: function () {
+                reject();
+            }
+        });
+    });
+}
 
 
 //Required for courses and course comments

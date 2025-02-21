@@ -15,10 +15,11 @@ namespace Proyecto_lenguajes.Models.Services
             connectionString = _configuration.GetConnectionString("DefaultConnection");
         }
 
-        public int Post(CommentNew commentNew) { 
+        public int Post(CommentNew commentNew)
+        {
             int result = 0;
 
-            using (SqlConnection connection = new SqlConnection(connectionString)) 
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 try
                 {
@@ -33,16 +34,16 @@ namespace Proyecto_lenguajes.Models.Services
 
                     connection.Close();
 
-                } catch (SqlException) 
+                }
+                catch (SqlException)
                 {
                     throw;
                 }
-            
+
             }
 
             return result;
         }
-
         public List<CommentNew> Get(string id) 
         { 
         
