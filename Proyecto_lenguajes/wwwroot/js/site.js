@@ -111,50 +111,92 @@ function LoadProfessor() {
     });
 }
 
-
-
 function PostApplicationConsultation() {
-
-
-
     let appointmentType = $("#appointmentType").val(); // Obtener el valor del select
 
-    if (appointmentType === "1") { // Solo ejecuta si el select está en "0"
-
+    if (appointmentType == "1") { // Solo ejecuta si el select está en "1"
         let professorSelect = $("#professorSelect option:selected"); // Obtiene la opción seleccionada
         let professorId = professorSelect.val(); // Obtiene el ID del profesor
         let professorName = professorSelect.text().replace(/\s*\(\d+\)$/, ''); // Extrae el nombre sin el ID
 
-        let applicationData = {
-            Text: $("#txtConsult").val(), // Asegurar que este input exista en el HTML
-            Student: {
-                Id: $("#studentID").text(), // Asegurar que el campo de estudiante exista
-                Name: $("#studentName").text()
-            },
+        getStudentDataFromSession().then(student => {
+            if (student) {
+                let applicationData = {
+                    Text: $("#txtConsult").val(), // Asegurar que este input exista en el HTML
+                    Student: {
+                        Id: student.id, // Usar el ID del estudiante obtenido de la sesión
+                        Name: student.name // Usar el nombre del estudiante obtenido de la sesión
+                    },
+                    Professor: {
+                        Id: professorId,
+                        Name: professorName
+                    }
+                };
 
-            Professor: {
-                Id: professorId,
-                Name: professorName
+                $.ajax({
+                    url: "/ApplicationConsultation/Post",
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify(applicationData),
+                    dataType: "json",
+                    success: function (response) {
+                        alert("Consulta enviada exitosamente");
+                    },
+                    error: function (error) {
+                        alert("Error al enviar la consulta");
+                    }
+                });
+            } else {
+                alert("No se encontraron datos del estudiante.");
             }
-        };
-
-        $.ajax({
-            url: "/PrivateConsultation/Post",
-            type: "POST",
-            contentType: "application/json;charset=utf-8",
-            data: JSON.stringify(applicationData),
-            dataType: "json",
-            success: function (response) {
-                alert("Consulta enviada exitosamente");
-            },
-            error: function (error) {
-                alert("Error al enviar la consulta");
-            }
+        }).catch(() => {
+            alert("Error al obtener los datos del estudiante.");
         });
-    } else {
-        alert("Seleccione una opción válida para enviar la consulta.");
-    }
+    } 
+}
 
+function PostPrivateConsultation() {
+    let appointmentType = $("#appointmentType").val(); // Obtener el valor del select
+
+    if (appointmentType == "0") { // Solo ejecuta si el select está en "0"
+        let professorSelect = $("#professorSelect option:selected"); // Obtiene la opción seleccionada
+        let professorId = professorSelect.val(); // Obtiene el ID del profesor
+        let professorName = professorSelect.text().replace(/\s*\(\d+\)$/, ''); // Extrae el nombre sin el ID
+
+        getStudentDataFromSession().then(student => {
+            if (student) {
+                let applicationData = {
+                    Text: $("#txtConsult").val(), // Asegurar que este input exista en el HTML
+                    Student: {
+                        Id: student.id, // Usar el ID del estudiante obtenido de la sesión
+                        Name: student.name // Usar el nombre del estudiante obtenido de la sesión
+                    },
+                    Professor: {
+                        Id: professorId,
+                        Name: professorName
+                    }
+                };
+
+                $.ajax({
+                    url: "/PrivateConsultation/Post",
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify(applicationData),
+                    dataType: "json",
+                    success: function (response) {
+                        alert("Consulta enviada exitosamente");
+                    },
+                    error: function (error) {
+                        alert("Error al enviar la consulta");
+                    }
+                });
+            } else {
+                alert("No se encontraron datos del estudiante.");
+            }
+        }).catch(() => {
+            alert("Error al obtener los datos del estudiante.");
+        });
+    } 
 }
 
 //Required for courses and course comments
@@ -606,6 +648,7 @@ function getStudentDataFromSession() {
             },
             error: function () {
                 reject();
+                document.querySelector("#header").scrollIntoView({ behavior: "smooth" });//redirige al loggin
             }
         });
     });

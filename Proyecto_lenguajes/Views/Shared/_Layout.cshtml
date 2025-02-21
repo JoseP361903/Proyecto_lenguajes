@@ -610,14 +610,14 @@
                             </select>
 
                             <select class="form-control without-margin mb-3" name="appointmentTypes" id="appointmentType">
-                                <option value="0" selected>Solicitud de hora de consulta</option>
+                                <option value="0" >Solicitud de hora de consulta</option>
                                 <option value="1">Consulta privada sobre curso</option>
                             </select>
 
                             <textarea class="form-control mb-3" rows="6" placeholder="Asunto"id="txtConsult" name="appointmentMessage"></textarea>
 
                             <div class="form-group">
-                                <button type="button" class="form-control-submit-button" onclick="PostApplicationConsultation()" id="submitAppointmentButton">Enviar</button>
+                                <button type="button" class="form-control-submit-button" onclick="PostApplicationConsultation();PostPrivateConsultation();" id="submitAppointmentButton">Enviar</button>
                             </div>
                         </form>
                     </div>
