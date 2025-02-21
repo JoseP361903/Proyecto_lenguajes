@@ -177,38 +177,35 @@ function AuthenticateStudent() {
         }
     });
 }
-function GetStudentData(id) {
+function GetStudentData() {
     $.ajax({
-        url: "/Student/Get",
+        url: "/Student/GetStudentDataFromSession",
         type: "GET",
-        data: { id: id },  // Asegurar que se envía el parámetro ID
         contentType: "application/json;charset=utf-8",
         dataType: "json",
-        success: function (professor) {
-            if (professor) {
-                $("#studentName").text(professor.name + " " + professor.lastName);
-                $("#studentID").text(professor.id);
+        success: function (student) {
+            if (student) {
+                $("#studentName").text(student.name + " " + student.lastName);
+                $("#studentID").text(student.id);
 
-                $("#pName").val(professor.name);
-                $("#pSname").val(professor.lastName);
-                $("#pMail").val(professor.email);
+                $("#pName").val(student.name);
+                $("#pSname").val(student.lastName);
+                $("#pMail").val(student.email);
 
-                if (professor.profilePicture) {
-                    $("#profileModal img").attr("src", professor.profilePicture);
+                if (student.photo) {
+                    $("#profileModal img").attr("src", `data:image/png;base64,${student.photo}`);
+                } else {
+                    $("#profileModal img").attr("src", "/images/default.jpg"); // Imagen por defecto
                 }
-
-               
-
             } else {
-                alert("No se encontraron datos del profesor.");
+                alert("No se encontraron datos del estudiante.");
             }
         },
         error: function () {
-            alert("Error al obtener los datos del profesor.");
+            alert("Error al obtener los datos del estudiante.");
         }
     });
 }
-
 function PostStudent() {
     // Construir el objeto student con los valores del formulario
     let student = {
@@ -416,9 +413,8 @@ function GetPhoto(id, type) {
 
 function GetStudentPhotoById() {
     $.ajax({
-        url: "/Student/Get",
+        url: "/Student/GetStudentDataFromSession",
         type: "GET",
-        data: { id: "C36373" },    //Change for the photo de user in the application
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         success: function (student) {
@@ -524,8 +520,6 @@ function closeModal(modal) {
     navigationBar.style.display = 'block';
 }
 function postComment() {
-    
-    
     var content = $("#textareacomment").val().trim(); // Obtiene el valor del textarea y quita espacios vacíos
     var acronym = $("#courseAcronym").text().trim(); // Obtiene el texto del h4
 
@@ -538,7 +532,7 @@ function postComment() {
     var commentData = {
         content: content,
         acronym: acronym,
-        idUser: "C36373",//Cambiar por el id del usuario
+        idUser: $("#studentID").text(), // Usar el ID del estudiante desde la sesión
         date: date
     };
 

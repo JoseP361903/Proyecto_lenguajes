@@ -40,6 +40,43 @@ namespace Proyecto_lenguajes.Controllers
             }
         }
 
+        public IActionResult Login(Student student)
+        {
+            HttpContext.Session.SetString("UserId", student.Id); // Guardar en sesión
+            return Ok(student); // Devolver un resultado indicando éxito
+        }
+        public IActionResult Dashboard()
+        {
+            var userId = HttpContext.Session.GetString("UserId"); // Leer sesión
+            ViewBag.UserId = userId;
+            return View();
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear(); // Eliminar sesión
+            return Ok(new { message = "Logout successful" }); // Devolver un resultado indicando éxito
+        }
+
+        public IActionResult GetStudentDataFromSession()
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User is not logged in.");
+            }
+
+            var student = new Student
+            {
+                Id = userId,
+                Name = HttpContext.Session.GetString("UserName"),
+                LastName = HttpContext.Session.GetString("UserLastName"),
+                Email = HttpContext.Session.GetString("UserEmail"),
+                Photo = HttpContext.Session.GetString("UserPhoto")
+            };
+
+            return Ok(student);
+        }
         public IActionResult Authenticate([FromBody] Student student)
         {
             var result = studentServices.Authenticate(student);
@@ -48,7 +85,16 @@ namespace Proyecto_lenguajes.Controllers
                 switch (result)
                 {
                     case 1:
-                        return Ok(student); // Autenticación exitosa
+                        var studentData = studentServices.Get(student.Id);
+                        if (studentData != null)
+                        {
+                            HttpContext.Session.SetString("UserId", studentData.Id);
+                            HttpContext.Session.SetString("UserName", studentData.Name);
+                            HttpContext.Session.SetString("UserLastName", studentData.LastName);
+                            HttpContext.Session.SetString("UserEmail", studentData.Email);
+                            HttpContext.Session.SetString("UserPhoto", studentData.Photo);
+                        }
+                        return Ok(new { message = "Authentication successful", student = studentData }); // Autenticación exitosa
                     case -1:
                         return Unauthorized("Incorrect password."); // Contraseña incorrecta
                     case -2:
@@ -64,7 +110,6 @@ namespace Proyecto_lenguajes.Controllers
                 throw;
             }
         }
-
         public IActionResult Post([FromBody] Student student)
         {
             try
