@@ -70,7 +70,26 @@ $(document).ready(function () {
 });
 
 
-
+function checkSession() {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: "/Student/IsSessionActive",
+            type: "GET",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                if (response && typeof response.isLoggedIn !== 'undefined') {
+                    resolve(response.isLoggedIn);
+                } else {
+                    reject(new Error("Respuesta inesperada del servidor"));
+                }
+            },
+            error: function (xhr, status, error) {
+                reject(new Error(`Error en la solicitud: ${status} - ${error}`));
+            }
+        });
+    });
+}
 function LoadProfessor() {
     $.ajax({
         url: "/Professor/Get",
@@ -209,6 +228,8 @@ function GetStudentData() {
         },
         error: function () {
             alert("Error al obtener los datos del estudiante.");
+
+            document.querySelector("#header").scrollIntoView({ behavior: "smooth" });//redirige al loggin
         }
     });
 }
@@ -242,8 +263,6 @@ function PostStudent() {
         }
     });
 }
-
-
 //Required for courses and course comments
 function loadNewsComments(id) {
     $.ajax({
@@ -293,7 +312,12 @@ function loadNewsComments(id) {
             }
         },
         error: function (errorMessage) {
+
+            
             console.error("Error al cargar los comentarios", errorMessage);
+
+
+            
         }
     });
 }
@@ -313,8 +337,6 @@ function appendComment(name, photo, comment) {
         `;
     $("#NewsCommentsLoader").append(commentHtml);
 }
-
-
 //Required for courses and course comments
 function GetCoursesByCycle(cycle) {
     $.ajax({
@@ -370,7 +392,7 @@ function GetCommentsByCourseId(courseId) {
 //Required for courses and course comments
 function loadComentarios(comments) {
 
-    GetStudentPhotoById();
+   
 
     $(".course-comment-loader").empty(); // Limpiar comentarios anteriores
 
@@ -431,8 +453,7 @@ function GetPhoto(id, type) {
             });
     });
 }
-
-function GetStudentPhotoById() {
+function GetStudentPhotoById(imgId) {
     $.ajax({
         url: "/Student/GetStudentDataFromSession",
         type: "GET",
@@ -440,18 +461,24 @@ function GetStudentPhotoById() {
         dataType: "json",
         success: function (student) {
             if (student) {
-                const imgElement = document.getElementById('imageUser');
-                base64ToImage(student.photo, imgElement);
+                const imgElement = document.getElementById(imgId);
+                if (imgElement) {
+                    base64ToImage(student.photo, imgElement);
+                } else {
+                    console.error(`Elemento con ID ${imgId} no encontrado.`);
+                }
             } else {
                 alert("No se encontraron datos del estudiante.");
             }
         },
         error: function () {
+
             alert("Error al obtener los datos del estudiante.");
+
+            document.querySelector("#header").scrollIntoView({ behavior: "smooth" });//redirige al loggin
         }
     });
 }
-
 //Required for courses and course comments
 function GetCourseByAcronym(acronym) {
     $.ajax({
@@ -485,9 +512,7 @@ function displayCourseInfo(course) {
 
 }
 
-
 //Converters / Util stuff
-
 function imageToBase64(imgElement, callback) {
     const img = imgElement; // Elemento <img>
     const canvas = document.createElement('canvas');
@@ -502,7 +527,6 @@ function imageToBase64(imgElement, callback) {
 
     callback(base64String);
 }
-
 
 //Conversors
 function imageToBase64(imgElement, callback) {
@@ -525,8 +549,6 @@ function imageToBase64(imgElement, callback) {
 function base64ToImage(base64String, imgElement) {
     imgElement.src = `data:image/png;base64,${base64String}`;
 }
-
-
 function postNewsComment() {
     var contentC = $("#newCommentmessage").val().trim(); // Usar .val() para obtener el valor del textarea
     var idNew = newsArray[newCurrentID].idNew;
@@ -552,9 +574,10 @@ function postNewsComment() {
         }
     }).catch(() => {
         alert("Error al obtener los datos del estudiante.");
+
+        document.querySelector("#header").scrollIntoView({ behavior: "smooth" });//redirige al loggin
     });
 }
-
 function postNewCommentData(commentData) {
     $.ajax({
         url: "/CommentNew/Post",
@@ -571,7 +594,6 @@ function postNewCommentData(commentData) {
         }
     });
 }
-
 function getStudentDataFromSession() {
     return new Promise((resolve, reject) => {
         $.ajax({
@@ -588,7 +610,6 @@ function getStudentDataFromSession() {
         });
     });
 }
-
 
 //Required for courses and course comments
 function openModal(modal) {
@@ -664,7 +685,6 @@ function PutStudent() {
     });
 }
 
-
 closeButtons.forEach(button => {
     button.addEventListener('click', () => {
         const modal = button.closest('.custom-modal');
@@ -714,6 +734,15 @@ mailNav.addEventListener('click', (event) => {
 const discussionButton = document.getElementById('discussionButton');
 const courseModal = document.getElementById('courseModal');
 discussionButton.addEventListener('click', () => {
+    checkSession().then(isLoggedIn => {
+        if (isLoggedIn) {
+            GetStudentPhotoById('imageUser');
+        } else {
+           
+        }
+    }).catch(error => {
+        console.error("Error al verificar la sesión:", error);
+    });
     openModal(courseModal);
 });
 
@@ -741,8 +770,6 @@ function loadNews() {
     });
 }
 
-
-
 function renderNews() {
     document.getElementById('newImage0').src = `data:image/png;base64,${newsArray[0].photo}`;
     document.getElementById('newImage1').src = `data:image/png;base64,${newsArray[1].photo}`;
@@ -753,7 +780,6 @@ function renderNews() {
     document.getElementById('newPreviewTittle2').textContent = newsArray[2].title;
 }
 
-
 function showNew() {
     document.getElementById('newFullImage').src = `data:image/png;base64,${newsArray[newCurrentID].photo}`;
     document.getElementById('newTitle').textContent = newsArray[newCurrentID].title;
@@ -761,8 +787,19 @@ function showNew() {
     document.getElementById('newBody').textContent = newsArray[newCurrentID].paragraph;
     loadNewsComments(newsArray[newCurrentID].idNew);
 
-}
 
+    checkSession().then(isLoggedIn => {
+        if (isLoggedIn) {
+            GetStudentPhotoById('imgNewComment');
+        } else {
+           
+        }
+    }).catch(error => {
+        console.error("Error al verificar la sesión:", error);
+    });
+    
+
+}
 
 function GetProfessorCommentData(id) {
     return new Promise((resolve, reject) => {
@@ -833,8 +870,6 @@ function movePrev() {
     newsArray.unshift(lastItem);
 
 }
-
-
 
 const link0 = document.getElementById("newsLink0");
 
