@@ -18,6 +18,10 @@
     <meta property="og:url" content="" /> <!-- where do you want your post to link to -->
     <meta property="og:type" content="article" />
 
+
+
+
+
     <!-- Website Title -->
     <title>Info-E</title>
 
@@ -29,6 +33,8 @@
     <link href="css/swiper.css" rel="stylesheet">
     <link href="css/magnific-popup.css" rel="stylesheet">
     <link href="css/styles.css?v=2" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <!-- Favicon  -->
     <link rel="icon" href="images/favicon.ico">
@@ -207,99 +213,112 @@
     </div>
 
 
- 
 
-
-    <!-- Email Modal -->
+    <!-- Bootstrap 5 Modal -->
     <div id="emailModal" class="custom-modal">
         <div class="custom-modal-content2">
             <span class="custom-modal-close">&times;</span>
 
-            <div class="email-container">
-                <!-- Left Side (Email List) -->
-                <div class="email-list">
-                    <table class="email-table">
-                        <tbody>
-                            <tr>
-                                <td class="email-info">
-                                    <h4>Subject Example</h4>
-                                    <p>From: sender@example.com</p>
-                                </td>
-                                <td class="email-action">
-                                    <button class="btn btn-primary"> Open </button>
-                                </td>
-                            </tr>
+            <!-- Tab Buttons -->
+            <ul class="nav nav-tabs" id="emailTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="appointments-tab" data-bs-toggle="tab" data-bs-target="#appointments" type="button" role="tab" aria-controls="appointments" aria-selected="true">Citas</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="consults-tab" data-bs-toggle="tab" data-bs-target="#consults" type="button" role="tab" aria-controls="consults" aria-selected="false">Consultas</button>
+                </li>
+            </ul>
 
-                            <tr>
-                                <td class="email-info">
-                                    <h4>Subject Example</h4>
-                                    <p>From: sender@example.com</p>
-                                </td>
-                                <td class="email-action">
-                                    <button class="btn btn-primary">Open</button>
-                                </td>
-                            </tr>
+            <!-- Tab Content -->
+            <div class="tab-content" id="emailTabContent">
+                <!-- Appointments Tab -->
+                <div class="tab-pane fade show active" id="appointments" role="tabpanel" aria-labelledby="appointments-tab">
+                    <div class="email-container">
+                        <div class="email-list">
+                            <table class="email-table" id="email-table-appointment">
+                                <tbody>
+                                    <tr>
+                                        <td class="email-info">
+                                            <h4>Appointment Subject</h4>
+                                            <p id="name_sender">From: sender@example.com</p>
+                                        </td>
+                                        <td class="email-action">
+                                            <button class="btn btn-primary">Open</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="email-content">
+                            <p class="previous_text" id="previous_text">Seleccione un mensaje para verlo</p>
+                            <div class="row-profile">
+                                <div class="col-md-2">
+                                    <img src="~/images/defaultpfp.jpg" alt="Profile Picture" class="img-fluid" id="student_app_photo" hidden="true">
+                                </div>
+                                <div class="col-md-3">
+                                    <h3 id="student_app_name" hidden>John Doe</h3>
+                                    <p id="student_app_date" hidden>Jan 26, 2025</p>
+                                </div>
+                            </div>
+                            <p class="email-body" id="student_app_text" hidden>Appointment details here...</p>
+                            <h3 id="student_app_reply" hidden>Responder</h3>
+                            <textarea class="form-control" placeholder="Write your reply..." id="student_app_answer" hidden></textarea>
+                            <h1 id="student_app_idconsult" hidden></h1>
+                            <h1 id="student_app_student" hidden></h1>
+                            <h1 id="student_app_professor" hidden></h1>
 
+                            <button class="btn btn-primary send-btn custom-send-btn" id="sender_app" hidden>Enviar</button>
 
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Right Side (Email Content) -->
-                <div class="email-content">
-                    <!-- Profile Row (Name & Date) -->
-                    <div class="row-profile">
-                        <div class="col-md-2">
-                            <img src="~/images/defaultpfp.jpg" alt="Profile Picture" class="img-fluid">
+                <!-- Consults Tab -->
+                <div class="tab-pane fade" id="consults" role="tabpanel" aria-labelledby="consults-tab">
+                    <div class="email-container">
+                        <div class="email-list">
+                            <table class="email-table" id="email-table-private">
+                                <tbody>
+                                    <tr>
+                                        <td class="email-info">
+                                            <h4>Consult Subject</h4>
+                                            <p>From: sender@example.com</p>
+                                        </td>
+                                        <td class="email-action">
+                                            <button class="btn btn-primary">Open</button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
                         </div>
-                        <div class="col-md-3">
-                            <h3>John Doe</h3>
-                            <p>Jan 26, 2025</p>
+                        <div class="email-content">
+                            <p class="previous_text" id="previous_priv_text">Seleccione un mensaje para verlo</p>
+                            <div class="row-profile">
+                                <div class="col-md-2">
+                                    <img src="~/images/defaultpfp.jpg" alt="Profile Picture" class="img-fluid" id="student_private_photo">
+                                </div>
+                                <div class="col-md-3">
+                                    <h3 id="student_private_name">John Doe</h3>
+                                    <p id="student_private_date">Jan 27, 2025</p>
+                                </div>
+                            </div>
+                            <p class="email-body" id="student_private_text">Consult details here...</p>
+                            <h3 id="student_private_reply">Reply</h3>
+                            <textarea class="form-control" placeholder="Write your reply..." id="student_private_answer"></textarea>
+                            <h1 id="student_private_idconsult" hidden></h1>
+                            <h1 id="student_private_student" hidden></h1>
+                            <h1 id="student_private_professor" hidden></h1>
+                            <button class="btn btn-primary send-btn custom-send-btn" id="sender_private" >Enviar</button>
+
                         </div>
-                        <div class="col-md-4"></div>
                     </div>
-
-                    <!-- Email Body -->
-                    <p class="email-body">
-
-                        HQIRUWEPROIQE[WEQR]
-
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-                        HQIRUWEPROIQE[WEQR
-
-
-
-
-                    </p>
-
-                    <!-- Reply Section -->
-                    <h3>Reply</h3>
-                    <textarea class="form-control" placeholder="Write your reply..."></textarea>
-                    <button class="btn btn-primary send-btn">Enviar</button>
                 </div>
             </div>
         </div>
     </div>
+
+
 
 
 

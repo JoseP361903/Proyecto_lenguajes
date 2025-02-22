@@ -690,7 +690,7 @@ function openModal(modal) {
 //Required for courses and course comments
 function closeModal(modal) {
     modal.style.display = 'none';
-    navigationBar.style.display = 'block';
+    navigationBar.style.display = 'flex';
     document.getElementById('nextBtn').style.display = "block";
     document.getElementById('prevBtn').style.display = "block";
 }
