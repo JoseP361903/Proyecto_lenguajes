@@ -874,6 +874,12 @@ p, label {
 	z-index: 1000;
 }
 
+#imgNewComment {
+	max-height: 100px;
+	max-width: 100px;
+	min-height: 100px;
+	min-width: 100px;
+}
 /* Modal content */
 .custom-modal-content2 {
 	background-color: #fff;
@@ -2970,6 +2976,7 @@ table th,
 		}
 
 
+
 /**********************/
 /*   News Comments */
 /**********************/
@@ -2980,9 +2987,22 @@ table th,
 	background-color: #FFFFFF;
 }
 
-	.news-comment-container comment-media-object {
-		height: 100px;
-		width: 100px;
+	.news-comment-container .comment-media-object {
+		max-height: 100px;
+		max-width: 100px;
+		min-height: 100px;
+		min-width: 100px;
+		display: block;
+		object-fit: cover;
+		margin-left: 20px;
+	}
+
+
+	.course-comment-container .comment-media-object {
+		max-height: 100px;
+		max-width: 100px;
+		min-height: 100px;
+		min-width: 100px;
 		display: block;
 		object-fit: cover;
 		margin-left: 20px;

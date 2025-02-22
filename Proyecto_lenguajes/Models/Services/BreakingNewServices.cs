@@ -51,5 +51,39 @@ namespace Proyecto_lenguajes.Models.Services
 
             return newsList;
         }
+
+        public int Post(BreakingNew news)
+        {
+            int result = 0;
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    connection.Open();
+
+                    SqlCommand sqlCommand = new SqlCommand("Edu.AddNew", connection);
+                    sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    sqlCommand.Parameters.AddWithValue("@Title", news.Title);
+                    sqlCommand.Parameters.AddWithValue("@Paragraph", news.Paragraph);
+                    sqlCommand.Parameters.AddWithValue("@Photo", news.Photo);
+                    result = sqlCommand.ExecuteNonQuery();
+
+                    connection.Close();
+
+                }
+                catch (SqlException)
+                {
+                    throw;
+                }
+
+            }
+
+            return result;
+        }
+
+
+
     }
 }

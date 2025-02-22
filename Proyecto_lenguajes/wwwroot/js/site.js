@@ -867,11 +867,16 @@ function loadNews() {
     });
 }
 
+let newsBase64 = "";
+let newsPure64 = "";
+
 document.getElementById("fileInputNew").addEventListener("change", function (event) {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
         reader.onload = function (e) {
+            newsBase64 = e.target.result;
+            newsPure64 = newsBase64.split(",")[1];
             const preview = document.getElementById("imageAddPreview");
             preview.style.backgroundImage = `url(${e.target.result})`;
             preview.style.backgroundSize = "cover";
@@ -882,6 +887,64 @@ document.getElementById("fileInputNew").addEventListener("change", function (eve
         reader.readAsDataURL(file);
     }
 });
+
+function postNew() {
+    event.preventDefault();
+
+    var title = document.getElementById('newsTitle').value;
+    var paragraph = document.getElementById('newsParagraph').value;
+    var photo = newsPure64;
+
+    console.log("auxilio");
+
+    let news = {
+        Title: title,
+        Paragraph: paragraph,
+        Photo: photo
+    };
+
+    if (title == "" || paragraph == "" || photo == "") {
+
+
+        alert("Falta información para la noticia");
+
+
+    } else {
+
+        $.ajax({
+            url: "/BreakingNew/Post",
+            type: "POST",
+            data: JSON.stringify(news),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                loadNews();
+                clearNewsForm();
+            },
+            error: function (error) {
+                alert("Error al publicar la noticia.");
+            }
+        });
+
+
+    }
+}
+
+function clearNewsForm(){
+
+    document.getElementById('newsTitle').value = "";
+    document.getElementById('newsParagraph').value = "";
+    newsBase64 = "";
+    newsPure64 = "";
+    document.getElementById('imageAddPreview').style.backgroundImage = "";
+    closeModal(asoModal);
+
+
+}
+
+
+
+
 
 function renderNews() {
     document.getElementById('newImage0').src = `data:image/png;base64,${newsArray[0].photo}`;

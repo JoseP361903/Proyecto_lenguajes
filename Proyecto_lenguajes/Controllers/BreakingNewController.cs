@@ -3,6 +3,7 @@ using Proyecto_lenguajes.Models.Entities;
 using Proyecto_lenguajes.Models.Services;
 using Proyecto_lenguajes.Models;
 using System.Diagnostics;
+using Microsoft.Data.SqlClient;
 
 public class BreakingNewController : Controller
 {
@@ -35,6 +36,22 @@ public class BreakingNewController : Controller
 
         return news;
     }
+
+    [HttpPost]
+    public IActionResult Post([FromBody] BreakingNew news)
+    {
+        try
+        {
+            return Ok(breakingNewServices.Post(news));
+        }
+        catch (SqlException e)
+        {
+            ViewBag.Message = e.Message;
+            return View(e.ToString());
+        }
+    }
+
+
 
     public IActionResult Index()
     {

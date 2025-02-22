@@ -582,6 +582,7 @@
         </div>
     </div>
 
+
     <!-- Aso Modal -->
     <div id="asoModal" class="custom-modal">
         <div class="custom-modal-content3">
@@ -593,11 +594,11 @@
 
                         <div class="aso-news-form">
                             <form>
-                                <label for="commentText">Titulo:</label>
-                                <input type="text" id="commentText" class="form-control" />
+                                <label for="newsTitle">Titulo:</label>
+                                <input type="text" id="newsTitle" class="form-control" />
 
-                                <label for="commentDetails"> Cuerpo de la noticia </label>
-                                <textarea id="commentDetails" class="form-control"  rows="8"></textarea>
+                                <label for="newsParagraph"> Cuerpo de la noticia </label>
+                                <textarea id="newsParagraph" class="form-control" rows="8"></textarea>
 
                                 <div class="image-upload-container">
                                     <label class="image-label">Imagen</label>
@@ -610,8 +611,8 @@
 
                                 <!-- Botones de acción -->
                                 <div style="display: flex; justify-content: space-between; margin-top: 20px;">
-                                    <button type="submit" class="add-news-button">Añadir</button>
-                                    <button type="button" class="add-news-button">Cancelar</button>
+                                    <button type="submit" class="add-news-button" onclick="postNew()">Añadir</button>
+                                    <button type="button" class="add-news-button" onclick="clearNewsForm()">Cancelar</button>
                                 </div>
                             </form>
                         </div>
