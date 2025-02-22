@@ -842,9 +842,7 @@ p, label {
 	text-align: right;
 }
 
-button {
-	margin-left: 10px; /* Adds space between the two buttons */
-}
+
 
 /* Optional: Center the entire modal content vertically and horizontally */
 .custom-modal {
@@ -1425,6 +1423,21 @@ label {
 	position: relative; /* Ensure the buttons are positioned relative to this container */
 }
 
+
+#addNewsButton {
+	background-color: #f1962e;
+	color: white;
+	border: none;
+	border-radius: 50%; 
+	padding: 0.5rem 1rem;
+	cursor: pointer;
+	font-size: 1.75rem;
+	width: 3rem; /* Set a consistent width */
+	height: 3rem; /* Set a consistent height */
+
+
+}
+
 .newsCar {
 	background-color: white;
 	padding: 2.5rem;
@@ -1434,7 +1447,6 @@ label {
 	gap: 1.5rem;
 	position: relative; /* Ensure the buttons are positioned relative to this container */
 }
-
 
 
 
@@ -1914,23 +1926,19 @@ table th,
 
 /**********************/
 /*   News Comments */
-/**********************/
-
-
+	/**********************/
 .news-comment-container {
 	padding: 30px 0;
 	background-color: #FFFFFF;
 }
 
-.comment-media-object {
-	max-height: 100px;
-	max-width: 100px;
-	min-height: 100px;
-	min-width: 100px;
-	display: block;
-	object-fit: cover;
-	margin-left: 20px;
-}
+	.news-comment-container comment-media-object {
+		height: 100px;
+		width: 100px;
+		display: block;
+		object-fit: cover;
+		margin-left: 20px;
+	}
 
 .news-comment-form .submit-comment-media {
 	height: 100px;
@@ -2063,6 +2071,7 @@ table th,
 			margin-right: 10px;
 		}
 
+
 /**********************/
 /* Course Discussion */
 /**********************/
@@ -2168,6 +2177,154 @@ table th,
 			margin-right: 10px;
 		}
 
+
+
+
+/**********************/
+/*     17. Agregar noticias     */
+/**********************/
+
+.custom-modal-content3 {
+	background-color: #fff;
+	margin: 5% auto;
+	padding: 1.5rem;
+	border-radius: 4px;
+	width: 100%;
+	max-width: 900px;
+	border: 3px solid #f1962e;
+	display: flex;
+	flex-direction: column;
+	max-height: 90vh;
+	overflow-y: auto;
+	border-bottom: 2px solid #ccc;
+	padding-bottom: 1rem;
+	box-sizing: border-box; /* Evita que el padding afecte el tamaño */
+}
+
+
+	.custom-modal-content3 h1 {
+		font-family: Arial, Helvetica, sans-serif;
+		font-size: 32px;
+	}
+
+
+
+	.custom-modal-content3 {
+		width: 100%; /* Asegura que use todo el ancho del modal */
+		padding: 20px;
+		box-sizing: border-box;
+	}
+
+.row {
+	margin: 0; /* Elimina márgenes de Bootstrap */
+	padding: 0;
+	width: 100%;
+}
+
+.col-sm-12 {
+	width: 100%;
+	padding: 0;
+}
+
+.aso-news-container {
+	width: 100%;
+	max-width: 100%; /* Evita que se limite el ancho */
+	padding: 0;
+}
+
+.aso-news-form {
+	width: 100%;
+}
+
+	.aso-news-form form {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		text-align: justify; /* Justifica el contenido */
+		width: 100%;
+	}
+
+		.aso-news-form form input,
+		.aso-news-form form textarea {
+			width: 100%; /* Ocupa todo el espacio disponible */
+		}
+
+		.aso-news-form form textarea {
+			height: 80px;
+			resize: none;
+		}
+
+.aso-news-container .submit-comment-media {
+	height: 100px;
+	width: 100px;
+}
+
+.aso-news-form form .btn {
+	margin-top: 10px;
+	background-color: #f1962e;
+	border: 0.125rem solid #f1962e;
+	color: #fff;
+	padding: 8px 16px;
+	transition: background-color 0.3s;
+}
+
+	.aso-news-form form .btn:hover {
+		background-color: #fff;
+		border: 0.125rem solid #f1962e;
+		color: #f1962e;
+	}
+
+.image-upload-container {
+	margin-top: 20px;
+}
+
+.image-label {
+	display: block;
+	font-size: 16px;
+	margin-bottom: 5px;
+}
+
+.image-preview {
+	max-height: 200px;
+	min-height: 200px;
+	max-width: 200px;
+	min-width: 200px;
+	border: 2px dashed #ccc;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.file-browser {
+	display: block;
+	margin-top: 10px;
+}
+
+.form-group {
+	margin-top: 10px;
+}
+
+.file-label {
+	display: inline-block;
+	background-color: #f1962e;
+	border-bottom: 2px solid #f1962e;
+	color: white;
+	padding: 8px 10px;
+	border-radius: 4px;
+	cursor: pointer;
+	text-align: center;
+	margin-top: 10px;
+}
+
+	.file-label:hover {
+		background-color: #fff;
+		border-bottom: 2px solid #f1962e;
+		color: #f1962e;
+	}
+
+.file-browser {
+	display: none; /* Oculta el input de archivo original */
+}
 
 /**********************/
 /*     17. Footer     */

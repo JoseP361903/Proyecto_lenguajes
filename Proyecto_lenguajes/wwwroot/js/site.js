@@ -3,7 +3,6 @@ const closeButtons = document.querySelectorAll('.custom-modal-close');
 const navigationBar = document.getElementById('navBar');
 
 
-
 let newsArray = [];
 let newCurrentID = 1;
 
@@ -658,11 +657,16 @@ function getStudentDataFromSession() {
 function openModal(modal) {
     modal.style.display = 'flex';
     navigationBar.style.display = 'none';
+    document.getElementById('nextBtn').style.display = "none";
+    document.getElementById('prevBtn').style.display = "none";
+
 }
 //Required for courses and course comments
 function closeModal(modal) {
     modal.style.display = 'none';
     navigationBar.style.display = 'block';
+    document.getElementById('nextBtn').style.display = "block";
+    document.getElementById('prevBtn').style.display = "block";
 }
 function postComment() {
     var content = $("#textareacomment").val().trim(); // Obtiene el valor del textarea y quita espacios vacíos
@@ -732,6 +736,7 @@ closeButtons.forEach(button => {
     button.addEventListener('click', () => {
         const modal = button.closest('.custom-modal');
         closeModal(modal);
+        
     });
 });
 
@@ -789,6 +794,16 @@ discussionButton.addEventListener('click', () => {
     openModal(courseModal);
 });
 
+const asoModal = document.getElementById('asoModal');
+const addNewsButton = document.getElementById('addNewsButton');
+
+addNewsButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    openModal(asoModal);
+});
+
+
+
 function loadNews() {
     $.ajax({
         url: "/BreakingNew/Get",
@@ -812,6 +827,22 @@ function loadNews() {
         }
     });
 }
+
+document.getElementById("fileInputNew").addEventListener("change", function (event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const preview = document.getElementById("imageAddPreview");
+            preview.style.backgroundImage = `url(${e.target.result})`;
+            preview.style.backgroundSize = "cover";
+            preview.style.backgroundPosition = "center";
+            preview.style.width = "200px";  
+            preview.style.height = "200px";
+        };
+        reader.readAsDataURL(file);
+    }
+});
 
 function renderNews() {
     document.getElementById('newImage0').src = `data:image/png;base64,${newsArray[0].photo}`;
@@ -855,7 +886,7 @@ function GetProfessorCommentData(id) {
                 resolve(result);
             },
             error: function () {
-                alert("Error retrieving data");
+
                 reject("Error retrieving data");
             }
         });

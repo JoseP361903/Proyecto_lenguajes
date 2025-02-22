@@ -358,6 +358,7 @@
     <div id="newsDisplayer" class="newsDisplayer">
         <div class="col-lg-12 d-flex justify-content-center">
             <h1>Noticias</h1>
+            <button  id="addNewsButton">+</button>
         </div>
         <div class="newsCar">
             <div id="newsContainer" class="newsContainer">
@@ -411,13 +412,7 @@
                     <p class="news-date" id="newDate">Published on: January 26, 2025</p>
                     <p class="news-body" id="newBody">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod malesuada dolor nec bibendum.
-                        Cras vehicula mi eget lectus efficitur, eget accumsan ante condimentum.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod malesuada dolor nec bibendum.
-                        Cras vehicula mi eget lectus efficitur, eget accumsan ante condimentum.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod malesuada dolor nec bibendum.
-                        Cras vehicula mi eget lectus efficitur, eget accumsan ante condimentum.
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod malesuada dolor nec bibendum.
-                        Cras vehicula mi eget lectus efficitur, eget accumsan ante condimentum.
+                      
                     </p>
                 </div>
 
@@ -439,11 +434,10 @@
                                 </div>
 
                                 <div class="comment col-xs-12 col-sm-9 col-lg-10">
-                           
+                                    <form>
                                         <textarea class="form-control" id="newCommentmessage" placeholder="Escribe un mensaje" required=""></textarea>
                                         <button type="button" class="btn btn-normal pull-right" onclick="postNewsComment()">Enviar</button>
-
-                            
+                                    </form>
                                 </div>
                             </div>
 
@@ -502,31 +496,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>IF4101</td>
-                            <td>Lenguajes para aplicaciones comerciales</td>
-                            <td><u>&gt&gt</u></td>
-                        </tr>
-                        <tr>
-                            <td>IF5000</td>
-                            <td>Redes y comunicaciones de datos</td>
-                            <td><u>&gt&gt</u></td>
-                        </tr>
-                        <tr>
-                            <td>IF5000</td>
-                            <td>Administración de las bases de datos</td>
-                            <td><u>&gt&gt</u></td>
-                        </tr>
-                        <tr>
-                            <td>MA0323</td>
-                            <td>Métodos numéricos</td>
-                            <td><u>&gt&gt</u></td>
-                        </tr>
-                        <tr>
-                            <td>SR-1</td>
-                            <td>Seminario de Realidad Nacional I</td>
-                            <td><u>&gt&gt</u></td>
-                        </tr>
+                        
                     </tbody>
                 </table>
             </div>
@@ -592,6 +562,47 @@
             </div>
         </div>
     </div>
+
+    <!-- Aso Modal -->
+    <div id="asoModal" class="custom-modal">
+        <div class="custom-modal-content3">
+            <span class="custom-modal-close" onclick="closeModal()">&times;</span>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="aso-news-container">
+                        <h1 style="text-align: center;">Añadir noticia</h1>
+
+                        <div class="aso-news-form">
+                            <form>
+                                <label for="commentText">Titulo:</label>
+                                <input type="text" id="commentText" class="form-control" />
+
+                                <label for="commentDetails"> Cuerpo de la noticia </label>
+                                <textarea id="commentDetails" class="form-control"  rows="8"></textarea>
+
+                                <div class="image-upload-container">
+                                    <label class="image-label">Imagen</label>
+                                    <div class="image-preview" id="imageAddPreview"></div>
+                                    <div class="form-group">
+                                        <label class="file-label" for="fileInputNew">Seleccionar archivo</label>
+                                        <input type="file" id="fileInputNew" class="file-browser" style="display: none;" />
+                                    </div>
+                                </div>
+
+                                <!-- Botones de acción -->
+                                <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+                                    <button type="submit" class="add-news-button">Añadir</button>
+                                    <button type="button" class="add-news-button">Cancelar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 
 
     <div id="contact" class="form-2">
