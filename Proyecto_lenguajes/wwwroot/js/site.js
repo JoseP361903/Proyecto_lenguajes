@@ -306,6 +306,20 @@ function PostStudent() {
 }
 //Required for courses and course comments
 function loadNewsComments(id) {
+    getStudentDataFromSession().then(student => {
+        if (student) {
+            var image = document.getElementById("imgNewComment");
+            base64ToImage(student.photo, image)
+        } else {
+            alert("No se encontraron datos del estudiante.");
+        }
+    }).catch(() => {
+
+        document.querySelector("#header").scrollIntoView({ behavior: "smooth" });//redirige al loggin
+    });
+
+    $("#newCommentmessage").val("");
+
     $.ajax({
         url: "/CommentNew/GetAll/",
         type: "GET",
@@ -432,6 +446,18 @@ function GetCommentsByCourseId(courseId) {
 
 //Required for courses and course comments
 function loadComentarios(comments) {
+
+    getStudentDataFromSession().then(student => {
+        if (student) {
+            var image = document.getElementById("imageUser");
+            base64ToImage(student.photo, image)
+        } else {
+            alert("No se encontraron datos del estudiante.");
+        }
+    }).catch(() => {
+        
+        document.querySelector("#header").scrollIntoView({ behavior: "smooth" });//redirige al loggin
+    });
 
    
 
@@ -669,6 +695,7 @@ function closeModal(modal) {
     document.getElementById('prevBtn').style.display = "block";
 }
 function postComment() {
+
     var content = $("#textareacomment").val().trim(); // Obtiene el valor del textarea y quita espacios vacíos
     var acronym = $("#courseAcronym").text().trim(); // Obtiene el texto del h4
 
@@ -678,30 +705,42 @@ function postComment() {
     const day = String(currentDate.getDate()).padStart(2, '0');
     const date = `${year}-${month}-${day}`;
 
-    var commentData = {
-        content: content,
-        acronym: acronym,
-        idUser: $("#studentID").text(), // Usar el ID del estudiante desde la sesión
-        date: date
-    };
 
-    $.ajax({
-        url: "/CommentCourse/Post",
-        type: "POST",
-        data: JSON.stringify(commentData),
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (response) {
-            $("#message").val("");
-            GetCommentsByCourseId(acronym);
-            $("#textareacomment").val("")
-        },
-        error: function (error) {
-            alert("Error al enviar el comentario.");
-            console.log(error);
+    getStudentDataFromSession().then(student => {
+        if (student) {
+            var commentData = {
+                content: content,
+                acronym: acronym,
+                idUser: student.id, // Usar el ID del estudiante desde la sesión
+                date: date
+            };
+
+            $.ajax({
+                url: "/CommentCourse/Post",
+                type: "POST",
+                data: JSON.stringify(commentData),
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $("#message").val("");
+                    GetCommentsByCourseId(acronym);
+                    $("#textareacomment").val("");
+                },
+                error: function (error) {
+                    alert("Error al enviar el comentario.");
+                    console.log(error);
+                }
+            });
+        } else {
+            alert("No se encontraron datos del estudiante.");
         }
+    }).catch(() => {
+        alert("Error al obtener los datos del estudiante.");
+
+        document.querySelector("#header").scrollIntoView({ behavior: "smooth" });//redirige al loggin
     });
 }
+
 function PutStudent() {
     
     let student = {
