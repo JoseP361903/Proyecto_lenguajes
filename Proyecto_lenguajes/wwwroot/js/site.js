@@ -865,8 +865,10 @@ function showNew() {
     checkSession().then(isLoggedIn => {
         if (isLoggedIn) {
             GetStudentPhotoById('imgNewComment');
+
+
         } else {
-           
+            
         }
     }).catch(error => {
         console.error("Error al verificar la sesión:", error);
