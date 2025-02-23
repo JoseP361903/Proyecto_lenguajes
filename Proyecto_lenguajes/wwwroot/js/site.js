@@ -105,7 +105,7 @@ function LoadProfessor() {
             });
         },
         error: function () {
-            alert("Error fetching professors");
+            swal.fire("Error", "Error abstrayendo la información de los profesores", "error");
         }
     });
 }
@@ -139,18 +139,18 @@ function PostApplicationConsultation() {
                     data: JSON.stringify(applicationData),
                     dataType: "json",
                     success: function (response) {
-                        alert("Consulta enviada exitosamente");
+                        swal.fire("Success", "Consulta enviada exitosamente", "success");
                         $("#txtConsult").val('');
                     },
                     error: function (error) {
-                        alert("Error al enviar la consulta");
+                        swal.fire("Error", "Error al enviar la consulta", "error");
                     }
                 });
             } else {
-                alert("No se encontraron datos del estudiante.");
+                swal.fire("Error", "No se encontraron datos del estudiante.", "error");
             }
         }).catch(() => {
-            alert("Error al obtener los datos del estudiante.");
+            swal.fire("Error", "Error al obtener los datos del estudiante.", "error");
         });
     } 
 }
@@ -184,18 +184,18 @@ function PostPrivateConsultation() {
                     data: JSON.stringify(applicationData),
                     dataType: "json",
                     success: function (response) {
-                        alert("Consulta enviada exitosamente");
+                        swal.fire("Success", "Consulta enviada exitosamente", "success");
                         $("#txtConsult").val('');
                     },
                     error: function (error) {
-                        alert("Error al enviar la consulta");
+                        swal.fire("Error", "Error al enviar la consulta", "error");
                     }
                 });
             } else {
-                alert("No se encontraron datos del estudiante.");
+                swal.fire("Error", "No se encontraron datos del estudiante.", "error");
             }
         }).catch(() => {
-            alert("Error al obtener los datos del estudiante.");
+            swal.fire("Error", "Error al obtener los datos del estudiante.", "error");
         });
     } 
 }
@@ -221,7 +221,7 @@ function AuthenticateStudent() {
         dataType: "json",
         success: function (response) {
             GetStudentData(student.id);
-            alert("Authentication successful!");
+            swal.fire("Success", "¡Autentificación exitosa!", "success");
 
             // Vaciar los campos de entrada
             $("#lId").val('');
@@ -230,21 +230,21 @@ function AuthenticateStudent() {
         error: function (xhr) {
             switch (xhr.status) {
                 case 401:
-                    alert("Incorrect password.");
+                    swal.fire("Error", "Contraseña Incorrecta.", "error");
                     $("#lPassword").val('');
                     break;
                 case 404:
-                    alert("User does not exist.");
+                    swal.fire("Error", "El usuario consultado no existe.", "error");
                     $("#lId").val('');
                     $("#lPassword").val('');
                     break;
                 case 403:
-                    alert("User is not active.");
+                    swal.fire("Error", "El usuario consultado no está activo.", "error");
                     $("#lId").val('');
                     $("#lPassword").val('');
                     break;
                 default:
-                    alert("Error authenticating. Check your credentials and try again.");
+                    swal.fire("Error", "Error autentificando. Revisa las credenciales e intenta de nuevo.", "error");
                     $("#lId").val('');
                     $("#lPassword").val('');
                     break;
@@ -273,11 +273,11 @@ function GetStudentData() {
                     $("#profileModal img").attr("src", "/images/default.jpg"); // Imagen por defecto
                 }
             } else {
-                alert("No se encontraron datos del estudiante.");
+                swal.fire("Error", "No se encontraron datos del estudiante.", "error");
             }
         },
         error: function () {
-            alert("Error al obtener los datos del estudiante.");
+            swal.fire("Error", "Error al obtener los datos del estudiante.", "error");
 
             document.querySelector("#header").scrollIntoView({ behavior: "smooth" });//redirige al loggin
         }
@@ -306,10 +306,16 @@ function PostStudent() {
         data: JSON.stringify(student), // Convertir objeto a JSON
         dataType: "json",
         success: function (response) {
-            alert("Student registered successfully!");
+            swal.fire("Success", "¡Estudiante registrado exitosamente!", "success");
+
+            $("#rId").val('');
+            $("#rName").val('');
+            $("#rSname").val('');
+            $("#rMail").val('');
+            $("#rPassword").val('');
         },
         error: function () {
-            alert("Error registering student. Try again.");
+            swal.fire("Error", "Error en el registro del estudiante. Intenta de nuevo", "error");
         }
     });
 }
@@ -320,7 +326,7 @@ function loadNewsComments(id) {
             var image = document.getElementById("imgNewComment");
             base64ToImage(student.photo, image)
         } else {
-            alert("No se encontraron datos del estudiante.");
+            swal.fire("Error", "No se encontraron datos del estudiante.", "error");
         }
     }).catch(() => {
 
@@ -461,7 +467,7 @@ function loadComentarios(comments) {
             var image = document.getElementById("imageUser");
             base64ToImage(student.photo, image)
         } else {
-            alert("No se encontraron datos del estudiante.");
+            swal.fire("Error", "No se encontraron datos del estudiante.", "error");
         }
     }).catch(() => {
         
@@ -502,7 +508,7 @@ function loadComentarios(comments) {
                 }
             })
             .catch(() => {
-                alert("Error to take photo.");
+                swal.alert("Error", "Error al cargar la foto", "error");
             });
     });
 }
@@ -544,12 +550,12 @@ function GetStudentPhotoById(imgId) {
                     console.error(`Elemento con ID ${imgId} no encontrado.`);
                 }
             } else {
-                alert("No se encontraron datos del estudiante.");
+                swal.fire("Error", "No se encontraron datos del estudiante.", "error");
             }
         },
         error: function () {
 
-            alert("Error al obtener los datos del estudiante.");
+            swal.file("Error", "Error al obtener los datos del estudiante.", "error");
 
             document.querySelector("#header").scrollIntoView({ behavior: "smooth" });//redirige al loggin
         }
@@ -570,11 +576,11 @@ function GetCourseByAcronym(acronym) {
                 displayCourseInfo(result);  // Llamar a una función para manejar la información del curso
 
             } else {
-                alert("No se encontró el curso.");
+                swal.fire("Error", "No se encontró el curso.", "error");
             }
         },
         error: function (errorMessage) {
-            alert("Error al obtener el curso.");
+            swal.fire("Error", "Error al obtener el curso.", "error");
         }
     });
 }
@@ -646,10 +652,10 @@ function postNewsComment() {
 
             postNewCommentData(commentData);
         } else {
-            alert("No se encontraron datos del estudiante.");
+            swal.fire("Error", "No se encontraron datos del estudiante.", "error");
         }
     }).catch(() => {
-        alert("Error al obtener los datos del estudiante.");
+        swal.fire("Error", "Error al obtener los datos del estudiante.", "error");
 
         document.querySelector("#header").scrollIntoView({ behavior: "smooth" });//redirige al loggin
     });
@@ -666,7 +672,7 @@ function postNewCommentData(commentData) {
             loadNewsComments(commentData.idNew);
         },
         error: function (error) {
-            alert("Error al enviar el comentario.");
+            swal.fire("Error", "Error al enviar el comentario.", "error");
         }
     });
 }
@@ -736,15 +742,15 @@ function postComment() {
                     $("#textareacomment").val("");
                 },
                 error: function (error) {
-                    alert("Error al enviar el comentario.");
+                    swal.fire("Error", "Error al enviar el comentario.", "error");
                     console.log(error);
                 }
             });
         } else {
-            alert("No se encontraron datos del estudiante.");
+            swal.fire("Error", "No se encontraron datos del estudiante.", "error");
         }
     }).catch(() => {
-        alert("Error al obtener los datos del estudiante.");
+        swal.fire("Error", "Error al obtener los datos del estudiante.", "error");
 
         document.querySelector("#header").scrollIntoView({ behavior: "smooth" });//redirige al loggin
     });
@@ -772,10 +778,10 @@ function PutStudent() {
         dataType: "json",
         success: function (response) {
             GetStudentData(student.id);
-            alert("Student updated successfully!");
+            swal.fire("Success", "¡Estudiante actualizado exitosamente!", "success");
         },
         error: function () {
-            alert("Error updating student. Try again.");
+            swal.fire("Error", "Error al actualizar el estudiante. Intenta de nuevo", "error");
         }
     });
 }
@@ -931,7 +937,7 @@ function postNew() {
                 clearNewsForm();
             },
             error: function (error) {
-                alert("Error al publicar la noticia.");
+                swal.fire("Error", "Error al publicar la noticia.", "error");
             }
         });
 
@@ -1018,7 +1024,7 @@ function CheckNewsCommentType(id) {
                 resolve(result);
             },
             error: function () {
-                alert("Not an ID");
+                swal.fire("Error", "Error al verificar el tipo de usuario.", "error");
                 reject("Error en la petición");
             }
         });
@@ -1037,7 +1043,7 @@ function GetStudentCommentData(id) {
                 resolve(result);
             },
             error: function () {
-                alert("Error retrieving data");
+                swal.fire("Error", "Error al obtener los datos del estudiante.", "error");
                 reject("Error retrieving data");
             }
         });
@@ -1084,7 +1090,7 @@ function GetApplicationConsultationByStudent() {
 
 
                 }, error: function () {
-                    alert("Error retrieving data");
+                    swal.fire("Error", "Error al obtener las consultas.", "error");
                     reject("Error retrieving data");
                 }
             })//endajax
@@ -1127,7 +1133,7 @@ function LoadSpecificAppConsultation(id) {
             $('#student_app_professor').text(result.idProfessor);
         },//end success
         error: function () {
-            alert("Error retrieving data");
+            swal.fire("Error", "Error al obtener los datos de la consulta.", "error");
             reject("Error retrieving data");
         } //end error
     })//end ajax
@@ -1173,7 +1179,7 @@ function GetPrivateConsultationByStudent() {
 
 
                 }, error: function () {
-                    alert("Error retrieving data");
+                    swal.fire("Error", "Error al obtener las consultas.", "error");
                     reject("Error retrieving data");
                 }
             })//endajax
@@ -1216,7 +1222,7 @@ function LoadSpecificPrivateConsultation(id) {
             $('#student_private_professor').text(result.idProfessor);
         },//end success
         error: function () {
-            alert("Error retrieving data");
+            swal.fire("Error", "Error al obtener los datos de la consulta.", "error");
             reject("Error retrieving data");
         } //end error
     })//end ajax

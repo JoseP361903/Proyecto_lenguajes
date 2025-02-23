@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using System.Text;
 using System.Data;
+using Proyecto_lenguajes.Util;
 
 namespace Proyecto_lenguajes.Models.Services
 {
@@ -112,6 +113,9 @@ namespace Proyecto_lenguajes.Models.Services
 
                     result = sqlCommand.ExecuteNonQuery();
                     connection.Close();
+
+                    EmailSender sender = new EmailSender();
+                    sender.SendEmail(student, "Bienvenido a la plataforma");
 
                 } catch (SqlException) {
                     throw;
