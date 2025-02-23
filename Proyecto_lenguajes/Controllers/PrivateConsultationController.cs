@@ -34,6 +34,32 @@ namespace Proyecto_lenguajes.Controllers
             }
         }
 
+        public IActionResult GetByStudent(string id)
+        {
+            try
+            {
+                return Ok(privateConsultationServices.GetPrivateByStudent(id));
+            } catch (SqlException e)
+            {
+                //TODO Consider how to handle errors
+                ViewBag.Message = e.Message;
+                return View(e.ToString());
+            }
+        }
+
+        public IActionResult GetById(int id)
+        {
+            try
+            {
+                return Ok(privateConsultationServices.GetPrivateById(id));
+            } catch (SqlException e)
+            {
+                //TODO Consider how to handle errors
+                ViewBag.Message = e.Message;
+                return View(e.ToString());
+            }
+        }
+
 
         public IActionResult Index()
         {

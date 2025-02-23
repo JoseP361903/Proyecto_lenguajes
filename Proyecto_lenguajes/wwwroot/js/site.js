@@ -113,7 +113,7 @@ function LoadProfessor() {
 function PostApplicationConsultation() {
     let appointmentType = $("#appointmentType").val(); // Obtener el valor del select
 
-    if (appointmentType == "1") { // Solo ejecuta si el select está en "1"
+    if (appointmentType == "0") { // Solo ejecuta si el select está en "1"
         let professorSelect = $("#professorSelect option:selected"); // Obtiene la opción seleccionada
         let professorId = professorSelect.val(); // Obtiene el ID del profesor
         let professorName = professorSelect.text().replace(/\s*\(\d+\)$/, ''); // Extrae el nombre sin el ID
@@ -140,6 +140,7 @@ function PostApplicationConsultation() {
                     dataType: "json",
                     success: function (response) {
                         alert("Consulta enviada exitosamente");
+                        $("#txtConsult").val('');
                     },
                     error: function (error) {
                         alert("Error al enviar la consulta");
@@ -157,7 +158,7 @@ function PostApplicationConsultation() {
 function PostPrivateConsultation() {
     let appointmentType = $("#appointmentType").val(); // Obtener el valor del select
 
-    if (appointmentType == "0") { // Solo ejecuta si el select está en "0"
+    if (appointmentType == "1") { // Solo ejecuta si el select está en "0"
         let professorSelect = $("#professorSelect option:selected"); // Obtiene la opción seleccionada
         let professorId = professorSelect.val(); // Obtiene el ID del profesor
         let professorName = professorSelect.text().replace(/\s*\(\d+\)$/, ''); // Extrae el nombre sin el ID
@@ -184,6 +185,7 @@ function PostPrivateConsultation() {
                     dataType: "json",
                     success: function (response) {
                         alert("Consulta enviada exitosamente");
+                        $("#txtConsult").val('');
                     },
                     error: function (error) {
                         alert("Error al enviar la consulta");
@@ -229,15 +231,22 @@ function AuthenticateStudent() {
             switch (xhr.status) {
                 case 401:
                     alert("Incorrect password.");
+                    $("#lPassword").val('');
                     break;
                 case 404:
                     alert("User does not exist.");
+                    $("#lId").val('');
+                    $("#lPassword").val('');
                     break;
                 case 403:
                     alert("User is not active.");
+                    $("#lId").val('');
+                    $("#lPassword").val('');
                     break;
                 default:
                     alert("Error authenticating. Check your credentials and try again.");
+                    $("#lId").val('');
+                    $("#lPassword").val('');
                     break;
             }
         }
@@ -1033,6 +1042,184 @@ function GetStudentCommentData(id) {
             }
         });
     });
+}
+
+function GetApplicationConsultationByStudent() {
+    getStudentDataFromSession().then(student => {
+        if (student) {
+            $.ajax({
+                url: "ApplicationConsultation/GetByStudent/",
+                type: "GET",
+                data: { id: student.id },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    $('#previous_text').attr('hidden', false);
+                    $('#student_app_photo').attr('hidden', true);
+                    $('#student_app_name').attr('hidden', true);
+                    $('#student_app_date').attr('hidden', true);
+                    $('#student_app_text').attr('hidden', true);
+                    $('#student_app_reply').attr('hidden', true);
+                    $('#student_app_answer').attr('hidden', true);
+                    $('#sender_app').attr('hidden', true);
+
+                    var htmlTable = '';
+
+                    $.each(result, function (key, item){
+                        htmlTable += '<tr>';
+                        htmlTable += '<td class="email-info">';
+                        htmlTable += '<h3> RE:' + item.text + '</h3>';
+                        htmlTable += '<p>De: ' + item.professor.name + ' ' + item.professor.lastName + '</p>';
+
+                        htmlTable += '</td>';
+                        htmlTable += '<td class="email-action">';
+                        htmlTable += '<button class="btn btn-primary" onclick="LoadSpecificAppConsultation(' + item.id + ')">Abrir</button>';
+                        htmlTable += '</td>';
+                        htmlTable += '</tr>';
+
+                    }) //end foreach
+
+                    $('#email-table-appointment').empty();
+                    $('#email-table-appointment').html(htmlTable);
+
+
+                }, error: function () {
+                    alert("Error retrieving data");
+                    reject("Error retrieving data");
+                }
+            })//endajax
+        }//endif
+    })
+}
+
+function LoadSpecificAppConsultation(id) {
+    $.ajax({
+        url: "ApplicationConsultation/GetById/",
+        type: "GET",
+        data: { id: id },
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            $('#previous_text').attr('hidden', true);
+            $('#student_app_photo').attr('hidden', false);
+            $('#student_app_name').attr('hidden', false);
+            $('#student_app_date').attr('hidden', false);
+            $('#student_app_text').attr('hidden', false);
+            $('#student_app_reply').attr('hidden', false);
+            $('#student_app_answer').attr('hidden', false);
+            $('#sender_app').attr('hidden', true);
+
+            if (result.professor.photo) {
+                $('#student_app_photo').attr("src", `data:image/png;base64,${result.professor.photo}`)
+            } else {
+                $('#student_app_photo').attr("src", "/images/default.jpg")
+            };
+
+            $('#student_app_name').text(result.professor.name + " " + result.professor.lastName);
+            $('#student_app_date').text(result.date);
+            $('#student_app_text').text(result.text);
+            $('#student_app_answer').text(result.answer);
+
+            $("#student_app_answer").prop("readonly", true);
+
+            $('#student_app_idconsult').text(id.toString());
+            $('#student_app_student').text(result.idStudent);
+            $('#student_app_professor').text(result.idProfessor);
+        },//end success
+        error: function () {
+            alert("Error retrieving data");
+            reject("Error retrieving data");
+        } //end error
+    })//end ajax
+} //end function
+
+function GetPrivateConsultationByStudent() {
+    getStudentDataFromSession().then(student => {
+        if (student) {
+            $.ajax({
+                url: "PrivateConsultation/GetByStudent/",
+                type: "GET",
+                data: { id: student.id },
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    $('#previous_priv_text').attr('hidden', false);
+                    $('#student_private_photo').attr('hidden', true);
+                    $('#student_private_name').attr('hidden', true);
+                    $('#student_private_date').attr('hidden', true);
+                    $('#student_private_text').attr('hidden', true);
+                    $('#student_private_reply').attr('hidden', true);
+                    $('#student_private_answer').attr('hidden', true);
+                    $('#sender_private').attr('hidden', true);
+
+                    var htmlTable = '';
+
+                    $.each(result, function (key, item) {
+                        htmlTable += '<tr>';
+                        htmlTable += '<td class="email-info">';
+                        htmlTable += '<h3> RE: ' + item.text + '</h3>';
+                        htmlTable += '<p>De: ' + item.professor.name + ' ' + item.professor.lastName + '</p>';
+
+                        htmlTable += '</td>';
+                        htmlTable += '<td class="email-action">';
+                        htmlTable += '<button class="btn btn-primary" onclick="LoadSpecificPrivateConsultation(' + item.id + ')">Abrir</button>';
+                        htmlTable += '</td>';
+                        htmlTable += '</tr>';
+
+                    }) //end foreach
+
+                    $('#email-table-private').empty();
+                    $('#email-table-private').html(htmlTable);
+
+
+                }, error: function () {
+                    alert("Error retrieving data");
+                    reject("Error retrieving data");
+                }
+            })//endajax
+        }//endif
+    })
+}
+
+function LoadSpecificPrivateConsultation(id) {
+    $.ajax({
+        url: "PrivateConsultation/GetById/",
+        type: "GET",
+        data: { id: id },
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            $('#previous_priv_text').attr('hidden', true);
+            $('#student_private_photo').attr('hidden', false);
+            $('#student_private_name').attr('hidden', false);
+            $('#student_private_date').attr('hidden', false);
+            $('#student_private_text').attr('hidden', false);
+            $('#student_private_reply').attr('hidden', false);
+            $('#student_private_answer').attr('hidden', false);
+            $('#sender_private').attr('hidden', true);
+
+            if (result.professor.photo) {
+                $('#student_private_photo').attr("src", `data:image/png;base64,${result.professor.photo}`)
+            } else {
+                $('#student_private_photo').attr("src", "/images/default.jpg")
+            };
+
+            $('#student_private_name').text(result.professor.name + " " + result.professor.lastName);
+            $('#student_private_date').text(result.date);
+            $('#student_private_text').text(result.text);
+            $('#student_private_answer').text(result.answer);
+
+            $("#student_private_answer").prop("readonly", true);
+
+            $('#student_private_idconsult').text(id.toString());
+            $('#student_private_student').text(result.idStudent);
+            $('#student_private_professor').text(result.idProfessor);
+        },//end success
+        error: function () {
+            alert("Error retrieving data");
+            reject("Error retrieving data");
+        } //end error
+    })//end ajax
 }
 
 

@@ -222,10 +222,10 @@
             <!-- Tab Buttons -->
             <ul class="nav nav-tabs" id="emailTabs" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="appointments-tab" data-bs-toggle="tab" data-bs-target="#appointments" type="button" role="tab" aria-controls="appointments" aria-selected="true">Citas</button>
+                    <button class="nav-link active" id="appointments-tab" data-bs-toggle="tab" data-bs-target="#appointments" type="button" role="tab" aria-controls="appointments" aria-selected="true" onclick="GetApplicationConsultationByStudent()">Citas</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="consults-tab" data-bs-toggle="tab" data-bs-target="#consults" type="button" role="tab" aria-controls="consults" aria-selected="false">Consultas</button>
+                    <button class="nav-link" id="consults-tab" data-bs-toggle="tab" data-bs-target="#consults" type="button" role="tab" aria-controls="consults" aria-selected="false" onclick="GetPrivateConsultationByStudent()">Consultas</button>
                 </li>
             </ul>
 
@@ -261,7 +261,7 @@
                                 </div>
                             </div>
                             <p class="email-body" id="student_app_text" hidden>Appointment details here...</p>
-                            <h3 id="student_app_reply" hidden>Responder</h3>
+                            <h3 id="student_app_reply" hidden>Respuesta</h3>
                             <textarea class="form-control" placeholder="Write your reply..." id="student_app_answer" hidden></textarea>
                             <h1 id="student_app_idconsult" hidden></h1>
                             <h1 id="student_app_student" hidden></h1>
@@ -296,20 +296,20 @@
                             <p class="previous_text" id="previous_priv_text">Seleccione un mensaje para verlo</p>
                             <div class="row-profile">
                                 <div class="col-md-2">
-                                    <img src="~/images/defaultpfp.jpg" alt="Profile Picture" class="img-fluid" id="student_private_photo">
+                                    <img src="~/images/defaultpfp.jpg" alt="Profile Picture" class="img-fluid" id="student_private_photo" hidden>
                                 </div>
                                 <div class="col-md-3">
-                                    <h3 id="student_private_name">John Doe</h3>
-                                    <p id="student_private_date">Jan 27, 2025</p>
+                                    <h3 id="student_private_name" hidden>John Doe</h3>
+                                    <p id="student_private_date" hidden>Jan 27, 2025</p>
                                 </div>
                             </div>
-                            <p class="email-body" id="student_private_text">Consult details here...</p>
-                            <h3 id="student_private_reply">Reply</h3>
-                            <textarea class="form-control" placeholder="Write your reply..." id="student_private_answer"></textarea>
+                            <p class="email-body" id="student_private_text" hidden>Consult details here...</p>
+                            <h3 id="student_private_reply" hidden>Reply</h3>
+                            <textarea class="form-control" placeholder="Write your reply..." id="student_private_answer" hidden></textarea>
                             <h1 id="student_private_idconsult" hidden></h1>
                             <h1 id="student_private_student" hidden></h1>
                             <h1 id="student_private_professor" hidden></h1>
-                            <button class="btn btn-primary send-btn custom-send-btn" id="sender_private" >Enviar</button>
+                            <button class="btn btn-primary send-btn custom-send-btn" id="sender_private" hidden>Enviar</button>
 
                         </div>
                     </div>
