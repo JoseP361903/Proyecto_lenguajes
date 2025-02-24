@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
+using Microsoft.IdentityModel.Tokens;
 using Proyecto_lenguajes.Models;
 using Proyecto_lenguajes.Models.Entities;
 using Proyecto_lenguajes.Models.Services;
@@ -92,7 +93,7 @@ namespace Proyecto_lenguajes.Controllers
                             HttpContext.Session.SetString("UserName", studentData.Name);
                             HttpContext.Session.SetString("UserLastName", studentData.LastName);
                             HttpContext.Session.SetString("UserEmail", studentData.Email);
-                            HttpContext.Session.SetString("UserPhoto", studentData.Photo);
+                            HttpContext.Session.SetString("UserPhoto", studentData.Photo.IsNullOrEmpty() ? "" : studentData.Photo);
                         }
                         return Ok(new { message = "Authentication successful", student = studentData }); // Autenticación exitosa
                     case -1:

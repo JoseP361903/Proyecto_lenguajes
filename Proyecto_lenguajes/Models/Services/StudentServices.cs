@@ -40,7 +40,7 @@ namespace Proyecto_lenguajes.Models.Services
                         student.Password = reader.GetString(3);
                         student.Email = reader.GetString(4);
                         student.Likings = reader.GetString(5);
-                        student.Photo = reader.GetString(6);
+                        student.Photo = reader.IsDBNull(6) ? null : reader.GetString(6);
                     }
                     sqlConnection.Close();
                 } catch (SqlException)
