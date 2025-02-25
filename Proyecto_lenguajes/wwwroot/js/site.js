@@ -7,33 +7,37 @@ let newsArray = [];
 let newCurrentID = 1;
 
 $(document).ready(function () {
-    GetCoursesByCycle(1);
-    loadNews();
-    LoadProfessor();
+   
+    getStudentDataFromSession().then(student => {
+        
+        if (student) {
+            GetCoursesByCycle(1);
+            loadNews();
+            LoadProfessor();
 
-    //Required for courses and course comments
-    const month = new Date().getMonth() + 1;
+            //Required for courses and course comments
+            const month = new Date().getMonth() + 1;
 
-    const courseModal = document.getElementById('courseModal');
+            const courseModal = document.getElementById('courseModal');
 
-    let fillHtml = "";
+            let fillHtml = "";
 
-    if (month >= 2 && month <= 7) {
-        fillHtml = `
+            if (month >= 2 && month <= 7) {
+                fillHtml = `
             <option value="I">I</option>
             <option value="III">III</option>
             <option value="V">V</option>
             <option value="VII">VII</option>
         `;
-    } else if (month >= 8 && month <= 12) {
-        fillHtml = `
+            } else if (month >= 8 && month <= 12) {
+                fillHtml = `
             <option value="II">II</option>
             <option value="IV">IV</option>
             <option value="VI">VI</option>
             <option value="VIII">VIII</option>
         `;
-    } else {
-        fillHtml = `
+            } else {
+                fillHtml = `
             <option value="I">I</option>
             <option value="II">II</option>
             <option value="III">III</option>
@@ -43,27 +47,39 @@ $(document).ready(function () {
             <option value="VII">VII</option>
             <option value="VIII">VIII</option>
         `;
-    }
-    //Required for courses and course comments
-    $("#cicles").html(fillHtml);
+            }
+            //Required for courses and course comments
+            $("#cicles").html(fillHtml);
 
-    //Required for courses and course comments
-    $("#cicles").change(function () {
-        let romanCycle = $(this).val();
-        let cycle = convertRomanToInt(romanCycle);
-        GetCoursesByCycle(cycle);
-    });
-
-
-    $('#nextBtn').click(function () {
-        moveNext();
-        renderNews();
-    });
+            //Required for courses and course comments
+            $("#cicles").change(function () {
+                let romanCycle = $(this).val();
+                let cycle = convertRomanToInt(romanCycle);
+                GetCoursesByCycle(cycle);
+            });
 
 
-    $('#prevBtn').click(function () {
-        movePrev();
-        renderNews();
+            $('#nextBtn').click(function () {
+                moveNext();
+                renderNews();
+            });
+
+
+            $('#prevBtn').click(function () {
+                movePrev();
+                renderNews();
+            });
+            
+
+            
+
+
+        } else {
+            swal.fire("Error", "No se encontraron datos del estudiante.", "error");
+        }
+    }).catch(() => {
+
+        document.querySelector("#header").scrollIntoView({ behavior: "smooth" });//redirige al loggin
     });
 
 });
@@ -78,6 +94,7 @@ function checkSession() {
             dataType: "json",
             success: function (response) {
                 if (response && typeof response.isLoggedIn !== 'undefined') {
+                   
                     resolve(response.isLoggedIn);
                 } else {
                     reject(new Error("Respuesta inesperada del servidor"));
@@ -205,13 +222,13 @@ function convertRomanToInt(roman) {
     const romanMap = { "I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8 };
     return romanMap[roman] || 0; 
 }
-function AuthenticateStudent() {
+function AuthenticateStudent() { 
+    event.preventDefault();
     // Construir el objeto student con los valores del formulario
     let student = {
         id: $("#lId").val(),
         password: $("#lPassword").val()
     };
-
     // Enviar los datos al backend con AJAX
     $.ajax({
         url: "/Student/Authenticate",
@@ -221,9 +238,10 @@ function AuthenticateStudent() {
         dataType: "json",
         success: function (response) {
             GetStudentData(student.id);
-            swal.fire("Success", "¡Autentificación exitosa!", "success");
+            setTimeout(function () {
+                location.reload();
+            }, 0);
             setAsociation();
-
             // Vaciar los campos de entrada
             $("#lId").val('');
             $("#lPassword").val('');
