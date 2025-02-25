@@ -69,6 +69,8 @@ $(document).ready(function () {
                 movePrev();
                 renderNews();
             });
+
+            GetStudentData();
             
 
             
@@ -237,7 +239,7 @@ function AuthenticateStudent() {
         data: JSON.stringify(student), // Convertir objeto a JSON
         dataType: "json",
         success: function (response) {
-            GetStudentData(student.id);
+            
             setTimeout(function () {
                 location.reload();
             }, 0);
@@ -272,34 +274,26 @@ function AuthenticateStudent() {
     });
 }
 function GetStudentData() {
-    $.ajax({
-        url: "/Student/GetStudentDataFromSession",
-        type: "GET",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        success: function (student) {
-            if (student) {
-                $("#studentName").text(student.name + " " + student.lastName);
-                $("#studentID").text(student.id);
+    getStudentDataFromSession().then(student => {
+        if (student) {
+            $("#studentName").text(student.name + " " + student.lastName);
+            $("#studentID").text(student.id);
 
-                $("#pName").val(student.name);
-                $("#pSname").val(student.lastName);
-                $("#pMail").val(student.email);
+            $("#pName").val(student.name);
+            $("#pSname").val(student.lastName);
+            $("#pMail").val(student.email);
 
-                if (student.photo) {
-                    $("#profileModal img").attr("src", `data:image/png;base64,${student.photo}`);
-                } else {
-                    $("#profileModal img").attr("src", "/images/default.jpg"); // Imagen por defecto
-                }
+            if (student.photo) {
+                $("#profileModal img").attr("src", `data:image/png;base64,${student.photo}`);
             } else {
-                swal.fire("Error", "No se encontraron datos del estudiante.", "error");
+                $("#profileModal img").attr("src", "/images/default.jpg"); // Imagen por defecto
             }
-        },
-        error: function () {
-            swal.fire("Error", "Error al obtener los datos del estudiante.", "error");
-
-            document.querySelector("#header").scrollIntoView({ behavior: "smooth" });//redirige al loggin
+        } else {
+            swal.fire("Error", "No se encontraron datos del estudiante.", "error");
         }
+    }).catch(() => {
+
+        document.querySelector("#header").scrollIntoView({ behavior: "smooth" });//redirige al loggin
     });
 }
 function PostStudent() {
@@ -723,7 +717,9 @@ function getStudentDataFromSession() {
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (student) {
+                
                 resolve(student);
+
             },
             error: function () {
                 reject();
