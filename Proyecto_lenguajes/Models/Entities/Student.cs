@@ -9,12 +9,13 @@
         private string email;
         private string likings;
         private string photo;
+        private short asociation;
 
         public Student()
         {
         }
 
-        public Student(string id, string name, string lastName, string password, string email, string likings, string photo)
+        public Student(string id, string name, string lastName, string password, string email, string likings, string photo, short asociation)
         {
             Id = id;
             Name = name;
@@ -23,6 +24,7 @@
             Email = email;
             Likings = likings;
             Photo = photo;
+            Asociation = asociation;
         }
 
         public string Id { get => id; set => id = value; }
@@ -32,5 +34,6 @@
         public string Email { get => email; set => email = value; }
         public string Likings { get => likings; set => likings = value; }
         public string Photo { get => photo; set => photo = value; }
+        public short Asociation { get => asociation; set => asociation = value; }
     }
 }

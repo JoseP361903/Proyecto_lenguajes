@@ -41,6 +41,7 @@ namespace Proyecto_lenguajes.Models.Services
                         student.Email = reader.GetString(4);
                         student.Likings = reader.GetString(5);
                         student.Photo = reader.IsDBNull(6) ? null : reader.GetString(6);
+                        student.Asociation = reader.GetInt16(7);
                     }
                     sqlConnection.Close();
                 } catch (SqlException)

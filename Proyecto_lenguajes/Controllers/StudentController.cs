@@ -73,7 +73,8 @@ namespace Proyecto_lenguajes.Controllers
                 Name = HttpContext.Session.GetString("UserName"),
                 LastName = HttpContext.Session.GetString("UserLastName"),
                 Email = HttpContext.Session.GetString("UserEmail"),
-                Photo = HttpContext.Session.GetString("UserPhoto")
+                Photo = HttpContext.Session.GetString("UserPhoto"),
+                Asociation = short.Parse(HttpContext.Session.GetString("UserAsociation"))
             };
 
             return Ok(student);
@@ -94,6 +95,7 @@ namespace Proyecto_lenguajes.Controllers
                             HttpContext.Session.SetString("UserLastName", studentData.LastName);
                             HttpContext.Session.SetString("UserEmail", studentData.Email);
                             HttpContext.Session.SetString("UserPhoto", studentData.Photo.IsNullOrEmpty() ? "" : studentData.Photo);
+                            HttpContext.Session.SetString("UserAsociation", studentData.Asociation.ToString());
                         }
                         return Ok(new { message = "Authentication successful", student = studentData }); // Autenticación exitosa
                     case -1:

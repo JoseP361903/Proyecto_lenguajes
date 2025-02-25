@@ -222,6 +222,7 @@ function AuthenticateStudent() {
         success: function (response) {
             GetStudentData(student.id);
             swal.fire("Success", "¡Autentificación exitosa!", "success");
+            setAsociation();
 
             // Vaciar los campos de entrada
             $("#lId").val('');
@@ -465,7 +466,12 @@ function loadComentarios(comments) {
     getStudentDataFromSession().then(student => {
         if (student) {
             var image = document.getElementById("imageUser");
-            base64ToImage(student.photo, image)
+            if (student.photo) {
+                base64ToImage(student.photo, image)
+            } else {
+                $('#imageUser').attr("src", "/images/default.jpg")
+            }
+            
         } else {
             swal.fire("Error", "No se encontraron datos del estudiante.", "error");
         }
@@ -660,6 +666,21 @@ function postNewsComment() {
         document.querySelector("#header").scrollIntoView({ behavior: "smooth" });//redirige al loggin
     });
 }
+
+function setAsociation() {
+    getStudentDataFromSession()
+        .then(student => {
+            if (student && student.asociation == "1") {
+                $("#addNewsButton").removeAttr("hidden");
+            } else {
+                $("#addNewsButton").attr("hidden", "true");
+            }
+        })
+        .catch(error => {
+            console.error("Error obteniendo datos del estudiante:", error);
+        });
+}
+
 function postNewCommentData(commentData) {
     $.ajax({
         url: "/CommentNew/Post",
